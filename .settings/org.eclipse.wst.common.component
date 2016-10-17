@@ -2,6 +2,9 @@
     <wb-module deploy-name="3910_Assign1_AlbertChen_JoeFong">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/JavaSource"/>
+        <dependent-module archiveName="timesheet.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/timesheet/timesheet">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="3910_Assign1_AlbertChen_JoeFong"/>
         <property name="java-output-path" value="/3910_Assign1_AlbertChen_JoeFong/WebContent/WEB-INF/classes"/>
     </wb-module>

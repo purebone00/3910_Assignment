@@ -3,6 +3,7 @@
 	<name>3910_Assign1_AlbertChen_JoeFong</name>
 	<comment></comment>
 	<projects>
+		<project>timesheet</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -12,26 +12,30 @@ public class EmployeeLister implements EmployeeList {
     @Inject Employee currentEmployee;
     List<Employee> employees;
     
-    @Override
+  
     public List<Employee> getEmployees() {
         return employees;
     }
 
-    @Override
+    
     public Employee getEmployee(String name) {
+        for (Employee x : employees) {
+            if (x.getName().equals(name)) {
+                return x;
+            }
+        }
         return null;
     }
 
-    @Override
     public Map<String, String> getLoginCombos() {
-        // TODO Auto-generated method stub
+        
         return null;
     }
 
     @Override
     public Employee getCurrentEmployee() {
-        // TODO Auto-generated method stub
-        return null;
+        
+        return currentEmployee;
     }
 
     @Override
