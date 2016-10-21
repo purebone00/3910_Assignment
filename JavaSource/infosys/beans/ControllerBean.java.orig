@@ -2,22 +2,22 @@ package infosys.beans;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import ca.bcit.infosys.employee.Employee;
 
 @Named("controller")
-@ConversationScoped
+@ApplicationScoped
 public class ControllerBean implements Serializable{
     @Inject Conversation conversation;
     @Inject EmployeeLister list;
     @Inject TimeSheetCollector timesheetCollection;
 	String userName;
     String password;
+<<<<<<< HEAD
     
     Integer empId;
     String oldPassword;
@@ -28,23 +28,13 @@ public class ControllerBean implements Serializable{
     public void init() {
         conversation.begin();
     }
+=======
+>>>>>>> timesheet
     
     public ControllerBean() {
         list = new EmployeeLister();
     }
     
-<<<<<<< HEAD
-    public String verifyLogin() {
-        String verified = "";
-        try {
-            if(list.getLogInfo().get(getUserName()).equals(getPassword())) {
-                verified = "next";
-            }
-        } catch(NullPointerException n) {
-            return "stay";
-        }
-        return verified;
-=======
     
     public String verifyLogin() {
         
@@ -62,40 +52,26 @@ public class ControllerBean implements Serializable{
         }
         
         return "stay";
->>>>>>> 016d3727b148f428237629ff3b9bd1f8e5b79f9c
     }
     
     public String logOut() {
-        conversation.end();
+        //conversation.end();
         return "log out";
+    }
+    
+    public String goBack() {
+    	return "goBack";
     }
     
     public String getUserName() {
         return userName;
     }
-    
     public void setUserName(String userName) {
         this.userName = userName;
     }
-    
     public String getPassword() {
         return password;
     }
-<<<<<<< HEAD
-    
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
-    public String timeSheet() {
-    	return "timeSheet";
-    }
-    
-    public TimeSheetCollector getTimesheetCollection() {
-		return timesheetCollection;
-	}
-    
-=======
     public Integer getEmpId() {
         return empId;
     }
@@ -135,6 +111,15 @@ public class ControllerBean implements Serializable{
     public String goToPassword() {
         return "changePassword";
     }
+    
+    public String timeSheet() {
+    	return "timeSheet";
+    }
+    
+    public TimeSheetCollector getTimesheetCollection() {
+		return timesheetCollection;
+	}
+    
     public String changePassword() {
         String result = "";
         for(Employee e: list.getEmployees()) {
@@ -155,6 +140,5 @@ public class ControllerBean implements Serializable{
         }
         return result;
     }
->>>>>>> 016d3727b148f428237629ff3b9bd1f8e5b79f9c
     
 }

@@ -1,6 +1,7 @@
 package infosys.beans;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import ca.bcit.infosys.timesheet.Timesheet;
 

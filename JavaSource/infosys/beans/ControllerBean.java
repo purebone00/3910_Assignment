@@ -33,7 +33,6 @@ public class ControllerBean implements Serializable{
         list = new EmployeeLister();
     }
     
-    
     public String verifyLogin() {
         
         for(Employee e: list.getEmployees()) {
@@ -57,12 +56,18 @@ public class ControllerBean implements Serializable{
         return "log out";
     }
     
+    public String goBack() {
+    	return "goBack";
+    }
+    
     public String getUserName() {
         return userName;
     }
+    
     public void setUserName(String userName) {
         this.userName = userName;
     }
+    
     public String getPassword() {
         return password;
     }
