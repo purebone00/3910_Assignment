@@ -3,6 +3,7 @@
 <faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
+
 <navigation-rule>
 	<from-view-id>/login.xhtml</from-view-id>
 	<navigation-case>
@@ -25,6 +26,12 @@
 		<to-view-id>/login.xhtml</to-view-id>
 		<redirect/>
 	</navigation-case>
+<<<<<<< HEAD
+    <navigation-case>      	 
+        <from-outcome>timeSheet</from-outcome>
+        <to-view-id>/timeSheet.xhtml</to-view-id>
+    </navigation-case>
+=======
 	<navigation-case>
 		<from-outcome>changePassword</from-outcome>
 		<to-view-id>/changePassword.xhtml</to-view-id>
@@ -48,10 +55,7 @@
 		<to-view-id>/login.xhtml</to-view-id>
 		<redirect/>
 	</navigation-case>
-    <navigation-case>      	 
-        <from-outcome>timeSheet</from-outcome>
-        <to-view-id>/timeSheet.xhtml</to-view-id>
-    </navigation-case>
+>>>>>>> 016d3727b148f428237629ff3b9bd1f8e5b79f9c
 </navigation-rule>
 
 

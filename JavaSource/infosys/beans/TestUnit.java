@@ -7,12 +7,16 @@ public class TestUnit {
         // TODO Auto-generated method stub
         ControllerBean cb = new ControllerBean();
         cb.setUserName("employeeJohn");
+        cb.setEmpId(12345);
         cb.setPassword("default");
-        ControllerBean cb2 = new ControllerBean();
-        cb2.setUserName("emplohhhhyeeLow");
-        cb2.setPassword("default");
+        cb.setNewPassword("123");
+        cb.setConfirmPassword("123");
         
-        System.out.println(cb.verifyLogin()); 
+        
+        System.out.println("Test for verifying users.\nExpected return 'next' :     " + cb.verifyLogin()); 
+        
+        
+        System.out.println("Test for changing password.\nExpected return 'success'  :   " + cb.changePassword());
     }
 
 }

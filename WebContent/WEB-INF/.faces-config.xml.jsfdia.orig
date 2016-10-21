@@ -17,9 +17,11 @@
    PATH="/userPanel.xhtml" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT ID="log out::#login.xhtml" NAME="output"
     PATH="/login.xhtml" TARGET="rules:#login.xhtml" TITLE="log out" model-entity="JSFProcessItemOutput"/>
+<<<<<<< HEAD
    <PROCESS-ITEM-OUTPUT ID="timeSheet::#timeSheet.xhtml" NAME="output1"
     PATH="/timeSheet.xhtml" TARGET="rules:#timeSheet.xhtml"
     TITLE="timeSheet" model-entity="JSFProcessItemOutput"/>
+=======
    <PROCESS-ITEM-OUTPUT ID="changePassword::#changePassword.xhtml"
     NAME="output1" PATH="/changePassword.xhtml"
     TARGET="rules:#changePassword.xhtml" TITLE="changePassword" model-entity="JSFProcessItemOutput"/>
@@ -39,6 +41,7 @@
    PATH="/changePassword.xhtml" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT ID="success::#login.xhtml" NAME="output"
     PATH="/login.xhtml" TARGET="rules:#login.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+>>>>>>> 016d3727b148f428237629ff3b9bd1f8e5b79f9c
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#timeSheet.xhtml" PATH="/timeSheet.xhtml"

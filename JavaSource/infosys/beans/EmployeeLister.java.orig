@@ -18,6 +18,7 @@ public class EmployeeLister implements EmployeeList {
     Map<String, String> logInfo = new HashMap<String, String>();
     Employee currentEmployee;
     
+    
     public EmployeeLister() {
         Employee admin = new Employee("Admin", 0000, "Admin"); 
         addEmployee(admin);
@@ -84,11 +85,14 @@ public class EmployeeLister implements EmployeeList {
     }
 
     public Employee getAdministrator() {
+<<<<<<< HEAD
+=======
         for(Employee e: employees) {
             if(e.getEmpNumber() == 0000) {
                 return e;
             }
         }
+>>>>>>> 016d3727b148f428237629ff3b9bd1f8e5b79f9c
         return null;
     }
 
@@ -119,5 +123,7 @@ public class EmployeeLister implements EmployeeList {
     public Employee getCurrentEmployee(ArrayList<Employee> e, int i) {
         return e.get(i);
     }
+    
+    
 
 }

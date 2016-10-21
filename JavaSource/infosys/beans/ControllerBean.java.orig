@@ -33,6 +33,18 @@ public class ControllerBean implements Serializable{
         list = new EmployeeLister();
     }
     
+<<<<<<< HEAD
+    public String verifyLogin() {
+        String verified = "";
+        try {
+            if(list.getLogInfo().get(getUserName()).equals(getPassword())) {
+                verified = "next";
+            }
+        } catch(NullPointerException n) {
+            return "stay";
+        }
+        return verified;
+=======
     
     public String verifyLogin() {
         
@@ -50,6 +62,7 @@ public class ControllerBean implements Serializable{
         }
         
         return "stay";
+>>>>>>> 016d3727b148f428237629ff3b9bd1f8e5b79f9c
     }
     
     public String logOut() {
@@ -60,12 +73,29 @@ public class ControllerBean implements Serializable{
     public String getUserName() {
         return userName;
     }
+    
     public void setUserName(String userName) {
         this.userName = userName;
     }
+    
     public String getPassword() {
         return password;
     }
+<<<<<<< HEAD
+    
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    public String timeSheet() {
+    	return "timeSheet";
+    }
+    
+    public TimeSheetCollector getTimesheetCollection() {
+		return timesheetCollection;
+	}
+    
+=======
     public Integer getEmpId() {
         return empId;
     }
@@ -105,15 +135,6 @@ public class ControllerBean implements Serializable{
     public String goToPassword() {
         return "changePassword";
     }
-    
-    public String timeSheet() {
-    	return "timeSheet";
-    }
-    
-    public TimeSheetCollector getTimesheetCollection() {
-		return timesheetCollection;
-	}
-    
     public String changePassword() {
         String result = "";
         for(Employee e: list.getEmployees()) {
@@ -134,5 +155,6 @@ public class ControllerBean implements Serializable{
         }
         return result;
     }
+>>>>>>> 016d3727b148f428237629ff3b9bd1f8e5b79f9c
     
 }
