@@ -170,9 +170,6 @@
 	      	<h:commandButton value="Edit" action="#{controller.timesheetCollection.currentTimesheet.editPage}"/>
 	      	<h:commandButton value="Add" action="#{controller.timesheetCollection.currentTimesheet.addRow()}"/>
 	      	<h:button value="Go back" outcome="#{controller.goBack()}" />
-	      	<h:selectOneMenu value="#{controller.timesheetCollection.currentTimesheet}">
-				<f:selectItems value="#{controller.timesheetCollection.getTimesheets()}"></f:selectItems>
-	  	  	</h:selectOneMenu>
 	     </h:form>
       
       </h:body>
