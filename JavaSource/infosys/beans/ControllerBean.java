@@ -25,18 +25,6 @@ public class ControllerBean implements Serializable{
         list = new EmployeeLister();
     }
     
-    /*
-    public String verifyLogin() {
-        for(Employee e: list.getEmployees()) {
-            if((getUserName().equals(e.getUserName())) &&
-                    (getPassword().equals(list.getLoginCombos().get(e.getUserName())))) {
-                return "next";
-            }
-        }
-        return "stay";
-    }
-    */
-    
     public String verifyLogin() {
         String verified = "";
         try {

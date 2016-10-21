@@ -16,6 +16,7 @@ public class EmployeeLister implements EmployeeList {
 
     ArrayList<Employee> employees = new ArrayList<Employee>();
     Map<String, String> logInfo = new HashMap<String, String>();
+    Employee currentEmployee;
     
     public EmployeeLister() {
         Employee e1 = new Employee("John", 12345, "employeeJohn"); 
@@ -59,9 +60,7 @@ public class EmployeeLister implements EmployeeList {
         return logInfo;
     }
 
-    @Override
     public Employee getAdministrator() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -71,29 +70,21 @@ public class EmployeeLister implements EmployeeList {
         return false;
     }
 
-    @Override
     public String logout(Employee employee) {
-        // TODO Auto-generated method stub
         return "log out";
     }
 
-    @Override
     public void deleteEmpoyee(Employee userToDelete) {
-        // TODO Auto-generated method stub
         employees.remove(userToDelete);
         
     }
 
-    @Override
     public void addEmployee(Employee newEmployee) {
-        // TODO Auto-generated method stub
         employees.add(newEmployee);
     }
 
-    @Override
     public Employee getCurrentEmployee() {
-        // TODO Auto-generated method stub
-        return null;
+        return currentEmployee;
     }
     
     @Override
