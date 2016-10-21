@@ -2,25 +2,19 @@ package infosys.beans;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named("controller")
-@ConversationScoped
+@ApplicationScoped
 public class ControllerBean implements Serializable{
     @Inject Conversation conversation;
     @Inject EmployeeLister list;
     @Inject TimeSheetCollector timesheetCollection;
 	String userName;
     String password;
-
-    @PostConstruct
-    public void init() {
-        conversation.begin();
-    }
     
     public ControllerBean() {
         list = new EmployeeLister();
@@ -39,7 +33,7 @@ public class ControllerBean implements Serializable{
     }
     
     public String logOut() {
-        conversation.end();
+        //conversation.end();
         return "log out";
     }
     
