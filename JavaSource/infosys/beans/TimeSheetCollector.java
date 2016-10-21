@@ -11,13 +11,12 @@ import ca.bcit.infosys.timesheet.TimesheetCollection;
 
 public class TimeSheetCollector implements TimesheetCollection{
     
-    @Inject Timesheet timesheet;
+    @Inject EditableTimesheet currentTimesheet;
     List<Timesheet> timesheets = new ArrayList<Timesheet>();
     
 
     public TimeSheetCollector () {
-        addTimesheet();
-        
+        addTimesheet();        
     }
     
     public List<Timesheet> getTimesheets() {
@@ -42,9 +41,15 @@ public class TimeSheetCollector implements TimesheetCollection{
         }
         return null;
     }
+    
+    public Timesheet getCurrentTimesheet() {
+    	return currentTimesheet;
+    }
 
     public String addTimesheet() {
-        timesheets.add(new Timesheet());
+    	EditableTimesheet temp = new EditableTimesheet();
+        timesheets.add(temp);
+        currentTimesheet = temp;
         return null;
     }
     

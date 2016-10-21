@@ -12,8 +12,9 @@ import javax.inject.Named;
 @ConversationScoped
 public class ControllerBean implements Serializable{
     @Inject Conversation conversation;
-    EmployeeLister list;
-    String userName;
+    @Inject EmployeeLister list;
+    @Inject TimeSheetCollector timesheetCollection;
+	String userName;
     String password;
 
     @PostConstruct
@@ -45,16 +46,26 @@ public class ControllerBean implements Serializable{
     public String getUserName() {
         return userName;
     }
+    
     public void setUserName(String userName) {
         this.userName = userName;
     }
+    
     public String getPassword() {
         return password;
     }
+    
     public void setPassword(String password) {
         this.password = password;
     }
-       
+    
+    public String timeSheet() {
+    	return "timeSheet";
+    }
+    
+    public TimeSheetCollector getTimesheetCollection() {
+		return timesheetCollection;
+	}
     
     
 }

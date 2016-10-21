@@ -9,13 +9,31 @@
       
       <h:body>
 	      <h:form>
-	      	<h:dataTable value="#{TimeSheetCollector.timesheets}" var="row">
+	      	<h:dataTable value="#{controller.timesheetCollection.currentTimesheet.details}" var="row">
 	      		<h:column>
-	      		</h:column>
-	      		<h:column>
+	      			<f:facet name="header">
+                  		<h:outputText value="ProjectID" styleClass="names" 
+                      headerClass="namesHeader" columnClasses="last,first"/>
+               		</f:facet>
+               		<h:inputText value		="#{row.projectID}" 
+               					 rendered	="#{controller.timesheetCollection.currentTimesheet.editing}" 
+               					 size		="10"/>
+               		<h:outputText value		="#{row.projectID}" 
+               					  rendered	="#{not controller.timesheetCollection.currentTimesheet.editing}"/>
+	      		</h:column>	      		
+	            <h:column>
+	               <f:facet name="header">
+	                  <h:outputText value="workpackage" styleClass="names" 
+                      headerClass="namesHeader" columnClasses="last,first"/>
+	               </f:facet>
+               		<h:inputText value		="#{row.workPackage}" 
+               					 rendered	="#{controller.timesheetCollection.currentTimesheet.editing}" 
+               					 size		="10"/>
+               		<h:outputText value		="#{row.workPackage}" 
+               					  rendered	="#{not controller.timesheetCollection.currentTimesheet.editing}"/>
 	      		</h:column>
 	      	</h:dataTable>
-	      	
+	      	<h:commandButton value="Edit" action="#{controller.timesheetCollection.currentTimesheet.editPage}"/>
 	     </h:form>
       
       </h:body>

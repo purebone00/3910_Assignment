@@ -14,6 +14,11 @@
    PATH="/userPanel.xhtml" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT ID="log out::#login.xhtml" NAME="output"
     PATH="/login.xhtml" TARGET="rules:#login.xhtml" TITLE="log out" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="timeSheet::#timeSheet.xhtml" NAME="output1"
+    PATH="/timeSheet.xhtml" TARGET="rules:#timeSheet.xhtml"
+    TITLE="timeSheet" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#timeSheet.xhtml" PATH="/timeSheet.xhtml"
+  SHAPE="464,17,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>
