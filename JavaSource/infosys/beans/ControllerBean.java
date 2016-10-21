@@ -5,18 +5,14 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import ca.bcit.infosys.employee.Employee;
-
 
 @Named("controller")
 @ConversationScoped
 public class ControllerBean implements Serializable{
     @Inject Conversation conversation;
-    EmployeeLister list = new EmployeeLister();
+    EmployeeLister list;
     String userName;
     String password;
 
@@ -25,6 +21,11 @@ public class ControllerBean implements Serializable{
         conversation.begin();
     }
     
+    public ControllerBean() {
+        list = new EmployeeLister();
+    }
+    
+    /*
     public String verifyLogin() {
         for(Employee e: list.getEmployees()) {
             if((getUserName().equals(e.getUserName())) &&
@@ -33,6 +34,24 @@ public class ControllerBean implements Serializable{
             }
         }
         return "stay";
+    }
+    */
+    
+    public String verifyLogin() {
+        String verified = "";
+        try {
+            if(list.getLogInfo().get(getUserName()).equals(getPassword())) {
+                verified = "next";
+            }
+        } catch(NullPointerException n) {
+            return "stay";
+        }
+        return verified;
+    }
+    
+    public String logOut() {
+        conversation.end();
+        return "log out";
     }
     
     public String getUserName() {

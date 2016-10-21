@@ -14,7 +14,23 @@
 	    <title>User Panel</title>
 	</h:head>
 	<h:body>
-	      <p>#{controller.userName}   #{controller.password}</p>
+		<div class="jumbotron" style="margin-top: 50px">
+  			<h1 style = "text-align:center;">Welcome, #{controller.userName}</h1>
+		</div>
+		
+		<hr></hr>
+		<div class="container" style="height:300px;">
+			<div class="col-md-4" style="text-align:center;">
+				<button type="button" class="btn btn-default btn-lg">Change Password</button>
+			</div>
+			<div class="col-md-4" style="text-align:center;">
+				<button type="button" class="btn btn-default btn-lg">View TimeSheet</button>
+			</div>
+			<div class="col-md-4" style="text-align:center;">
+				<h:button class="btn btn-default btn-lg" value="Log Out" outcome="#{controller.logOut()}"/>
+			</div>
+		</div>
+		<hr></hr>
 		
 	</h:body>
 </html>

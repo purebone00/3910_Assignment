@@ -9,10 +9,10 @@ public class TestUnit {
         cb.setUserName("employeeJohn");
         cb.setPassword("default");
         ControllerBean cb2 = new ControllerBean();
-        cb2.setUserName("employeeLow");
+        cb2.setUserName("emplohhhhyeeLow");
         cb2.setPassword("default");
         
-        System.out.println(cb2.verifyLogin()); 
+        System.out.println(cb.verifyLogin()); 
     }
 
 }

@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.inject.Inject;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 
 import ca.bcit.infosys.employee.*;
 
+@Named("el")
+@ApplicationScoped
 public class EmployeeLister implements EmployeeList {
 
 
@@ -34,7 +37,9 @@ public class EmployeeLister implements EmployeeList {
         
     }
     
-    
+    public Map<String, String> getLogInfo() {
+        return logInfo;
+    }
     
     public ArrayList<Employee> getEmployees() {
         return employees;
@@ -60,20 +65,16 @@ public class EmployeeLister implements EmployeeList {
         return null;
     }
 
+    
     @Override
     public boolean verifyUser(Credentials credential) {
-        // TODO Auto-generated method stub
-        for(Employee e: employees) {
-            return (credential.getUserName() == e.getUserName()) && 
-                    (credential.getPassword() == logInfo.get(e.getUserName()));
-        }
         return false;
     }
 
     @Override
     public String logout(Employee employee) {
         // TODO Auto-generated method stub
-        return null;
+        return "log out";
     }
 
     @Override
