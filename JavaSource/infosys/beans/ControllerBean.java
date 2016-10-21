@@ -43,6 +43,10 @@ public class ControllerBean implements Serializable{
         return "log out";
     }
     
+    public String goBack() {
+    	return "goBack";
+    }
+    
     public String getUserName() {
         return userName;
     }
