@@ -16,7 +16,7 @@ public class ControllerBean implements Serializable{
     @Inject EmployeeLister list;
     @Inject TimeSheetCollector timesheetCollection;
 	@Inject Credentials currentCredential;
-	@Inject Timesheet currentTimesheet;
+	@Inject EditableTimesheet currentTimesheet;
     
     String oldPassword;
     String newPassword;

@@ -16,21 +16,21 @@
 	      <h:form>
 	      	
 	      
-	      	Week Number:<h:outputText value	= "#{controller.timesheetCollection.currentTimesheet.getWeekNumber()}"/>
+	      	Week Number:<h:outputText value	= "#{controller.currentTimesheet.getWeekNumber()}"/>
 	      			
-	        Week Ending:<h:outputText value	= "#{controller.timesheetCollection.currentTimesheet.getWeekEnding()}"/>
+	        Week Ending:<h:outputText value	= "#{controller.currentTimesheet.getWeekEnding()}"/>
 	      		
-	      	<h:dataTable value="#{controller.timesheetCollection.currentTimesheet.details}" var="row">
+	      	<h:dataTable value="#{controller.currentTimesheet.details}" var="row">
 	      		<h:column>     			
 	      			<f:facet name="header">
                   		<h:outputText value="ProjectID" styleClass="names" 
                       headerClass="namesHeader" columnClasses="last,first"/>
                		</f:facet>
                		<h:inputText value		="#{row.projectID}" 
-               					 rendered	="#{controller.timesheetCollection.currentTimesheet.editing}" 
+               					 rendered	="#{controller.currentTimesheet.editing}" 
                					 size		="10"/>
                		<h:outputText value		="#{row.projectID}" 
-               					  rendered	="#{not controller.timesheetCollection.currentTimesheet.editing}"/>
+               					  rendered	="#{not controller.currentTimesheet.editing}"/>
                		<f:facet name="footer">
                   		<h:outputText value="Total"/>
                		</f:facet>
@@ -41,10 +41,10 @@
                       headerClass="namesHeader" columnClasses="last,first"/>
 	               </f:facet>
                		<h:inputText value		="#{row.workPackage}" 
-               					 rendered	="#{controller.timesheetCollection.currentTimesheet.editing}" 
+               					 rendered	="#{controller.currentTimesheet.editing}" 
                					 size		="10"/>
                		<h:outputText value		="#{row.workPackage}" 
-               					  rendered	="#{not controller.timesheetCollection.currentTimesheet.editing}"/>
+               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 	      		</h:column>
 	      		<h:column>
 	               <f:facet name="header">
@@ -52,9 +52,9 @@
                       headerClass="namesHeader" columnClasses="last,first"/>
 	               </f:facet>
                		<h:outputText value		="#{row.getSum()}" 
-               					  rendered	="#{not controller.timesheetCollection.currentTimesheet.editing}"/>
+               					  rendered	="#{not controller.currentTimesheet.editing}"/>
                		<f:facet name="footer">
-                  		<h:outputText value="#{controller.timesheetCollection.currentTimesheet.getTotalHours()}"/>
+                  		<h:outputText value="#{controller.currentTimesheet.getTotalHours()}"/>
                		</f:facet>
 	      		</h:column>
 	      		<h:column>
@@ -63,12 +63,12 @@
                       headerClass="namesHeader" columnClasses="last,first"/>
 	               </f:facet>
                		<h:inputText value		="#{row.hoursForWeek[0]}" 
-               					 rendered	="#{controller.timesheetCollection.currentTimesheet.editing}" 
+               					 rendered	="#{controller.currentTimesheet.editing}" 
                					 size		="10"/>
                		<h:outputText value		="#{row.hoursForWeek[0]}" 
-               					  rendered	="#{not controller.timesheetCollection.currentTimesheet.editing}"/>
+               					  rendered	="#{not controller.currentTimesheet.editing}"/>
                		<f:facet name="footer">
-                  		<h:outputText value="#{controller.timesheetCollection.currentTimesheet.getDailyHours()[0]}"/>
+                  		<h:outputText value="#{controller.currentTimesheet.getDailyHours()[0]}"/>
                		</f:facet>
 	      		</h:column>
 	      		<h:column>
@@ -77,12 +77,12 @@
                       headerClass="namesHeader" columnClasses="last,first"/>
 	               </f:facet>
                		<h:inputText value		="#{row.hoursForWeek[1]}" 
-               					 rendered	="#{controller.timesheetCollection.currentTimesheet.editing}" 
+               					 rendered	="#{controller.currentTimesheet.editing}" 
                					 size		="10"/>
                		<h:outputText value		="#{row.hoursForWeek[1]}" 
-               					  rendered	="#{not controller.timesheetCollection.currentTimesheet.editing}"/>
+               					  rendered	="#{not controller.currentTimesheet.editing}"/>
                		<f:facet name="footer">
-                  		<h:outputText value="#{controller.timesheetCollection.currentTimesheet.getDailyHours()[1]}"/>
+                  		<h:outputText value="#{controller.currentTimesheet.getDailyHours()[1]}"/>
                		</f:facet>
 	      		</h:column>
 	      		<h:column>
@@ -91,12 +91,12 @@
                       headerClass="namesHeader" columnClasses="last,first"/>
 	               </f:facet>
                		<h:inputText value		="#{row.hoursForWeek[2]}" 
-               					 rendered	="#{controller.timesheetCollection.currentTimesheet.editing}" 
+               					 rendered	="#{controller.currentTimesheet.editing}" 
                					 size		="10"/>
                		<h:outputText value		="#{row.hoursForWeek[2]}" 
-               					  rendered	="#{not controller.timesheetCollection.currentTimesheet.editing}"/>
+               					  rendered	="#{not controller.currentTimesheet.editing}"/>
                		<f:facet name="footer">
-                  		<h:outputText value="#{controller.timesheetCollection.currentTimesheet.getDailyHours()[2]}"/>
+                  		<h:outputText value="#{controller.currentTimesheet.getDailyHours()[2]}"/>
                		</f:facet>
 	      		</h:column>
 	      		<h:column>
@@ -105,12 +105,12 @@
                       headerClass="namesHeader" columnClasses="last,first"/>
 	               </f:facet>
                		<h:inputText value		="#{row.hoursForWeek[3]}" 
-               					 rendered	="#{controller.timesheetCollection.currentTimesheet.editing}" 
+               					 rendered	="#{controller.currentTimesheet.editing}" 
                					 size		="10"/>
                		<h:outputText value		="#{row.hoursForWeek[3]}" 
-               					  rendered	="#{not controller.timesheetCollection.currentTimesheet.editing}"/>
+               					  rendered	="#{not controller.currentTimesheet.editing}"/>
                		<f:facet name="footer">
-                  		<h:outputText value="#{controller.timesheetCollection.currentTimesheet.getDailyHours()[3]}"/>
+                  		<h:outputText value="#{controller.currentTimesheet.getDailyHours()[3]}"/>
                		</f:facet>
 	      		</h:column>
 	      		<h:column>
@@ -119,12 +119,12 @@
                       headerClass="namesHeader" columnClasses="last,first"/>
 	               </f:facet>
                		<h:inputText value		="#{row.hoursForWeek[4]}" 
-               					 rendered	="#{controller.timesheetCollection.currentTimesheet.editing}" 
+               					 rendered	="#{controller.currentTimesheet.editing}" 
                					 size		="10"/>
                		<h:outputText value		="#{row.hoursForWeek[4]}" 
-               					  rendered	="#{not controller.timesheetCollection.currentTimesheet.editing}"/>
+               					  rendered	="#{not controller.currentTimesheet.editing}"/>
                		<f:facet name="footer">
-                  		<h:outputText value="#{controller.timesheetCollection.currentTimesheet.getDailyHours()[4]}"/>
+                  		<h:outputText value="#{controller.currentTimesheet.getDailyHours()[4]}"/>
                		</f:facet>
 	      		</h:column>
 	      		<h:column>
@@ -133,12 +133,12 @@
                       headerClass="namesHeader" columnClasses="last,first"/>
 	               </f:facet>
                		<h:inputText value		="#{row.hoursForWeek[5]}" 
-               					 rendered	="#{controller.timesheetCollection.currentTimesheet.editing}" 
+               					 rendered	="#{controller.currentTimesheet.editing}" 
                					 size		="10"/>
                		<h:outputText value		="#{row.hoursForWeek[5]}" 
-               					  rendered	="#{not controller.timesheetCollection.currentTimesheet.editing}"/>
+               					  rendered	="#{not controller.currentTimesheet.editing}"/>
                		<f:facet name="footer">
-                  		<h:outputText value="#{controller.timesheetCollection.currentTimesheet.getDailyHours()[5]}"/>
+                  		<h:outputText value="#{controller.currentTimesheet.getDailyHours()[5]}"/>
                		</f:facet>
 	      		</h:column>
 	      		<h:column>
@@ -147,12 +147,12 @@
                       headerClass="namesHeader" columnClasses="last,first"/>
 	               </f:facet>
                		<h:inputText value		="#{row.hoursForWeek[6]}" 
-               					 rendered	="#{controller.timesheetCollection.currentTimesheet.editing}" 
+               					 rendered	="#{controller.currentTimesheet.editing}" 
                					 size		="10"/>
                		<h:outputText value		="#{row.hoursForWeek[6]}" 
-               					  rendered	="#{not controller.timesheetCollection.currentTimesheet.editing}"/>
+               					  rendered	="#{not controller.currentTimesheet.editing}"/>
                		<f:facet name="footer">
-                  		<h:outputText value="#{controller.timesheetCollection.currentTimesheet.getDailyHours()[6]}"/>
+                  		<h:outputText value="#{controller.currentTimesheet.getDailyHours()[6]}"/>
                		</f:facet>
 	      		</h:column>
 	      		<h:column>
@@ -161,14 +161,14 @@
                       headerClass="namesHeader" columnClasses="last,first"/>
 	               </f:facet>
                		<h:inputText value		="#{row.notes}" 
-               					 rendered	="#{controller.timesheetCollection.currentTimesheet.editing}" 
+               					 rendered	="#{controller.currentTimesheet.editing}" 
                					 size		="10"/>
                		<h:outputText value		="#{row.notes}" 
-               					  rendered	="#{not controller.timesheetCollection.currentTimesheet.editing}"/>
+               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 	      		</h:column>
 	      	</h:dataTable>
-	      	<h:commandButton value="Edit" action="#{controller.timesheetCollection.currentTimesheet.editPage}"/>
-	      	<h:commandButton value="Add" action="#{controller.timesheetCollection.currentTimesheet.addRow()}"/>
+	      	<h:commandButton value="Edit" action="#{controller.currentTimesheet.editPage}"/>
+	      	<h:commandButton value="Add" action="#{controller.currentTimesheet.addRow()}"/>
 	      	<h:commandButton value="Add Timesheet" action="#{controller.timesheetCollection.addTimesheet()}"/>
 	      	<h:button value="Go back" outcome="#{controller.goBack()}" />
 	     </h:form>
