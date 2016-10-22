@@ -7,12 +7,15 @@ public class TestUnit {
         // TODO Auto-generated method stub
         ControllerBean cb = new ControllerBean();
         cb.setUserName("employeeJohn");
-        cb.setEmpId(12345);
         cb.setPassword("default");
         cb.setOldPassword("default");
         cb.setNewPassword("123");
         cb.setConfirmPassword("123");
+        cb.setDeleteUser("employeeJohn");
+        cb.setDeleteUserPassword("default");
         
+        //cb.deletingUser("employeeJohn");
+        //System.out.println(cb.getPrintDeletingUser());
         
         System.out.println("Test for verifying users.\nExpected return 'next' :     " + cb.verifyLogin()); 
         

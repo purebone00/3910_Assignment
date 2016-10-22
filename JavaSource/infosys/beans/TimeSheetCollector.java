@@ -15,8 +15,6 @@ public class TimeSheetCollector implements TimesheetCollection{
     
     @Inject EditableTimesheet currentTimesheet;
     List<Timesheet> timesheets = new ArrayList<Timesheet>();
-    
-    
 
     public TimeSheetCollector () {
         addTimesheet();        

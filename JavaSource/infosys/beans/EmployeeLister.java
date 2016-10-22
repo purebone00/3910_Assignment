@@ -12,8 +12,8 @@ import ca.bcit.infosys.employee.*;
 @Named("el")
 @ApplicationScoped
 public class EmployeeLister implements EmployeeList {
-
-    ArrayList<Credentials> cred = new ArrayList<Credentials>();
+    private static int employeeNumber = 1000;
+    private static ArrayList<Credentials> cred = new ArrayList<Credentials>();
     ArrayList<Employee> employees = new ArrayList<Employee>();
     Map<String, String> logInfo = new HashMap<String, String>();
     Employee currentEmployee;
@@ -23,6 +23,7 @@ public class EmployeeLister implements EmployeeList {
 	}
 
 	public EmployeeLister() {
+	    
         Employee admin = new Employee("Admin", 0000, "Admin"); 
         addEmployee(admin);
         Credentials adminCred = new Credentials();
@@ -32,7 +33,7 @@ public class EmployeeLister implements EmployeeList {
         logInfo.put(adminCred.getUserName(), adminCred.getPassword());
         cred.add(adminCred);
                
-        Employee e1 = new Employee("John", 12345, "employeeJohn"); 
+        Employee e1 = new Employee("John", getEmployeeNumber(), "employeeJohn"); 
         addEmployee(e1);
         Credentials c = new Credentials();
         c.setUserName(e1.getUserName());
@@ -41,7 +42,7 @@ public class EmployeeLister implements EmployeeList {
         logInfo.put(c.getUserName(), c.getPassword());
         cred.add(c);
         
-        Employee e2 = new Employee("Jovina", 12346, "employeeLow"); 
+        Employee e2 = new Employee("Jovina", getEmployeeNumber(), "employeeLow"); 
         addEmployee(e2);
         Credentials c2 = new Credentials();
         c2.setUserName(e2.getUserName());
@@ -53,11 +54,16 @@ public class EmployeeLister implements EmployeeList {
         
     }
     
+	public int getEmployeeNumber() {
+	    employeeNumber++;
+	    return employeeNumber;
+	}
+	
     public void addCred(Credentials c) {
         cred.add(c);
     }
     
-    public Credentials getCred(Employee e) {
+    public Credentials getCreds(Employee e) {
         for(Credentials c: cred) {
             if(e.getUserName() == c.getUserName()) {
                 return c;
@@ -65,6 +71,10 @@ public class EmployeeLister implements EmployeeList {
         }
         return null;
     }
+    public ArrayList<Credentials> getCred() {
+        return cred;
+    }
+    
     
     public Map<String, String> getLogInfo() {
         return logInfo;

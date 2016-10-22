@@ -3,8 +3,11 @@ package infosys.beans;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 import ca.bcit.infosys.employee.Credentials;
 import ca.bcit.infosys.employee.Employee;
@@ -19,24 +22,41 @@ public class ControllerBean implements Serializable{
     String oldPassword;
     String newPassword;
     String confirmPassword;
-
+    
+    String addUser;
+    String addUserPassword;
+    String addName;
+    
+    String deleteUser;
+    String deleteUserPassword;
+    String deleteUserPasswordConfirm;
+    
+    String searchUser;
+    String searchUserMsg;
+    String searchConfirmUser;
+    
     
     public ControllerBean() {
         list = new EmployeeLister();
+        //currentCredential = new Credentials();
     }
     
-    
-    public String verifyLogin() {
-        
+    /**
+     * Verifies user logging In. Differentiates between Admin and Users.
+     * @return String for navigation. 
+     */
+    public String verifyLogin() {  
+        //Login for admin who has ID of 0000
         for(Employee e: list.getEmployees()) {
-            if(e.getEmpNumber() == 0000) 
+            if(e.getEmpNumber() == 0000) {
                 if((getUserName().equals(e.getUserName())) &&
                         (getPassword().equals(list.getLoginCombos().get(e.getUserName())))) {
                     list.setCurrentEmployee(e);
                 	return "admin";   
                 }
+            }
         }
-        
+        //Login for regular employees
         for(Employee e: list.getEmployees()) {
             if((getUserName().equals(e.getUserName())) &&
                     (getPassword().equals(list.getLoginCombos().get(e.getUserName())))) {
@@ -44,32 +64,44 @@ public class ControllerBean implements Serializable{
             	return "next"; 
             }
         }
-        
         return "stay";
     }
     
+  /**
+   * Allows Users to change password.
+   * @return String for navigation.
+   */
     public String changePassword() {
         String result = "";
-        for(Employee e: list.getEmployees()) {
-            if(e.getEmpNumber() == getEmpId()) {
-                if(list.getCred(e).getPassword().equals(getOldPassword()))
-                    if(getConfirmPassword().equals(getNewPassword())) {
-                        list.getCred(e).setPassword(getNewPassword());
-                        System.out.println(list.getCred(e).getPassword());
-                        list.getLogInfo().put(e.getUserName(), getNewPassword());
-                        System.out.println(list.getLogInfo().get(e.getUserName()));
-                        setPassword(getNewPassword());
-                        System.out.println(getPassword());
-                        result = "success";
-                        break;
-                    }
-            } else 
-                result = "fail";
+      for (Employee e: list.getEmployees()) {
+        if (e.getEmpNumber() == getEmpId()) {
+          if (list.getCreds(e).getPassword().equals(getOldPassword())) {
+            if (getConfirmPassword().equals(getNewPassword())) {
+              list.getCreds(e).setPassword(getNewPassword());
+              list.getLogInfo().put(e.getUserName(), getNewPassword());
+              setPassword(getNewPassword());
+              result = "success";
+              break;
+            }
+          }
+        } else {
+          result = "fail";
         }
-        return result;
+      }
+      return result;
     }
     
+    /**
+     * 
+     * @return
+     */
     public String logOut() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext ec = context.getExternalContext();
+ 
+        final HttpServletRequest request = (HttpServletRequest)ec.getRequest();
+         request.getSession( false ).invalidate();
+      
         return "log out";
     }
     
@@ -83,6 +115,158 @@ public class ControllerBean implements Serializable{
     
     public String goBack() {
     	return "goBack";
+    }
+    
+    public void addingUser() {
+        int employeeNumber = list.getEmployeeNumber();
+        Credentials c = new Credentials();
+        c.setUserName(getAddUser());
+        c.setPassword(getAddUserPassword());
+        Employee e = new Employee(getAddName(), employeeNumber, getAddUser());
+        list.getEmployees().add(e);
+        list.getCred().add(c);
+        list.getLogInfo().put(getAddUser(), getAddUserPassword());
+    }
+    
+    public String getAddingUser(){
+        if(("".equals(getAddUser()) || getAddUser() == null)){
+         return "";
+        }else{
+         return "User, " + getAddUser() + ", has been added into the system.";
+        }
+     }
+    
+    public String getPrintDeletingUser(String user){
+        boolean render = false;
+        for(Employee e: list.getEmployees()) {
+            if(e.getUserName().equals(getDeleteUser())) { 
+                list.getEmployees().remove(e);
+                render = true;
+            }
+        }
+        for(Credentials c: list.getCred()) {
+            if(c.getUserName() == getDeleteUser()) {
+                c = null;
+            }
+        }
+        list.getLogInfo().remove(getDeleteUser());
+        
+        if(("".equals(getDeleteUser()) || getDeleteUser() == null)){
+         return "";
+        } else{
+         return (!list.getLogInfo().containsKey(getDeleteUser())&&render)?"User, " + getDeleteUser() + ", has been deleted from the system.": "User, " + getDeleteUser() + ", does not exist in the system.";
+        }
+     }
+    
+    public String getChangingUser(){
+        for(Employee e: list.getEmployees()) {
+            if(e.getUserName().equals(getSearchUser()) && (getSearchUser().equals(getSearchConfirmUser()))) {
+                list.getLogInfo().put(getSearchUser(),"default");
+            }
+        }
+        if(("".equals(getSearchUser()) || getSearchUser() == null)){
+         return "";
+        }else{
+         return (list.getLogInfo().containsKey(getSearchUser()))?"User, " + getSearchUser() + "'s password has been reseted to 'default'.":"User does not exist.";
+        }
+     }
+    
+    public String getSearchingUser(){
+        String password = "";
+        String name = "";
+        int employeeNumber = 0;
+        
+        for(Employee e: list.getEmployees()) {
+            if(e.getUserName().equals(getSearchUser())) {
+                employeeNumber = e.getEmpNumber();
+                name = e.getName();
+                break;
+            }
+        }
+        
+        password = list.getLogInfo().get(getSearchUser());
+        
+        
+        if(("".equals(getSearchUser()) || getSearchUser() == null)){
+         return "";
+        }else{
+         return (list.getLogInfo().containsKey(getSearchUser()))?"User: " + getSearchUser() + "\n" 
+                                                                 + "Name: " + name + "\n" 
+                                                                 + "EmployeeID: " + employeeNumber + "\n"
+                                                                 + "Password: " + password: "User does not exist.";
+        }
+     }
+    
+    public String getSearchConfirmUser() {
+        return searchConfirmUser;
+    }
+
+    public void setSearchConfirmUser(String searchConfirmUser) {
+        this.searchConfirmUser = searchConfirmUser;
+    }
+
+    public String getSearchUser() {
+        return searchUser;
+    }
+
+    public void setSearchUser(String searchUser) {
+        this.searchUser = searchUser;
+    }
+    
+    public String deletedUserMsg() {
+        return "You have deleted user, " + getDeleteUser() + ".";
+    }
+    public String addedUserMsg() {
+        return "You have added user, " + getAddUser() + ".";
+    }
+    
+    public String getDeleteUser() {
+        return deleteUser;
+    }
+
+    public void setDeleteUser(String deleteUser) {
+        this.deleteUser = deleteUser;
+    }
+
+    public String getDeleteUserPassword() {
+        return deleteUserPassword;
+    }
+
+    public void setDeleteUserPassword(String deleteUserPassword) {
+        this.deleteUserPassword = deleteUserPassword;
+    }
+
+    public String getDeleteUserPasswordConfirm() {
+        return deleteUserPasswordConfirm;
+    }
+
+    public void setDeleteUserPasswordConfirm(String deleteUserPasswordConfirm) {
+        this.deleteUserPasswordConfirm = deleteUserPasswordConfirm;
+    }
+    
+    
+    public String getAddName() {
+        return addName;
+    }
+
+    public void setAddName(String addName) {
+        this.addName = addName;
+    }
+    
+    public String getAddUser() {
+        return addUser;
+    }
+
+    public void setAddUser(String addUser) {
+        this.addUser = addUser;
+    }
+
+    public String getAddUserPassword() {
+        return addUserPassword;
+    }
+
+    public void setAddUserPassword(String addUserPassword) {
+        this.addUserPassword = addUserPassword;
     }
     
     public String getUserName() {

@@ -27,7 +27,9 @@
 				<h:button class="btn btn-default btn-lg" value="View TimeSheet" outcome="#{controller.goToTimeSheet()}"/>
 			</div>
 			<div class="col-md-4" style="text-align:center;">
-				<h:button class="btn btn-default btn-lg" value="Log Out" outcome="#{controller.logOut()}"/>
+				<h:form>
+					<h:commandButton class="btn btn-default btn-lg" value="Log Out" action="#{controller.logOut}"/>
+				</h:form>
 			</div>
 		</div>
 		<hr></hr>
