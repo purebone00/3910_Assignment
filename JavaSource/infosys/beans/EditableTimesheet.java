@@ -59,5 +59,11 @@ public class EditableTimesheet extends Timesheet {
 		}
 	}
 	
+	public String amIEditing() {
+		if (editing) {
+			return "Save";
+		}
+		return "Edit";
+	}
 	
 }

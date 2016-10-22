@@ -4,11 +4,8 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import javax.enterprise.context.ApplicationScoped;
-
 import ca.bcit.infosys.employee.Employee;
-import ca.bcit.infosys.timesheet.Timesheet;
 import ca.bcit.infosys.timesheet.TimesheetRow;
 
 @ApplicationScoped
