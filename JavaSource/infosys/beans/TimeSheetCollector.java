@@ -28,11 +28,20 @@ public class TimeSheetCollector {
     }
 
     public String addTimesheet(Employee e) {
-    	List<TimesheetRow> newRows = new ArrayList<TimesheetRow>(5);
-    	EditableTimesheet temp = new EditableTimesheet(e, getNextFriday(), newRows);    	
+    	EditableTimesheet temp = new EditableTimesheet(e, getNextFriday(), createNewRows());    	
         timesheets.add(temp);
         setCurrentTimesheet(temp);
         return null;
+    }
+    
+    public List<TimesheetRow> createNewRows() {
+    	List<TimesheetRow> newRows = new ArrayList<TimesheetRow>();
+    	newRows.add(new TimesheetRow());
+    	newRows.add(new TimesheetRow());
+    	newRows.add(new TimesheetRow());
+    	newRows.add(new TimesheetRow());
+    	newRows.add(new TimesheetRow());
+    	return newRows;
     }
     
     public String addTimesheet() {
@@ -41,6 +50,7 @@ public class TimeSheetCollector {
         setCurrentTimesheet(temp);
 		return null;
 	}
+    
 	
 	public EditableTimesheet getCurrentTimesheet() {
 		if (currentTimesheet == null) {

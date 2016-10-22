@@ -169,7 +169,7 @@
 	      	</h:dataTable>
 	      	<h:commandButton value="Edit" action="#{controller.currentTimesheet.editPage}"/>
 	      	<h:commandButton value="Add" action="#{controller.currentTimesheet.addRow()}"/>
-	      	<h:commandButton value="Add Timesheet" action="#{controller.timesheetCollection.addTimesheet()}"/>
+	      	<h:commandButton value="Add Timesheet" action="#{controller.timesheetCollection.addTimesheet(controller.currentTimesheet.employee)}"/>
 	      	<h:button value="Go back" outcome="#{controller.goBack()}" />
 	     </h:form>
       </h:body>
