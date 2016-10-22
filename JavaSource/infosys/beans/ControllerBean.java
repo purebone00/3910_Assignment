@@ -8,6 +8,7 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import ca.bcit.infosys.employee.Credentials;
 import ca.bcit.infosys.employee.Employee;
 
 @Named("controller")
@@ -16,10 +17,8 @@ public class ControllerBean implements Serializable{
     @Inject Conversation conversation;
     @Inject EmployeeLister list;
     @Inject TimeSheetCollector timesheetCollection;
-	String userName;
-    String password;
+    @Inject Credentials currentCredential;
     
-    Integer empId;
     String oldPassword;
     String newPassword;
     String confirmPassword;
@@ -38,14 +37,18 @@ public class ControllerBean implements Serializable{
         for(Employee e: list.getEmployees()) {
             if(e.getEmpNumber() == 0000) 
                 if((getUserName().equals(e.getUserName())) &&
-                        (getPassword().equals(list.getLoginCombos().get(e.getUserName())))) 
-                    return "admin";   
+                        (getPassword().equals(list.getLoginCombos().get(e.getUserName())))) {
+                    list.setCurrentEmployee(e);
+                	return "admin";   
+                }
         }
         
         for(Employee e: list.getEmployees()) {
             if((getUserName().equals(e.getUserName())) &&
-                    (getPassword().equals(list.getLoginCombos().get(e.getUserName())))) 
-                return "next"; 
+                    (getPassword().equals(list.getLoginCombos().get(e.getUserName())))) {
+                list.setCurrentEmployee(e);
+            	return "next"; 
+            }
         }
         
         return "stay";
@@ -61,22 +64,22 @@ public class ControllerBean implements Serializable{
     }
     
     public String getUserName() {
-        return userName;
+        return currentCredential.getUserName();
     }
     
     public void setUserName(String userName) {
-        this.userName = userName;
+        currentCredential.setUserName(userName);;
     }
     
     public String getPassword() {
-        return password;
+        return currentCredential.getPassword();
     }
     public Integer getEmpId() {
-        return empId;
+        return list.getCurrentEmployee().getEmpNumber();
     }
 
     public void setEmpId(Integer empId) {
-        this.empId = empId;
+        list.getCurrentEmployee().setEmpNumber(empId);
     }
 
     public String getOldPassword() {
@@ -104,7 +107,7 @@ public class ControllerBean implements Serializable{
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        currentCredential.setPassword(password);
     }
        
     public String goToPassword() {

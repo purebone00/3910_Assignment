@@ -18,7 +18,11 @@ public class EmployeeLister implements EmployeeList {
     Map<String, String> logInfo = new HashMap<String, String>();
     Employee currentEmployee;
     
-    public EmployeeLister() {
+    public void setCurrentEmployee(Employee currentEmployee) {
+		this.currentEmployee = currentEmployee;
+	}
+
+	public EmployeeLister() {
         Employee admin = new Employee("Admin", 0000, "Admin"); 
         addEmployee(admin);
         Credentials adminCred = new Credentials();
@@ -42,9 +46,10 @@ public class EmployeeLister implements EmployeeList {
         Credentials c2 = new Credentials();
         c2.setUserName(e2.getUserName());
         c2.setPassword("default");
-        cred.add(c2);
+        
         
         logInfo.put(c2.getUserName(), c2.getPassword());
+        cred.add(c2);
         
     }
     
