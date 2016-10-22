@@ -2,8 +2,12 @@ package infosys.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
+import ca.bcit.infosys.employee.Employee;
 import ca.bcit.infosys.timesheet.Timesheet;
+import ca.bcit.infosys.timesheet.TimesheetRow;
 
 public class EditableTimesheet extends Timesheet {
 	
@@ -20,6 +24,15 @@ public class EditableTimesheet extends Timesheet {
 		this.addRow();
 		this.addRow();
 		this.addRow();
+	}
+	
+	public EditableTimesheet(final Employee user, final Date end,
+            final List<TimesheetRow> list) {
+		
+		super(user, end, list);
+
+		isEditable = true;
+		editing = false;
 	}
 	
 		
@@ -44,6 +57,13 @@ public class EditableTimesheet extends Timesheet {
 		if (isEditable()) {
 			setEditing(!isEditing());
 		}
+	}
+	
+	public String amIEditing() {
+		if (editing) {
+			return "Save";
+		}
+		return "Edit";
 	}
 	
 	

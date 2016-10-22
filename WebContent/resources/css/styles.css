@@ -1,18 +1,35 @@
 .names {
-   border: thin solid black;
+   border: thin solid black!important;
 }
 .namesHeader {
-   text-align: center;
-   font-style: italic;
-   color: Snow;
-   background: Teal;
+   text-align: center!important;
+   font-style: italic!important;
+   color: Snow!important;
+   background: Teal!important;
 }
-.last {
-   height: 25px;
-   text-align: center;
-   background: MediumTurquoise;
+
+.header {
+	width: 50px;
 }
-.first {
-   text-align: left;
-   background: PowderBlue;
+
+
+td {
+	padding: 1px;
+    text-align: left;
+    font-family: Arial, Verdana, sans-serif;
+    border: 1px solid #000; 
+    width: 88px;
+    hight: 19px;
+}
+
+td:nth-child(n+3):nth-last-child(n+2){
+	text-align: center!important;
+}
+
+.odd {
+	background: PowderBlue!important;
+}
+
+.even {
+	background: MediumTurquoise!important;
 }

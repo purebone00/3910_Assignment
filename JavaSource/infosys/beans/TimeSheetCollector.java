@@ -1,64 +1,88 @@
 package infosys.beans;
 
+import java.util.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
-
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-
 import ca.bcit.infosys.employee.Employee;
-import ca.bcit.infosys.timesheet.Timesheet;
-import ca.bcit.infosys.timesheet.TimesheetCollection;
+import ca.bcit.infosys.timesheet.TimesheetRow;
 
 @ApplicationScoped
-public class TimeSheetCollector implements TimesheetCollection{
+public class TimeSheetCollector {
     
-    @Inject EditableTimesheet currentTimesheet;
-    List<Timesheet> timesheets = new ArrayList<Timesheet>();
+    List<EditableTimesheet> timesheets = new ArrayList<EditableTimesheet>();
+    EditableTimesheet currentTimesheet;
     
     
 
-    public TimeSheetCollector () {
-        addTimesheet();        
+	TimeSheetCollector() {
+    	
     }
-    
-    public List<Timesheet> getTimesheets() {
+        
+    public List<EditableTimesheet> getTimesheets() {
         return timesheets;
     }
 
-    public List<Timesheet> getTimesheets(Employee e) {
-      List<Timesheet> temp = new ArrayList<Timesheet>();
-      for (Timesheet x : timesheets) {
-          if (x.getEmployee().equals(e)) {
-              temp.add(x);
-          }
-      }
-      return temp;
-    }
-
-    public Timesheet getCurrentTimesheet(Employee e) {
-        for (Timesheet x : timesheets) {
-            if (x.getEmployee().equals(e)) {
-                return x;
-            }
-        }
-        return null;
-    }
-    
-    public Timesheet getCurrentTimesheet() {
-    	return currentTimesheet;
-    }
-    
-    public void setCurrentTimesheet(EditableTimesheet currentTimesheet) {
-    	this.currentTimesheet = currentTimesheet;
-    }
-
-    public String addTimesheet() {
-    	EditableTimesheet temp = new EditableTimesheet();
+    public String addTimesheet(Employee e) {
+    	EditableTimesheet temp = new EditableTimesheet(e, getNextFriday(), createNewRows());    	
         timesheets.add(temp);
         setCurrentTimesheet(temp);
         return null;
     }
+    
+    public List<TimesheetRow> createNewRows() {
+    	List<TimesheetRow> newRows = new ArrayList<TimesheetRow>();
+    	newRows.add(new EditableRow());
+    	newRows.add(new EditableRow());
+    	newRows.add(new EditableRow());
+    	newRows.add(new EditableRow());
+    	newRows.add(new EditableRow());
+    	return newRows;
+    }
+    
+    public String addTimesheet() {
+    	EditableTimesheet temp = new EditableTimesheet();    
+		timesheets.add(temp);
+        setCurrentTimesheet(temp);
+		return null;
+	}
+    
+	
+	public EditableTimesheet getCurrentTimesheet() {
+		if (currentTimesheet == null) {
+			addTimesheet();
+		}
+		return currentTimesheet;
+	}
+	
+	public EditableTimesheet getCurrentTimesheet(Employee employee) {
+		boolean hasTimesheet = false;
+		for (EditableTimesheet x : timesheets) {
+			if (x.getEmployee().getEmpNumber() == employee.getEmpNumber()) {
+				currentTimesheet = x;
+				hasTimesheet = true;
+			}
+		}
+		if (currentTimesheet == null || !hasTimesheet) {
+			addTimesheet(employee);
+		}
+		return currentTimesheet;
+	}
+
+	public void setCurrentTimesheet(EditableTimesheet currentTimesheet) {
+		this.currentTimesheet = currentTimesheet;
+	}	
+	
+	public static Date getNextFriday() {
+    	Calendar cal = Calendar.getInstance();
+    	cal.set(Calendar.DAY_OF_WEEK, cal.getActualMinimum(Calendar.DAY_OF_WEEK));
+    	Date now = new Date();
+    	cal.setTime(now);
+    	int week = cal.get(Calendar.DAY_OF_WEEK);
+    	return new Date(now.getTime() - 24 * 60 * 60 * 1000 * (week - 6));
+    }
+
     
 
 }

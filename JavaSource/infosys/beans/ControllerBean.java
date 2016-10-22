@@ -8,6 +8,7 @@ import javax.inject.Named;
 
 import ca.bcit.infosys.employee.Credentials;
 import ca.bcit.infosys.employee.Employee;
+import ca.bcit.infosys.timesheet.Timesheet;
 
 @Named("controller")
 @SessionScoped
@@ -15,15 +16,12 @@ public class ControllerBean implements Serializable{
     @Inject EmployeeLister list;
     @Inject TimeSheetCollector timesheetCollection;
 	@Inject Credentials currentCredential;
+	@Inject EditableTimesheet currentTimesheet;
     
     String oldPassword;
     String newPassword;
     String confirmPassword;
 
-    
-    public ControllerBean() {
-        list = new EmployeeLister();
-    }
     
     
     public String verifyLogin() {
@@ -137,6 +135,11 @@ public class ControllerBean implements Serializable{
     public TimeSheetCollector getTimesheetCollection() {
 		return timesheetCollection;
 	}
+    
+    public Timesheet getCurrentTimesheet() {
+    	currentTimesheet = timesheetCollection.getCurrentTimesheet(list.getCurrentEmployee());
+    	return currentTimesheet;
+    }
 
 
 }
