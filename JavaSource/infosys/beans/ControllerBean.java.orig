@@ -3,7 +3,6 @@ package infosys.beans;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import ca.bcit.infosys.employee.Credentials;
@@ -12,9 +11,16 @@ import ca.bcit.infosys.employee.Employee;
 @Named("controller")
 @SessionScoped
 public class ControllerBean implements Serializable{
+<<<<<<< HEAD
+    EmployeeLister list;
+    String userName;
+    String password;
+=======
+    @Inject Conversation conversation;
     @Inject EmployeeLister list;
     @Inject TimeSheetCollector timesheetCollection;
-	@Inject Credentials currentCredential;
+    @Inject Credentials currentCredential;
+>>>>>>> login
     
     String oldPassword;
     String newPassword;
@@ -24,7 +30,6 @@ public class ControllerBean implements Serializable{
     public ControllerBean() {
         list = new EmployeeLister();
     }
-    
     
     public String verifyLogin() {
         
@@ -73,6 +78,7 @@ public class ControllerBean implements Serializable{
         return "log out";
     }
     
+<<<<<<< HEAD
     public String goToPassword() {
         return "changePassword";
     }
@@ -82,15 +88,21 @@ public class ControllerBean implements Serializable{
     }
     
     public String goBack() {
+        return "goBack";
+=======
+    public String goBack() {
     	return "goBack";
+>>>>>>> login
     }
     
     public String getUserName() {
         return currentCredential.getUserName();
     }
+    
     public void setUserName(String userName) {
         currentCredential.setUserName(userName);;
     }
+    
     public String getPassword() {
         return currentCredential.getPassword();
     }
@@ -129,14 +141,41 @@ public class ControllerBean implements Serializable{
     public void setPassword(String password) {
         currentCredential.setPassword(password);
     }
-
+       
+<<<<<<< HEAD
+=======
+    public String goToPassword() {
+        return "changePassword";
+    }
+    
     public String timeSheet() {
     	return "timeSheet";
-    }   
-
+    }
+    
     public TimeSheetCollector getTimesheetCollection() {
 		return timesheetCollection;
 	}
-
-
+    
+    public String changePassword() {
+        String result = "";
+        for(Employee e: list.getEmployees()) {
+            if(e.getEmpNumber() == getEmpId()) {
+                if(list.getCred(e).getPassword().equals(getPassword()))
+                    if(getConfirmPassword().equals(getNewPassword())) {
+                        list.getCred(e).setPassword(getNewPassword());
+                        System.out.println(list.getCred(e).getPassword());
+                        list.getLogInfo().put(e.getUserName(), getNewPassword());
+                        System.out.println(list.getLogInfo().get(e.getUserName()));
+                        setPassword(getNewPassword());
+                        System.out.println(getPassword());
+                        result = "success";
+                        break;
+                    }
+            } else 
+                result = "fail";
+        }
+        return result;
+    }
+>>>>>>> login
+    
 }

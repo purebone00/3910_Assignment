@@ -48,7 +48,11 @@
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#timeSheet.xhtml" PATH="/timeSheet.xhtml"
+<<<<<<< HEAD
   SHAPE="528,193,0,0" model-entity="JSFProcessGroup">
+=======
+  SHAPE="464,17,0,0" model-entity="JSFProcessGroup">
+>>>>>>> login
   <PROCESS-ITEM ID="rules:#timeSheet.xhtml:0" NAME="item"
    PATH="/timeSheet.xhtml" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT ID="goBack::#userPanel.xhtml" NAME="output"
