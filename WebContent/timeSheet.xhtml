@@ -8,16 +8,8 @@
       </h:head>
       
       <h:body>
-	      <h:form>
-	      	<h:dataTable value="#{TimeSheetCollector.timesheets}" var="row">
-	      		<h:column>
-	      		</h:column>
-	      		<h:column>
-	      		</h:column>
-	      	</h:dataTable>
-	      	
-	     </h:form>
-      
+	  	<p>Welcome, #{controller.userName}</p>
+	  	<h:button value="Go back" outcome="#{controller.goBack()}"></h:button>
       </h:body>
       
 </html>

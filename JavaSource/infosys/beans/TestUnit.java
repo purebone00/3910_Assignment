@@ -9,6 +9,7 @@ public class TestUnit {
         cb.setUserName("employeeJohn");
         cb.setEmpId(12345);
         cb.setPassword("default");
+        cb.setOldPassword("default");
         cb.setNewPassword("123");
         cb.setConfirmPassword("123");
         

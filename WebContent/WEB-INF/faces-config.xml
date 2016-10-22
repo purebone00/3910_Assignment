@@ -8,13 +8,11 @@
 	<navigation-case>
 		<from-outcome>next</from-outcome>
 		<to-view-id>/userPanel.xhtml</to-view-id>
-		<redirect/>
 	</navigation-case>
 	
 	<navigation-case>
 		<from-outcome>admin</from-outcome>
 		<to-view-id>/adminPanel.xhtml</to-view-id>
-		<redirect/>
 	</navigation-case>
 </navigation-rule>
 
@@ -30,6 +28,18 @@
 		<to-view-id>/changePassword.xhtml</to-view-id>
 		<redirect/>
 	</navigation-case>
+	<navigation-case>
+		<from-outcome>toTimeSheet</from-outcome>
+		<to-view-id>/timeSheet.xhtml</to-view-id>
+	</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+	<from-view-id>/timeSheet.xhtml</from-view-id>
+	<navigation-case>
+		<from-outcome>goBack</from-outcome>
+		<to-view-id>/userPanel.xhtml</to-view-id>
+	</navigation-case>
 </navigation-rule>
 
 <navigation-rule>
@@ -37,6 +47,11 @@
 	<navigation-case>
 		<from-outcome>log out</from-outcome>
 		<to-view-id>/login.xhtml</to-view-id>
+		<redirect/>
+	</navigation-case>
+		<navigation-case>
+		<from-outcome>toTimeSheet</from-outcome>
+		<to-view-id>/timeSheet.xhtml</to-view-id>
 		<redirect/>
 	</navigation-case>
 </navigation-rule>

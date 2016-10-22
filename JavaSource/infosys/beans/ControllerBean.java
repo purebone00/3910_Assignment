@@ -2,18 +2,14 @@ package infosys.beans;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
-import javax.inject.Inject;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import ca.bcit.infosys.employee.Employee;
 
 @Named("controller")
-@ConversationScoped
+@SessionScoped
 public class ControllerBean implements Serializable{
-    @Inject Conversation conversation;
     EmployeeLister list;
     String userName;
     String password;
@@ -23,10 +19,6 @@ public class ControllerBean implements Serializable{
     String newPassword;
     String confirmPassword;
 
-    @PostConstruct
-    public void init() {
-        conversation.begin();
-    }
     
     public ControllerBean() {
         list = new EmployeeLister();
@@ -51,9 +43,41 @@ public class ControllerBean implements Serializable{
         return "stay";
     }
     
+    public String changePassword() {
+        String result = "";
+        for(Employee e: list.getEmployees()) {
+            if(e.getEmpNumber() == getEmpId()) {
+                if(list.getCred(e).getPassword().equals(getOldPassword()))
+                    if(getConfirmPassword().equals(getNewPassword())) {
+                        list.getCred(e).setPassword(getNewPassword());
+                        System.out.println(list.getCred(e).getPassword());
+                        list.getLogInfo().put(e.getUserName(), getNewPassword());
+                        System.out.println(list.getLogInfo().get(e.getUserName()));
+                        setPassword(getNewPassword());
+                        System.out.println(getPassword());
+                        result = "success";
+                        break;
+                    }
+            } else 
+                result = "fail";
+        }
+        return result;
+    }
+    
     public String logOut() {
-        conversation.end();
         return "log out";
+    }
+    
+    public String goToPassword() {
+        return "changePassword";
+    }
+    
+    public String goToTimeSheet() {
+        return "toTimeSheet";
+    }
+    
+    public String goBack() {
+        return "goBack";
     }
     
     public String getUserName() {
@@ -101,28 +125,5 @@ public class ControllerBean implements Serializable{
         this.password = password;
     }
        
-    public String goToPassword() {
-        return "changePassword";
-    }
-    public String changePassword() {
-        String result = "";
-        for(Employee e: list.getEmployees()) {
-            if(e.getEmpNumber() == getEmpId()) {
-                if(list.getCred(e).getPassword().equals(getPassword()))
-                    if(getConfirmPassword().equals(getNewPassword())) {
-                        list.getCred(e).setPassword(getNewPassword());
-                        System.out.println(list.getCred(e).getPassword());
-                        list.getLogInfo().put(e.getUserName(), getNewPassword());
-                        System.out.println(list.getLogInfo().get(e.getUserName()));
-                        setPassword(getNewPassword());
-                        System.out.println(getPassword());
-                        result = "success";
-                        break;
-                    }
-            } else 
-                result = "fail";
-        }
-        return result;
-    }
     
 }
