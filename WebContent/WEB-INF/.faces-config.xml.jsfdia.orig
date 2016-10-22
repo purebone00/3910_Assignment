@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#login.xhtml" PATH="/login.xhtml"
+  SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#login.xhtml:0" NAME="item"
+   PATH="/login.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="next::#userPanel.xhtml" NAME="output"
+    PATH="/userPanel.xhtml" TARGET="rules:#userPanel.xhtml" TITLE="next" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="admin::#adminPanel.xhtml" NAME="output1"
+    PATH="/adminPanel.xhtml" TARGET="rules:#adminPanel.xhtml"
+    TITLE="admin" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#userPanel.xhtml" PATH="/userPanel.xhtml"
+  SHAPE="240,33,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#userPanel.xhtml:0" NAME="item"
+   PATH="/userPanel.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="log out::#login.xhtml" NAME="output"
+    PATH="/login.xhtml" TARGET="rules:#login.xhtml" TITLE="log out" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="timeSheet::#timeSheet.xhtml" NAME="output1"
+    PATH="/timeSheet.xhtml" TARGET="rules:#timeSheet.xhtml"
+    TITLE="timeSheet" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="changePassword::#changePassword.xhtml"
+    NAME="output1" PATH="/changePassword.xhtml"
+    TARGET="rules:#changePassword.xhtml" TITLE="changePassword" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="toTimeSheet::#timeSheet.xhtml"
+    NAME="output2" PATH="/timeSheet.xhtml"
+    TARGET="rules:#timeSheet.xhtml" TITLE="toTimeSheet" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#adminPanel.xhtml" PATH="/adminPanel.xhtml"
+  SHAPE="256,177,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#adminPanel.xhtml:0" NAME="item"
+   PATH="/adminPanel.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="log out::#login.xhtml" NAME="output"
+    PATH="/login.xhtml" TARGET="rules:#login.xhtml" TITLE="log out" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="toTimeSheet::#timeSheet.xhtml"
+    NAME="output1" PATH="/timeSheet.xhtml"
+    TARGET="rules:#timeSheet.xhtml" TITLE="toTimeSheet" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#changePassword.xhtml"
+  PATH="/changePassword.xhtml" SHAPE="496,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#changePassword.xhtml:0" NAME="item"
+   PATH="/changePassword.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="success::#login.xhtml" NAME="output"
+    PATH="/login.xhtml" TARGET="rules:#login.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#timeSheet.xhtml" PATH="/timeSheet.xhtml"
+<<<<<<< HEAD
+  SHAPE="528,193,0,0" model-entity="JSFProcessGroup">
+=======
+  SHAPE="464,17,0,0" model-entity="JSFProcessGroup">
+>>>>>>> login
+  <PROCESS-ITEM ID="rules:#timeSheet.xhtml:0" NAME="item"
+   PATH="/timeSheet.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="goBack::#userPanel.xhtml" NAME="output"
+    PATH="/userPanel.xhtml" TARGET="rules:#userPanel.xhtml"
+    TITLE="goBack" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+</PROCESS>

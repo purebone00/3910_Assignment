@@ -13,6 +13,10 @@
       </h:head>
       
       <h:body>
+<<<<<<< HEAD
+	  	<p>Welcome, #{controller.userName}</p>
+	  	<h:button value="Go back" outcome="#{controller.goBack()}"></h:button>
+=======
 	      <h:form>
 	      	
 	      
@@ -172,6 +176,7 @@
 	      	<h:commandButton value="Add Timesheet" action="#{controller.timesheetCollection.addTimesheet()}"/>
 	      	<h:button value="Go back" outcome="#{controller.goBack()}" />
 	     </h:form>
+>>>>>>> login
       </h:body>
       
 </html>

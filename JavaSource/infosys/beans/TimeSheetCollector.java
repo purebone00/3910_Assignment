@@ -3,21 +3,23 @@ package infosys.beans;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import ca.bcit.infosys.employee.Employee;
 import ca.bcit.infosys.timesheet.Timesheet;
 import ca.bcit.infosys.timesheet.TimesheetCollection;
 
+@ApplicationScoped
 public class TimeSheetCollector implements TimesheetCollection{
     
-    @Inject Timesheet timesheet;
+    @Inject EditableTimesheet currentTimesheet;
     List<Timesheet> timesheets = new ArrayList<Timesheet>();
+    
     
 
     public TimeSheetCollector () {
-        addTimesheet();
-        
+        addTimesheet();        
     }
     
     public List<Timesheet> getTimesheets() {
@@ -42,9 +44,19 @@ public class TimeSheetCollector implements TimesheetCollection{
         }
         return null;
     }
+    
+    public Timesheet getCurrentTimesheet() {
+    	return currentTimesheet;
+    }
+    
+    public void setCurrentTimesheet(EditableTimesheet currentTimesheet) {
+    	this.currentTimesheet = currentTimesheet;
+    }
 
     public String addTimesheet() {
-        timesheets.add(new Timesheet());
+    	EditableTimesheet temp = new EditableTimesheet();
+        timesheets.add(temp);
+        setCurrentTimesheet(temp);
         return null;
     }
     
