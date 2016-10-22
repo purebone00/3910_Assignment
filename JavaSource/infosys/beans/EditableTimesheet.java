@@ -27,9 +27,9 @@ public class EditableTimesheet extends Timesheet {
 	}
 	
 	public EditableTimesheet(final Employee user, final Date end,
-            final List<TimesheetRow> charges) {
+            final List<TimesheetRow> list) {
 		
-		super(user, end, charges);
+		super(user, end, list);
 
 		isEditable = true;
 		editing = false;
@@ -65,5 +65,6 @@ public class EditableTimesheet extends Timesheet {
 		}
 		return "Edit";
 	}
+	
 	
 }

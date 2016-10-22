@@ -33,11 +33,11 @@ public class TimeSheetCollector {
     
     public List<TimesheetRow> createNewRows() {
     	List<TimesheetRow> newRows = new ArrayList<TimesheetRow>();
-    	newRows.add(new TimesheetRow());
-    	newRows.add(new TimesheetRow());
-    	newRows.add(new TimesheetRow());
-    	newRows.add(new TimesheetRow());
-    	newRows.add(new TimesheetRow());
+    	newRows.add(new EditableRow());
+    	newRows.add(new EditableRow());
+    	newRows.add(new EditableRow());
+    	newRows.add(new EditableRow());
+    	newRows.add(new EditableRow());
     	return newRows;
     }
     

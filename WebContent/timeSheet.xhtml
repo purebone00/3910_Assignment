@@ -7,7 +7,6 @@
       <h:head>
 	    <meta name="viewport" content="width=device-width, initial-scale=1" />
 	   	<h:outputStylesheet name="css/styles.css"/>
-	   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min"/>
 		<h:outputStylesheet library="css" name="bootstrap.min.css"/>
 		<h:outputScript library="js" name="bootstrap.js" />
       </h:head>
@@ -73,10 +72,10 @@
 			               <f:facet name="header">
 			                  <h:outputText value="SAT"/>
 			               </f:facet>
-		               		<h:inputText value		="#{row.hoursForWeek[0]}" 
+		               		<h:inputText value		="#{row.saturday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
 		               					 size		="8"/>
-		               		<h:outputText value		="#{row.hoursForWeek[0]}" 
+		               		<h:outputText value		="#{row.saturday}" 
 		               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 		               		<f:facet name="footer">
 		                  		<h:outputText value="#{controller.currentTimesheet.getDailyHours()[0]}"/>
@@ -86,10 +85,10 @@
 			               <f:facet name="header">
 			                  <h:outputText value="SUN"/>
 			               </f:facet>
-		               		<h:inputText value		="#{row.hoursForWeek[1]}" 
+		               		<h:inputText value		="#{row.sunday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
 		               					 size		="8"/>
-		               		<h:outputText value		="#{row.hoursForWeek[1]}" 
+		               		<h:outputText value		="#{row.sunday}" 
 		               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 		               		<f:facet name="footer">
 		                  		<h:outputText value="#{controller.currentTimesheet.getDailyHours()[1]}"/>
@@ -99,10 +98,10 @@
 			               <f:facet name="header">
 			                  <h:outputText value="MON"/>
 			               </f:facet>
-		               		<h:inputText value		="#{row.hoursForWeek[2]}" 
+		               		<h:inputText value		="#{row.monday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
 		               					 size		="8"/>
-		               		<h:outputText value		="#{row.hoursForWeek[2]}" 
+		               		<h:outputText value		="#{row.monday}" 
 		               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 		               		<f:facet name="footer">
 		                  		<h:outputText value="#{controller.currentTimesheet.getDailyHours()[2]}"/>
@@ -112,10 +111,10 @@
 			               <f:facet name="header">
 			                  <h:outputText value="TUE"/>
 			               </f:facet>
-		               		<h:inputText value		="#{row.hoursForWeek[3]}" 
+		               		<h:inputText value		="#{row.tuesday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
 		               					 size		="8"/>
-		               		<h:outputText value		="#{row.hoursForWeek[3]}" 
+		               		<h:outputText value		="#{row.tuesday}" 
 		               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 		               		<f:facet name="footer">
 		                  		<h:outputText value="#{controller.currentTimesheet.getDailyHours()[3]}"/>
@@ -125,10 +124,10 @@
 			               <f:facet name="header">
 			                  <h:outputText value="WED"/>
 			               </f:facet>
-		               		<h:inputText value		="#{row.hoursForWeek[4]}" 
+		               		<h:inputText value		="#{row.wednesday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
 		               					 size		="8"/>
-		               		<h:outputText value		="#{row.hoursForWeek[4]}" 
+		               		<h:outputText value		="#{row.wednesday}" 
 		               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 		               		<f:facet name="footer">
 		                  		<h:outputText value="#{controller.currentTimesheet.getDailyHours()[4]}"/>
@@ -138,10 +137,10 @@
 			               <f:facet name="header">
 			                  <h:outputText value="THU"/>
 			               </f:facet>
-		               		<h:inputText value		="#{row.hoursForWeek[5]}" 
+		               		<h:inputText value		="#{row.thursday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
 		               					 size		="8"/>
-		               		<h:outputText value		="#{row.hoursForWeek[5]}" 
+		               		<h:outputText value		="#{row.thursday}" 
 		               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 		               		<f:facet name="footer">
 		                  		<h:outputText value="#{controller.currentTimesheet.getDailyHours()[5]}"/>
@@ -151,10 +150,10 @@
 			               <f:facet name="header">
 			                  <h:outputText value="FRI"/>
 			               </f:facet>
-		               		<h:inputText value		="#{row.hoursForWeek[6]}" 
+		               		<h:inputText value		="#{row.friday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
 		               					 size		="8"/>
-		               		<h:outputText value		="#{row.hoursForWeek[6]}" 
+		               		<h:outputText value		="#{row.friday}" 
 		               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 		               		<f:facet name="footer">
 		                  		<h:outputText value="#{controller.currentTimesheet.getDailyHours()[6]}"/>
