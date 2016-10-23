@@ -1,7 +1,6 @@
 package ca.bcit.infosys.employee;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -68,5 +67,4 @@ public interface EmployeeList extends Serializable {
      */
     void addEmployee(Employee newEmployee);
 
-    Employee getCurrentEmployee(ArrayList<Employee> e, int i);
 }

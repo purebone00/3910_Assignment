@@ -1,5 +1,9 @@
 package infosys.beans;
 
+import ca.bcit.infosys.employee.Credentials;
+import ca.bcit.infosys.employee.Employee;
+import ca.bcit.infosys.employee.EmployeeList;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,22 +11,25 @@ import java.util.Map;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
-import ca.bcit.infosys.employee.*;
+
 
 @Named("el")
 @ApplicationScoped
 public class EmployeeLister implements EmployeeList {
-
-    ArrayList<Credentials> cred = new ArrayList<Credentials>();
+    private static int employeeNumber = 1000;
+    private static ArrayList<Credentials> cred = new ArrayList<Credentials>();
     ArrayList<Employee> employees = new ArrayList<Employee>();
     Map<String, String> logInfo = new HashMap<String, String>();
     Employee currentEmployee;
     
     public void setCurrentEmployee(Employee currentEmployee) {
-		this.currentEmployee = currentEmployee;
-	}
-
-	public EmployeeLister() {
+        this.currentEmployee = currentEmployee;
+    }
+    
+    /**
+     * Creates an Employee list that contains all our employees. 
+     */
+    public EmployeeLister() { 
         Employee admin = new Employee("Admin", 0000, "Admin"); 
         addEmployee(admin);
         Credentials adminCred = new Credentials();
@@ -32,48 +39,53 @@ public class EmployeeLister implements EmployeeList {
         logInfo.put(adminCred.getUserName(), adminCred.getPassword());
         cred.add(adminCred);
                
-        Employee e1 = new Employee("John", 12345, "employeeJohn"); 
+        Employee e1 = new Employee("John", getEmployeeNumber(), "employeeJohn"); 
         addEmployee(e1);
-        Credentials c = new Credentials();
-        c.setUserName(e1.getUserName());
-        c.setPassword("default");
+        Credentials credential = new Credentials();
+        credential.setUserName(e1.getUserName());
+        credential.setPassword("default");
         
-        logInfo.put(c.getUserName(), c.getPassword());
-        cred.add(c);
+        logInfo.put(credential.getUserName(), credential.getPassword());
+        cred.add(credential);
         
-        Employee e2 = new Employee("Jovina", 12346, "employeeLow"); 
+        Employee e2 = new Employee("Jovina", getEmployeeNumber(), "employeeLow"); 
         addEmployee(e2);
-        Credentials c2 = new Credentials();
-        c2.setUserName(e2.getUserName());
-        c2.setPassword("default");
+        Credentials credentialsTwo = new Credentials();
+        credentialsTwo.setUserName(e2.getUserName());
+        credentialsTwo.setPassword("default");
         
         
-        logInfo.put(c2.getUserName(), c2.getPassword());
-        cred.add(c2);
+        logInfo.put(credentialsTwo.getUserName(), credentialsTwo.getPassword());
+        cred.add(credentialsTwo);
         
     }
     
-    public void addCred(Credentials c) {
-        cred.add(c);
+    public int getEmployeeNumber() {
+        employeeNumber++;
+        return employeeNumber;
     }
     
-    public Credentials getCred(Employee e) {
-        for(Credentials c: cred) {
-            if(e.getUserName() == c.getUserName()) {
+    public void addCred(Credentials credentials) {
+        cred.add(credentials);
+    }
+    
+    /**
+     * Gets the credentials of an employee.
+     * @param employee to have credentials extracted. 
+     * @return The employee's credentials.
+     */
+    public Credentials getCreds(Employee employee) {
+        for (Credentials c: cred) {
+            if (employee.getUserName() == c.getUserName()) {
                 return c;
             }
         }
         return null;
     }
-    
-    public Map<String, String> getLogInfo() {
-        return logInfo;
-    }
-    
-    public ArrayList<Employee> getEmployees() {
-        return employees;
-    }
 
+    /**
+     * Get the current employee. 
+     */
     public Employee getEmployee(String name) {
         for (Employee x : employees) {
             if (x.getName().equals(name)) {
@@ -84,17 +96,33 @@ public class EmployeeLister implements EmployeeList {
     }
     
 
-    public Map<String, String> getLoginCombos() {
-        return logInfo;
-    }
-
+    /**
+     * Gets the current administrator.
+     */
     public Employee getAdministrator() {
-        for(Employee e: employees) {
-            if(e.getEmpNumber() == 0000) {
+        for (Employee e: employees) {
+            if (e.getEmpNumber() == 0000) {
                 return e;
             }
         }
         return null;
+    }
+    
+    public ArrayList<Credentials> getCred() {
+        return cred;
+    }
+    
+    public Map<String, String> getLogInfo() {
+        return logInfo;
+    }
+    
+    public ArrayList<Employee> getEmployees() {
+        return employees;
+    }
+    
+    public Map<String, String> getLoginCombos() {
+     
+        return logInfo;
     }
 
     
@@ -119,11 +147,8 @@ public class EmployeeLister implements EmployeeList {
     public Employee getCurrentEmployee() {
         return currentEmployee;
     }
+
     
-    @Override
-    public Employee getCurrentEmployee(ArrayList<Employee> e, int i) {
-        return e.get(i);
-    }
     
 
 }
