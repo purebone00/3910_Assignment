@@ -2,6 +2,10 @@ package infosys.beans;
 
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.faces.bean.ManagedProperty;
+
 import ca.bcit.infosys.employee.Employee;
 import ca.bcit.infosys.timesheet.Timesheet;
 import ca.bcit.infosys.timesheet.TimesheetRow;
@@ -14,7 +18,7 @@ import ca.bcit.infosys.timesheet.TimesheetRow;
  *
  */
 public class EditableTimesheet extends Timesheet {
-	
+		
 	/**	Sees if a time sheet is editable. For now it is always true. */
 	private boolean isEditable;
 

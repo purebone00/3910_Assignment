@@ -10,24 +10,24 @@
 		<h:outputStylesheet name="css/styles.css"/>
 		<h:outputScript library="js" name="jquery-3.1.1.min.js" />
 		<h:outputScript library="js" name="bootstrap.js" />		
-	    <title>User Panel</title>
+	    <title>#{msgs['userPanel.title']}</title>
 	</h:head>
 	<h:body>
 		<div class="jumbotron" style="margin-top: 50px">
-  			<h1 style = "text-align:center;">Welcome, #{controller.userName}</h1>
+  			<h1 style = "text-align:center">#{msgs['userPanel.welcomeMsg']}#{controller.userName}</h1>
 		</div>
 		
 		<hr></hr>
 		<div class="container" style="height:300px;">
 			<div class="col-md-4" style="text-align:center;">
-				<h:button class="btn btn-default btn-lg" value="Change Password" outcome="#{controller.goToPassword()}"/>
+				<h:button class="btn btn-default btn-lg" value="#{msgs['userPanel.changePswd']}" outcome="#{controller.goToPassword()}"/>
 			</div>
 			<div class="col-md-4" style="text-align:center;">
-				<h:button class="btn btn-default btn-lg" value="View TimeSheet" outcome="#{controller.goToTimeSheet()}"/>
+				<h:button class="btn btn-default btn-lg" value="#{msgs['userPanel.timesheet']}" outcome="#{controller.goToTimeSheet()}"/>
 			</div>
 			<div class="col-md-4" style="text-align:center;">
 				<h:form>
-					<h:commandButton class="btn btn-default btn-lg" value="Log Out" action="#{controller.logOut}"/>
+					<h:commandButton class="btn btn-default btn-lg" value="#{msgs['userPanel.logout']}" action="#{controller.logOut}"/>
 				</h:form>
 			</div>
 		</div>

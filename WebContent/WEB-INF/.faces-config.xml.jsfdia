@@ -51,13 +51,10 @@
   SHAPE="528,193,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#timeSheet.xhtml:0" NAME="item"
    PATH="/timeSheet.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="goBack::#adminPanel.xhtml" NAME="output"
-    PATH="/adminPanel.xhtml" TARGET="rules:#adminPanel.xhtml"
-    TITLE="goBack" model-entity="JSFProcessItemOutput"/>
-  </PROCESS-ITEM>
-  <PROCESS-ITEM ID="rules:#timeSheet.xhtml:1" NAME="item1"
-   PATH="/timeSheet.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="goBack::#userPanel.xhtml" NAME="output"
+   <PROCESS-ITEM-OUTPUT ID="goBackAdmin::#adminPanel.xhtml"
+    NAME="output" PATH="/adminPanel.xhtml"
+    TARGET="rules:#adminPanel.xhtml" TITLE="goBackAdmin" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="goBack::#userPanel.xhtml" NAME="output1"
     PATH="/userPanel.xhtml" TARGET="rules:#userPanel.xhtml"
     TITLE="goBack" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>

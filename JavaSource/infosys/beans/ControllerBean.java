@@ -249,6 +249,9 @@ public class ControllerBean implements Serializable {
     }
     
     public String goBack() {
+    	if (getEmpId() == 0000) {
+    		return "goBackAdmin";
+    	}
         return "goBack";
     }    
     

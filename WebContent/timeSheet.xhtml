@@ -9,6 +9,7 @@
 		<h:outputStylesheet library="css" name="bootstrap.min.css"/>
 		<h:outputScript library="js" name="bootstrap.js" />
 	   	<h:outputStylesheet name="css/styles.css"/>
+	   	<title>#{msgs['timesheet.Title']} #{controller.currentTimesheet.employee.name}</title>
       </h:head>
       
       <h:body>
@@ -16,18 +17,18 @@
 	      	<div class="col-md-12">
 	      		<div class="col-md-4">
 	      			<div class="col-md-12">
-	      				Emp Number:<h:outputText value="#{controller.empId}" />
+	      				#{msgs['timesheet.employeeId']}<h:outputText value="#{controller.empId}" />
 	      			</div>
 	      			<div class="col-md-12">	  
-	      				Name:<h:outputText value ="#{controller.currentTimesheet.employee.name}"/>
+	      				#{msgs['timesheet.name']}<h:outputText value ="#{controller.currentTimesheet.employee.name}"/>
 	      			</div>
 	      		</div>
 	      		<div class="col-md-8">
 	      			<div class="col-md-6">	  
-	      				Week Number:<h:outputText value	= "#{controller.currentTimesheet.getWeekNumber()}"/>
+	      				#{msgs['timesheet.weekNumber']}<h:outputText value	= "#{controller.currentTimesheet.getWeekNumber()}"/>
 	      			</div>
 	      			<div class="col-md-6">	  
-	        			Week Ending:<h:outputText value	= "#{controller.currentTimesheet.getWeekEnding()}"/>
+	        			#{msgs['timesheet.weekEnding']}<h:outputText value	= "#{controller.currentTimesheet.getWeekEnding()}"/>
 	      			</div>
 	        	</div>
 	        
@@ -37,7 +38,7 @@
 		                      headerClass="namesHeader" rowClasses="odd,even">
 			      		<h:column>     			
 			      			<f:facet name="header">
-		                  		<h:outputText value="ProjectID"/>
+		                  		<h:outputText value="#{msgs['timesheet.projectID']}"/>
 		               		</f:facet>
 		               		<h:inputText value		="#{row.projectID}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
@@ -45,12 +46,12 @@
 		               		<h:outputText value		="#{row.projectID}" 
 		               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 		               		<f:facet name="footer">
-		                  		<h:outputText value="Total"/>
+		                  		<h:outputText value="#{msgs['timesheet.total']}"/>
 		               		</f:facet>
 			      		</h:column>	      		
 			            <h:column>
 			               <f:facet name="header">
-			                  <h:outputText value="WP"/>
+			                  <h:outputText value="#{msgs['timesheet.workPackage']}"/>
 			               </f:facet>
 		               		<h:inputText value		="#{row.workPackage}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
@@ -60,7 +61,7 @@
 			      		</h:column>
 			      		<h:column>
 			               <f:facet name="header">
-			                  <h:outputText value="Total"/>
+			                  <h:outputText value="#{msgs['timesheet.total']}"/>
 			               </f:facet>
 		               		<h:outputText value		="#{row.getSum()}" 
 		               					  rendered	="#{not controller.currentTimesheet.editing}"/>
@@ -70,7 +71,7 @@
 			      		</h:column>
 			      		<h:column>
 			               <f:facet name="header">
-			                  <h:outputText value="SAT"/>
+			                  <h:outputText value="#{msgs['timesheet.saturday']}"/>
 			               </f:facet>
 		               		<h:inputText value		="#{row.saturday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
@@ -86,7 +87,7 @@
 			      		</h:column>
 			      		<h:column>
 			               <f:facet name="header">
-			                  <h:outputText value="SUN"/>
+			                  <h:outputText value="#{msgs['timesheet.sunday']}"/>
 			               </f:facet>
 		               		<h:inputText value		="#{row.sunday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
@@ -102,7 +103,7 @@
 			      		</h:column>
 			      		<h:column>
 			               <f:facet name="header">
-			                  <h:outputText value="MON"/>
+			                  <h:outputText value="#{msgs['timesheet.monday']}"/>
 			               </f:facet>
 		               		<h:inputText value		="#{row.monday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
@@ -118,7 +119,7 @@
 			      		</h:column>
 			      		<h:column>
 			               <f:facet name="header">
-			                  <h:outputText value="TUE"/>
+			                  <h:outputText value="#{msgs['timesheet.tuesday']}"/>
 			               </f:facet>
 		               		<h:inputText value		="#{row.tuesday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
@@ -134,7 +135,7 @@
 			      		</h:column>
 			      		<h:column>
 			               <f:facet name="header">
-			                  <h:outputText value="WED"/>
+			                  <h:outputText value="#{msgs['timesheet.wednesday']}"/>
 			               </f:facet>
 		               		<h:inputText value		="#{row.wednesday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
@@ -150,7 +151,7 @@
 			      		</h:column>
 			      		<h:column>
 			               <f:facet name="header">
-			                  <h:outputText value="THU"/>
+			                  <h:outputText value="#{msgs['timesheet.thursday']}"/>
 			               </f:facet>
 		               		<h:inputText value		="#{row.thursday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
@@ -166,7 +167,7 @@
 			      		</h:column>
 			      		<h:column>
 			               <f:facet name="header">
-			                  <h:outputText value="FRI"/>
+			                  <h:outputText value="#{msgs['timesheet.friday']}"/>
 			               </f:facet>
 		               		<h:inputText value		="#{row.friday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
@@ -182,7 +183,7 @@
 			      		</h:column>
 			      		<h:column>
 			               <f:facet name="header">
-			                  <h:outputText value="Notes"/>
+			                  <h:outputText value="#{msgs['timesheet.notes']}"/>
 			               </f:facet>
 		               		<h:inputText value		="#{row.notes}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
@@ -197,11 +198,11 @@
 	      		<div class = "col-md-12">
 	      				<div class = "col-md-9">
 			      		<h:commandButton value="#{controller.currentTimesheet.amIEditing()}" action="#{controller.currentTimesheet.editPage}"/>
-			      		<h:commandButton value="Add" action="#{controller.currentTimesheet.addRow()}"/>
-			      		<h:commandButton value="New Timesheet" action="#{controller.timesheetCollection.addTimesheet(controller.currentTimesheet.employee)}"/>
+			      		<h:commandButton value="#{msgs['timesheet.addRow']}" action="#{controller.currentTimesheet.addRow()}"/>
+			      		<h:commandButton value="#{msgs['timesheet.newTimesheet']}" action="#{controller.timesheetCollection.addTimesheet(controller.currentTimesheet.employee)}"/>
 			      	</div>
 			      	<div class = "col-md-3">
-			      		<h:button value="Go back" outcome="#{controller.goBack()}" />
+			      		<h:button value="#{msgs['timesheet.goBack']}" outcome="#{controller.goBack()}" />
 		      		</div>
 		      	</div>
 	      	</div>

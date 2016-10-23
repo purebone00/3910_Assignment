@@ -19,8 +19,12 @@
 <navigation-rule>
 	<from-view-id>/timeSheet.xhtml</from-view-id>
 	<navigation-case>
-		<from-outcome>goBack</from-outcome>
+		<from-outcome>goBackAdmin</from-outcome>
 		<to-view-id>/adminPanel.xhtml</to-view-id>
+	</navigation-case>	
+	<navigation-case>
+		<from-outcome>goBack</from-outcome>
+		<to-view-id>/userPanel.xhtml</to-view-id>
 	</navigation-case>
 </navigation-rule>
 
@@ -39,14 +43,6 @@
 	<navigation-case>
 		<from-outcome>toTimeSheet</from-outcome>
 		<to-view-id>/timeSheet.xhtml</to-view-id>
-	</navigation-case>
-</navigation-rule>
-
-<navigation-rule>
-	<from-view-id>/timeSheet.xhtml</from-view-id>
-	<navigation-case>
-		<from-outcome>goBack</from-outcome>
-		<to-view-id>/userPanel.xhtml</to-view-id>
 	</navigation-case>
 </navigation-rule>
 
@@ -77,5 +73,15 @@
     </navigation-case>
 </navigation-rule>
 
+<application>
+		<locale-config>
+			<default-locale>en</default-locale>
+			<supported-locale>fr</supported-locale>
+		</locale-config>
+		<resource-bundle>
+			<base-name>messages</base-name>
+			<var>msgs</var>
+		</resource-bundle>
+</application>
 
 </faces-config>
