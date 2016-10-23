@@ -5,35 +5,32 @@ import ca.bcit.infosys.employee.Employee;
 import ca.bcit.infosys.timesheet.Timesheet;
 
 import java.io.Serializable;
-
-
+import java.util.Iterator;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
 
 /**
  * This is the master controller java bean. This class holds all essential methods to process 
  * users and admins in their current session. 
  * @author Joe Fong
- * Version 1.0
  */
 @Named("controller")
 @SessionScoped
 public class ControllerBean implements Serializable {
-    @Inject EmployeeLister list;
     @Inject TimeSheetCollector timesheetCollection;
     @Inject Credentials currentCredential;
+    @Inject EmployeeLister list;
+    
     /** An editable timesheet. */
     EditableTimesheet currentTimesheet;
     
     /** The old password. */
-	String oldPassword;
-	/** The new password to change to. */
+    String oldPassword;
+    /** The new password to change to. */
     String newPassword;
     /** Confirming the new password. */
     String confirmPassword;
@@ -58,6 +55,8 @@ public class ControllerBean implements Serializable {
     String searchUserMsg;
     /** The user name confirmed. */
     String searchConfirmUser;
+    /** Determines if user is be deleted. */
+    boolean render;
     
     /**
      * The constructor for the bean. 
@@ -66,6 +65,7 @@ public class ControllerBean implements Serializable {
     public ControllerBean() {
         list = new EmployeeLister();
         currentTimesheet = new EditableTimesheet();
+        currentCredential = new Credentials();
     }
     
     /**
@@ -102,7 +102,7 @@ public class ControllerBean implements Serializable {
     public String changePassword() {
         String result = "";
         for (Employee e: list.getEmployees()) {
-            if (e.getEmpNumber() == getEmpId()) {
+            if (e.getUserName().equals(getUserName())) {
                 if (list.getCreds(e).getPassword().equals(getOldPassword())) {
                     if (getConfirmPassword().equals(getNewPassword())) {
                         list.getCreds(e).setPassword(getNewPassword());
@@ -126,12 +126,7 @@ public class ControllerBean implements Serializable {
      * @return String for navigation.
      */
     public String logOut() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ExternalContext ec = context.getExternalContext();
- 
-        final HttpServletRequest request = (HttpServletRequest)ec.getRequest();
-        request.getSession( false ).invalidate();
-      
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "log out";
     }
   
@@ -162,25 +157,37 @@ public class ControllerBean implements Serializable {
     }
     
     /**
+     * Deletes a user specified by the submitted form.
+     */
+    public void deleteAUser() {
+        this.render = false;
+        
+        Iterator<Employee> it = list.getEmployees().iterator();
+        Iterator<Credentials> cit = list.getCred().iterator();
+        while (it.hasNext()) {
+            Employee employee = it.next();
+            if (employee.getUserName().equals(getDeleteUser())) {
+                it.remove();
+                this.render = true;
+            }
+        }
+        while (cit.hasNext()) {
+            Credentials credential = cit.next();
+            if (credential.getUserName().equals(getDeleteUser())) {
+                cit.remove();
+                this.render = true;
+            }
+        }
+        
+        list.getLoginCombos().remove(getDeleteUser());
+    }
+    
+    /**
      * Prints a message notifying the user has been deleted and deletes the user.
      * @param user is the user being deleted.
      * @return String notifying that a existing user has been deleted.
      */
     public String getPrintDeletingUser(String user) {
-        boolean render = false;
-        for (Employee e: list.getEmployees()) {
-            if (e.getUserName().equals(getDeleteUser())) { 
-                list.getEmployees().remove(e);
-                render = true;
-            }
-        }
-        for (Credentials c: list.getCred()) {
-            if (c.getUserName() == getDeleteUser()) {
-                c = null;
-            }
-        }
-        list.getLoginCombos().remove(getDeleteUser());
-        
         if (("".equals(getDeleteUser()) || getDeleteUser() == null)) {
             return "";
         } else {
@@ -384,8 +391,8 @@ public class ControllerBean implements Serializable {
     }
     
     public Timesheet getCurrentTimesheet() {
-    	currentTimesheet = timesheetCollection.getCurrentTimesheet(list.getCurrentEmployee());
-    	return currentTimesheet;
+        currentTimesheet = timesheetCollection.getCurrentTimesheet(list.getCurrentEmployee());
+        return currentTimesheet;
     }
     
 }
