@@ -4,7 +4,7 @@ package infosys.beans;
 public class TestUnit {
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
+
         ControllerBean cb = new ControllerBean();
         cb.setUserName("employeeJohn");
         cb.setPassword("default");
@@ -17,10 +17,9 @@ public class TestUnit {
         //cb.deletingUser("employeeJohn");
         //System.out.println(cb.getPrintDeletingUser());
         
-        System.out.println("Test for verifying users.\nExpected return 'next' :     " + cb.verifyLogin()); 
+        //System.out.println("Test for verifying users.\nExpected return 'next' :     " + cb.verifyLogin()); 
         
-        
-        System.out.println("Test for changing password.\nExpected return 'success'  :   " + cb.changePassword());
+        //System.out.println("Test for changing password.\nExpected return 'success'  :   " + cb.changePassword());
     }
 
 }

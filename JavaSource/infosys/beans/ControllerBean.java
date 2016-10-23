@@ -16,32 +16,53 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 
-
+/**
+ * This is the master controller java bean. This class holds all essential methods to process 
+ * users and admins in their current session. 
+ * @author Joe Fong
+ * Version 1.0
+ */
 @Named("controller")
 @SessionScoped
 public class ControllerBean implements Serializable {
     @Inject EmployeeLister list;
     @Inject TimeSheetCollector timesheetCollection;
     @Inject Credentials currentCredential;
+    /** An editable timesheet. */
     EditableTimesheet currentTimesheet;
     
+    /** The old password. */
 	String oldPassword;
+	/** The new password to change to. */
     String newPassword;
+    /** Confirming the new password. */
     String confirmPassword;
     
+    /** Newly added user name. */
     String addUser;
+    /** Password for added user. */
     String addUserPassword;
+    /** Name of newly added user. */
     String addName;
     
+    /** User name of user to be deleted. */
     String deleteUser;
+    /** Password of user to be deleted. */
     String deleteUserPassword;
+    /** Confirmed password of user to be deleted. */
     String deleteUserPasswordConfirm;
-    
+   
+    /** The user currently searched. */
     String searchUser;
+    /** The message returned to the user. */
     String searchUserMsg;
+    /** The user name confirmed. */
     String searchConfirmUser;
     
-    
+    /**
+     * The constructor for the bean. 
+     * Creates a list of employees and editable time sheets.
+     */
     public ControllerBean() {
         list = new EmployeeLister();
         currentTimesheet = new EditableTimesheet();
@@ -85,8 +106,8 @@ public class ControllerBean implements Serializable {
                 if (list.getCreds(e).getPassword().equals(getOldPassword())) {
                     if (getConfirmPassword().equals(getNewPassword())) {
                         list.getCreds(e).setPassword(getNewPassword());
-                        list.getLogInfo().put(e.getUserName(), getNewPassword());
-                        System.out.println(list.getLogInfo().get(e.getUserName()));
+                        list.getLoginCombos().put(e.getUserName(), getNewPassword());
+                        System.out.println(list.getLoginCombos().get(e.getUserName()));
                         setPassword(getNewPassword());
                         System.out.println(getPassword());
                         result = "success";
@@ -125,7 +146,7 @@ public class ControllerBean implements Serializable {
         Employee employee = new Employee(getAddName(), employeeNumber, getAddUser());
         list.getEmployees().add(employee);
         list.getCred().add(cred);
-        list.getLogInfo().put(getAddUser(), getAddUserPassword());
+        list.getLoginCombos().put(getAddUser(), getAddUserPassword());
     }
     
     /**
@@ -158,12 +179,12 @@ public class ControllerBean implements Serializable {
                 c = null;
             }
         }
-        list.getLogInfo().remove(getDeleteUser());
+        list.getLoginCombos().remove(getDeleteUser());
         
         if (("".equals(getDeleteUser()) || getDeleteUser() == null)) {
             return "";
         } else {
-            return (!list.getLogInfo().containsKey(getDeleteUser()) && render) ? "User, " 
+            return (!list.getLoginCombos().containsKey(getDeleteUser()) && render) ? "User, " 
                 + getDeleteUser() + ", has been deleted from the system." 
                 : "User, " + getDeleteUser() + ", does not exist in the system.";
         }
@@ -177,13 +198,13 @@ public class ControllerBean implements Serializable {
         for (Employee e: list.getEmployees()) {
             if (e.getUserName().equals(getSearchUser())
                     && (getSearchUser().equals(getSearchConfirmUser()))) {
-                list.getLogInfo().put(getSearchUser(),"default");
+                list.getLoginCombos().put(getSearchUser(),"default");
             }
         }
         if (("".equals(getSearchUser()) || getSearchUser() == null)) {
             return "";
         } else {
-            return (list.getLogInfo().containsKey(getSearchUser()))
+            return (list.getLoginCombos().containsKey(getSearchUser()))
                     ? "User, " + getSearchUser() + "'s password has been reseted to 'default'."
                             : "User does not exist.";
         }
@@ -206,13 +227,13 @@ public class ControllerBean implements Serializable {
             }
         }
         
-        password = list.getLogInfo().get(getSearchUser());
+        password = list.getLoginCombos().get(getSearchUser());
         
         
         if (("".equals(getSearchUser()) || getSearchUser() == null)) {
             return "";
         } else {
-            return (list.getLogInfo().containsKey(getSearchUser()))
+            return (list.getLoginCombos().containsKey(getSearchUser()))
                     ? "User: " + getSearchUser() + "\n" + "Name: " + name + "\n" 
                     + "EmployeeID: " + employeeNumber + "\n"
                     + "Password: " + password : "User does not exist.";

@@ -12,7 +12,6 @@
 	width: 50px;
 }
 
-
 td {
 	padding: 1px;
     text-align: left;
@@ -33,3 +32,4 @@ td:nth-child(n+3):nth-last-child(n+2){
 .even {
 	background: MediumTurquoise!important;
 }
+
