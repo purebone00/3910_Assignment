@@ -74,7 +74,10 @@
 			               </f:facet>
 		               		<h:inputText value		="#{row.saturday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
-		               					 size		="8"/>
+		               					 size		="8">
+		               		    <f:convertNumber minFractionDigits="1"/>
+				                <f:validateDoubleRange minimum="0" maximum="24"/>
+				            </h:inputText>
 		               		<h:outputText value		="#{row.saturday}" 
 		               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 		               		<f:facet name="footer">
@@ -87,7 +90,10 @@
 			               </f:facet>
 		               		<h:inputText value		="#{row.sunday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
-		               					 size		="8"/>
+		               					 size		="8">
+		               		    <f:convertNumber minFractionDigits="1"/>
+				                <f:validateDoubleRange minimum="0" maximum="24"/>
+				            </h:inputText>
 		               		<h:outputText value		="#{row.sunday}" 
 		               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 		               		<f:facet name="footer">
@@ -98,15 +104,16 @@
 			               <f:facet name="header">
 			                  <h:outputText value="MON"/>
 			               </f:facet>
-		               		<h:inputText id			="monday"
-		               					 value		="#{row.monday}" 
+		               		<h:inputText value		="#{row.monday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
-		               					 size		="8"/>
+		               					 size		="8">
+               					<f:convertNumber minFractionDigits="1"/>
+				                <f:validateDoubleRange minimum="0" maximum="24"/>
+		               		</h:inputText>
 		               		<h:outputText value		="#{row.monday}" 
 		               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 		               		<f:facet name="footer">
 		                  		<h:outputText value="#{controller.currentTimesheet.getDailyHours()[2]}"/>
-		                  		 <h:message for="monday"/>
 		                  	</f:facet>
 			      		</h:column>
 			      		<h:column>
@@ -115,7 +122,10 @@
 			               </f:facet>
 		               		<h:inputText value		="#{row.tuesday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
-		               					 size		="8"/>
+		               					 size		="8">
+		               		    <f:convertNumber minFractionDigits="1"/>
+				                <f:validateDoubleRange minimum="0" maximum="24"/>
+				            </h:inputText>
 		               		<h:outputText value		="#{row.tuesday}" 
 		               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 		               		<f:facet name="footer">
@@ -128,7 +138,10 @@
 			               </f:facet>
 		               		<h:inputText value		="#{row.wednesday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
-		               					 size		="8"/>
+		               					 size		="8">
+		               		    <f:convertNumber minFractionDigits="1"/>
+				                <f:validateDoubleRange minimum="0" maximum="24"/>
+				            </h:inputText>
 		               		<h:outputText value		="#{row.wednesday}" 
 		               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 		               		<f:facet name="footer">
@@ -141,7 +154,10 @@
 			               </f:facet>
 		               		<h:inputText value		="#{row.thursday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
-		               					 size		="8"/>
+		               					 size		="8">
+		               		    <f:convertNumber minFractionDigits="1"/>
+				                <f:validateDoubleRange minimum="0" maximum="24"/>
+				            </h:inputText>
 		               		<h:outputText value		="#{row.thursday}" 
 		               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 		               		<f:facet name="footer">
@@ -154,7 +170,10 @@
 			               </f:facet>
 		               		<h:inputText value		="#{row.friday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
-		               					 size		="8"/>
+		               					 size		="8">
+		               		    <f:convertNumber minFractionDigits="1"/>
+				                <f:validateDoubleRange minimum="0" maximum="24"/>
+				            </h:inputText>
 		               		<h:outputText value		="#{row.friday}" 
 		               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 		               		<f:facet name="footer">
@@ -172,6 +191,7 @@
 		               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 			      		</h:column>
 			      	</h:dataTable>
+			      	<h:messages styleClass="errorMessage"/>
 			    </div>
 	      		</div>
 	      		<div class = "col-md-12">

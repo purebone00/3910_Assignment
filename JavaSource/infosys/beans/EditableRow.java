@@ -3,6 +3,10 @@ package infosys.beans;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import ca.bcit.infosys.timesheet.TimesheetRow;
 
 public class EditableRow extends TimesheetRow implements Serializable {
@@ -28,7 +32,7 @@ public class EditableRow extends TimesheetRow implements Serializable {
 	}
 
 	public void setMonday(BigDecimal hours) {
-		super.setHour(2, hours);
+			super.setHour(2, hours);
 	}
 	
 	public BigDecimal getTuesday() {
