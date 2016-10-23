@@ -66,5 +66,9 @@ public class EditableTimesheet extends Timesheet {
 		return "Edit";
 	}
 	
+    public void addRow() {
+        super.getDetails().add(new EditableRow());
+    }
+	
 	
 }

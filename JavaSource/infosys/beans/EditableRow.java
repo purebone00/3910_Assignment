@@ -16,7 +16,7 @@ public class EditableRow extends TimesheetRow implements Serializable {
 	}
 	
 	public BigDecimal getSunday() {
-		return super.getHour(0);
+		return super.getHour(1);
 	}
 	
 	public void setSunday(BigDecimal hours) {
@@ -24,7 +24,7 @@ public class EditableRow extends TimesheetRow implements Serializable {
 	}
 	
 	public BigDecimal getMonday() {
-		return super.getHour(0);
+		return super.getHour(2);
 	}
 
 	public void setMonday(BigDecimal hours) {
@@ -32,7 +32,7 @@ public class EditableRow extends TimesheetRow implements Serializable {
 	}
 	
 	public BigDecimal getTuesday() {
-		return super.getHour(0);
+		return super.getHour(3);
 	}
 
 	public void setTuesday(BigDecimal hours) {
@@ -40,7 +40,7 @@ public class EditableRow extends TimesheetRow implements Serializable {
 	}
 	
 	public BigDecimal getWednesday() {
-		return super.getHour(0);
+		return super.getHour(4);
 	}
 
 	public void setWednesday(BigDecimal hours) {
@@ -48,7 +48,7 @@ public class EditableRow extends TimesheetRow implements Serializable {
 	}
 	
 	public BigDecimal getThursday() {
-		return super.getHour(0);
+		return super.getHour(5);
 	}
 
 	public void setThursday(BigDecimal hours) {
@@ -56,7 +56,7 @@ public class EditableRow extends TimesheetRow implements Serializable {
 	}
 	
 	public BigDecimal getFriday() {
-		return super.getHour(0);
+		return super.getHour(6);
 	}
 
 	public void setFriday(BigDecimal hours) {
