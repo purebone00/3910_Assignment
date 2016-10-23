@@ -179,7 +179,7 @@
 														<h:inputText class ="form-control" id="inputDeletePassword" value="#{controller.deleteUserPassword}"></h:inputText>
 													</div>
 												</div>
-												<h:commandButton class="btn btn-default btn-md" value="Delete User">
+												<h:commandButton class="btn btn-default btn-md" value="Delete User" action="#{controller.deleteAUser()}">
 													<f:ajax execute="@form" render="outputDeleteMessage"/>
 												</h:commandButton>
 												<h2><h:outputText id="outputDeleteMessage" immediate="true" value="#{controller.getPrintDeletingUser(controller.deleteUser)} "/></h2>							

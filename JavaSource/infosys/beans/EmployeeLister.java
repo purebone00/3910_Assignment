@@ -44,26 +44,7 @@ public class EmployeeLister implements EmployeeList {
         adminCred.setPassword("default");
         
         logInfo.put(adminCred.getUserName(), adminCred.getPassword());
-        cred.add(adminCred);
-               
-        Employee e1 = new Employee("John", getEmployeeNumber(), "employeeJohn"); 
-        addEmployee(e1);
-        Credentials credential = new Credentials();
-        credential.setUserName(e1.getUserName());
-        credential.setPassword("default");
-        
-        logInfo.put(credential.getUserName(), credential.getPassword());
-        cred.add(credential);
-        
-        Employee e2 = new Employee("Jovina", getEmployeeNumber(), "employeeLow"); 
-        addEmployee(e2);
-        Credentials credentialsTwo = new Credentials();
-        credentialsTwo.setUserName(e2.getUserName());
-        credentialsTwo.setPassword("default");
-        
-        logInfo.put(credentialsTwo.getUserName(), credentialsTwo.getPassword());
-        cred.add(credentialsTwo);
-        
+        cred.add(adminCred);   
     }
     
     /**
