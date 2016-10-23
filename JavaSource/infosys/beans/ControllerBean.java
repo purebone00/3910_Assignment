@@ -14,10 +14,10 @@ import ca.bcit.infosys.employee.Employee;
 
 @Named("controller")
 @SessionScoped
-public class ControllerBean implements Serializable{
+public class ControllerBean implements Serializable {
     @Inject EmployeeLister list;
     @Inject TimeSheetCollector timesheetCollection;
-	@Inject Credentials currentCredential;
+    @Inject Credentials currentCredential;
     
     String oldPassword;
     String newPassword;
@@ -47,60 +47,60 @@ public class ControllerBean implements Serializable{
      */
     public String verifyLogin() {  
         //Login for admin who has ID of 0000
-        for(Employee e: list.getEmployees()) {
-            if(e.getEmpNumber() == 0000) {
-                if((getUserName().equals(e.getUserName())) &&
-                        (getPassword().equals(list.getLoginCombos().get(e.getUserName())))) {
+        for (Employee e: list.getEmployees()) {
+            if (e.getEmpNumber() == 0000) {
+                if ((getUserName().equals(e.getUserName())) 
+                        && (getPassword().equals(list.getLoginCombos().get(e.getUserName())))) {
                     list.setCurrentEmployee(e);
-                	return "admin";   
+                    return "admin";   
                 }
             }
         }
         //Login for regular employees
-        for(Employee e: list.getEmployees()) {
-            if((getUserName().equals(e.getUserName())) &&
-                    (getPassword().equals(list.getLoginCombos().get(e.getUserName())))) {
+        for (Employee e: list.getEmployees()) {
+            if ((getUserName().equals(e.getUserName())) 
+                    && (getPassword().equals(list.getLoginCombos().get(e.getUserName())))) {
                 list.setCurrentEmployee(e);
-            	return "next"; 
+                return "next"; 
             }
         }
         return "stay";
     }
     
-  /**
-   * Allows Users to change password.
-   * @return String for navigation.
-   */
+    /**
+     * Allows Users to change password.
+     * @return String for navigation.
+     */
     public String changePassword() {
         String result = "";
-      for (Employee e: list.getEmployees()) {
-        if (e.getEmpNumber() == getEmpId()) {
-          if (list.getCreds(e).getPassword().equals(getOldPassword())) {
-            if (getConfirmPassword().equals(getNewPassword())) {
-              list.getCreds(e).setPassword(getNewPassword());
-              list.getLogInfo().put(e.getUserName(), getNewPassword());
-              setPassword(getNewPassword());
-              result = "success";
-              break;
+        for (Employee e: list.getEmployees()) {
+            if (e.getEmpNumber() == getEmpId()) {
+                if (list.getCreds(e).getPassword().equals(getOldPassword())) {
+                    if (getConfirmPassword().equals(getNewPassword())) {
+                        list.getCreds(e).setPassword(getNewPassword());
+                        list.getLogInfo().put(e.getUserName(), getNewPassword());
+                        setPassword(getNewPassword());
+                        result = "success";
+                        break;
+                    }
+                }
+            } else {
+                result = "fail";
             }
-          }
-        } else {
-          result = "fail";
         }
-      }
-      return result;
+        return result;
     }
     
     /**
-     * 
-     * @return
+     * Logs the user out, ending the current session.
+     * @return String for navigation.
      */
     public String logOut() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext ec = context.getExternalContext();
  
         final HttpServletRequest request = (HttpServletRequest)ec.getRequest();
-         request.getSession( false ).invalidate();
+        request.getSession( false ).invalidate();
       
         return "log out";
     }
@@ -114,70 +114,95 @@ public class ControllerBean implements Serializable{
     }
     
     public String goBack() {
-    	return "goBack";
+        return "goBack";
     }
     
+    /**
+     * Adds a user to our user list.
+     */
     public void addingUser() {
         int employeeNumber = list.getEmployeeNumber();
-        Credentials c = new Credentials();
-        c.setUserName(getAddUser());
-        c.setPassword(getAddUserPassword());
-        Employee e = new Employee(getAddName(), employeeNumber, getAddUser());
-        list.getEmployees().add(e);
-        list.getCred().add(c);
+        Credentials cred = new Credentials();
+        cred.setUserName(getAddUser());
+        cred.setPassword(getAddUserPassword());
+        Employee employee = new Employee(getAddName(), employeeNumber, getAddUser());
+        list.getEmployees().add(employee);
+        list.getCred().add(cred);
         list.getLogInfo().put(getAddUser(), getAddUserPassword());
     }
     
-    public String getAddingUser(){
-        if(("".equals(getAddUser()) || getAddUser() == null)){
-         return "";
-        }else{
-         return "User, " + getAddUser() + ", has been added into the system.";
+    /**
+     * A message notifying a user has been added.
+     * @return a string notification.
+     */
+    public String getAddingUser() {
+        if (("".equals(getAddUser()) || getAddUser() == null)) {
+            return "";
+        } else {
+            return "User, " + getAddUser() + ", has been added into the system.";
         }
-     }
+    }
     
-    public String getPrintDeletingUser(String user){
+    /**
+     * Prints a message notifying the user has been deleted and deletes the user.
+     * @param user is the user being deleted.
+     * @return String notifying that a existing user has been deleted.
+     */
+    public String getPrintDeletingUser(String user) {
         boolean render = false;
-        for(Employee e: list.getEmployees()) {
-            if(e.getUserName().equals(getDeleteUser())) { 
+        for (Employee e: list.getEmployees()) {
+            if (e.getUserName().equals(getDeleteUser())) { 
                 list.getEmployees().remove(e);
                 render = true;
             }
         }
-        for(Credentials c: list.getCred()) {
-            if(c.getUserName() == getDeleteUser()) {
+        for (Credentials c: list.getCred()) {
+            if (c.getUserName() == getDeleteUser()) {
                 c = null;
             }
         }
         list.getLogInfo().remove(getDeleteUser());
         
-        if(("".equals(getDeleteUser()) || getDeleteUser() == null)){
-         return "";
-        } else{
-         return (!list.getLogInfo().containsKey(getDeleteUser())&&render)?"User, " + getDeleteUser() + ", has been deleted from the system.": "User, " + getDeleteUser() + ", does not exist in the system.";
+        if (("".equals(getDeleteUser()) || getDeleteUser() == null)) {
+            return "";
+        } else {
+            return (!list.getLogInfo().containsKey(getDeleteUser()) && render) ? "User, " 
+                + getDeleteUser() + ", has been deleted from the system." 
+                : "User, " + getDeleteUser() + ", does not exist in the system.";
         }
-     }
+    }
     
-    public String getChangingUser(){
-        for(Employee e: list.getEmployees()) {
-            if(e.getUserName().equals(getSearchUser()) && (getSearchUser().equals(getSearchConfirmUser()))) {
+    /**
+     * Resets a users password.
+     * @return A message notifying that the password has been reseted.
+     */
+    public String getChangingUser() {
+        for (Employee e: list.getEmployees()) {
+            if (e.getUserName().equals(getSearchUser())
+                    && (getSearchUser().equals(getSearchConfirmUser()))) {
                 list.getLogInfo().put(getSearchUser(),"default");
             }
         }
-        if(("".equals(getSearchUser()) || getSearchUser() == null)){
-         return "";
-        }else{
-         return (list.getLogInfo().containsKey(getSearchUser()))?"User, " + getSearchUser() + "'s password has been reseted to 'default'.":"User does not exist.";
+        if (("".equals(getSearchUser()) || getSearchUser() == null)) {
+            return "";
+        } else {
+            return (list.getLogInfo().containsKey(getSearchUser()))
+                    ? "User, " + getSearchUser() + "'s password has been reseted to 'default'."
+                            : "User does not exist.";
         }
-     }
+    }
     
-    public String getSearchingUser(){
+    /**
+     * Returns information about the currently searched user.
+     * @return A message about the user information.
+     */
+    public String getSearchingUser() {
         String password = "";
         String name = "";
         int employeeNumber = 0;
         
-        for(Employee e: list.getEmployees()) {
-            if(e.getUserName().equals(getSearchUser())) {
+        for (Employee e: list.getEmployees()) {
+            if (e.getUserName().equals(getSearchUser())) {
                 employeeNumber = e.getEmpNumber();
                 name = e.getName();
                 break;
@@ -187,15 +212,15 @@ public class ControllerBean implements Serializable{
         password = list.getLogInfo().get(getSearchUser());
         
         
-        if(("".equals(getSearchUser()) || getSearchUser() == null)){
-         return "";
-        }else{
-         return (list.getLogInfo().containsKey(getSearchUser()))?"User: " + getSearchUser() + "\n" 
-                                                                 + "Name: " + name + "\n" 
-                                                                 + "EmployeeID: " + employeeNumber + "\n"
-                                                                 + "Password: " + password: "User does not exist.";
+        if (("".equals(getSearchUser()) || getSearchUser() == null)) {
+            return "";
+        } else {
+            return (list.getLogInfo().containsKey(getSearchUser()))
+                    ? "User: " + getSearchUser() + "\n" + "Name: " + name + "\n" 
+                    + "EmployeeID: " + employeeNumber + "\n"
+                    + "Password: " + password : "User does not exist.";
         }
-     }
+    }
     
     public String getSearchConfirmUser() {
         return searchConfirmUser;
@@ -216,6 +241,7 @@ public class ControllerBean implements Serializable{
     public String deletedUserMsg() {
         return "You have deleted user, " + getDeleteUser() + ".";
     }
+    
     public String addedUserMsg() {
         return "You have added user, " + getAddUser() + ".";
     }
@@ -272,12 +298,15 @@ public class ControllerBean implements Serializable{
     public String getUserName() {
         return currentCredential.getUserName();
     }
+    
     public void setUserName(String userName) {
         currentCredential.setUserName(userName);;
     }
+    
     public String getPassword() {
         return currentCredential.getPassword();
     }
+    
     public Integer getEmpId() {
         return list.getCurrentEmployee().getEmpNumber();
     }
@@ -315,12 +344,12 @@ public class ControllerBean implements Serializable{
     }
 
     public String timeSheet() {
-    	return "timeSheet";
+        return "timeSheet";
     }   
 
     public TimeSheetCollector getTimesheetCollection() {
-		return timesheetCollection;
-	}
+        return timesheetCollection;
+    }
 
 
 }

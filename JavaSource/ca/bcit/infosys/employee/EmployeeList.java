@@ -68,5 +68,4 @@ public interface EmployeeList extends Serializable {
      */
     void addEmployee(Employee newEmployee);
 
-    Employee getCurrentEmployee(ArrayList<Employee> e, int i);
 }

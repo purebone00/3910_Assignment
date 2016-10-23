@@ -19,11 +19,13 @@ public class EmployeeLister implements EmployeeList {
     Employee currentEmployee;
     
     public void setCurrentEmployee(Employee currentEmployee) {
-		this.currentEmployee = currentEmployee;
-	}
-
-	public EmployeeLister() {
-	    
+        this.currentEmployee = currentEmployee;
+    }
+    
+    /**
+     * Creates an Employee list that contains all our employees. 
+     */
+    public EmployeeLister() { 
         Employee admin = new Employee("Admin", 0000, "Admin"); 
         addEmployee(admin);
         Credentials adminCred = new Credentials();
@@ -35,42 +37,48 @@ public class EmployeeLister implements EmployeeList {
                
         Employee e1 = new Employee("John", getEmployeeNumber(), "employeeJohn"); 
         addEmployee(e1);
-        Credentials c = new Credentials();
-        c.setUserName(e1.getUserName());
-        c.setPassword("default");
+        Credentials credential = new Credentials();
+        credential.setUserName(e1.getUserName());
+        credential.setPassword("default");
         
-        logInfo.put(c.getUserName(), c.getPassword());
-        cred.add(c);
+        logInfo.put(credential.getUserName(), credential.getPassword());
+        cred.add(credential);
         
         Employee e2 = new Employee("Jovina", getEmployeeNumber(), "employeeLow"); 
         addEmployee(e2);
-        Credentials c2 = new Credentials();
-        c2.setUserName(e2.getUserName());
-        c2.setPassword("default");
+        Credentials credentialsTwo = new Credentials();
+        credentialsTwo.setUserName(e2.getUserName());
+        credentialsTwo.setPassword("default");
         
         
-        logInfo.put(c2.getUserName(), c2.getPassword());
-        cred.add(c2);
+        logInfo.put(credentialsTwo.getUserName(), credentialsTwo.getPassword());
+        cred.add(credentialsTwo);
         
     }
     
-	public int getEmployeeNumber() {
-	    employeeNumber++;
-	    return employeeNumber;
-	}
-	
-    public void addCred(Credentials c) {
-        cred.add(c);
+    public int getEmployeeNumber() {
+        employeeNumber++;
+        return employeeNumber;
     }
     
-    public Credentials getCreds(Employee e) {
-        for(Credentials c: cred) {
-            if(e.getUserName() == c.getUserName()) {
+    public void addCred(Credentials credentials) {
+        cred.add(credentials);
+    }
+    
+    /**
+     * 
+     * @param e
+     * @return
+     */
+    public Credentials getCreds(Employee employee) {
+        for (Credentials c: cred) {
+            if (employee.getUserName() == c.getUserName()) {
                 return c;
             }
         }
         return null;
     }
+    
     public ArrayList<Credentials> getCred() {
         return cred;
     }
@@ -84,6 +92,9 @@ public class EmployeeLister implements EmployeeList {
         return employees;
     }
 
+    /**
+     * 
+     */
     public Employee getEmployee(String name) {
         for (Employee x : employees) {
             if (x.getName().equals(name)) {
@@ -98,16 +109,18 @@ public class EmployeeLister implements EmployeeList {
         return logInfo;
     }
 
+    /**
+     * Gets the current administrator.
+     */
     public Employee getAdministrator() {
-        for(Employee e: employees) {
-            if(e.getEmpNumber() == 0000) {
+        for (Employee e: employees) {
+            if (e.getEmpNumber() == 0000) {
                 return e;
             }
         }
         return null;
     }
 
-    
     @Override
     public boolean verifyUser(Credentials credential) {
         return false;
@@ -129,10 +142,8 @@ public class EmployeeLister implements EmployeeList {
     public Employee getCurrentEmployee() {
         return currentEmployee;
     }
+
     
-    @Override
-    public Employee getCurrentEmployee(ArrayList<Employee> e, int i) {
-        return e.get(i);
-    }
+    
 
 }
