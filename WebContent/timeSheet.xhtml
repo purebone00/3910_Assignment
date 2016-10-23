@@ -98,14 +98,16 @@
 			               <f:facet name="header">
 			                  <h:outputText value="MON"/>
 			               </f:facet>
-		               		<h:inputText value		="#{row.monday}" 
+		               		<h:inputText id			="monday"
+		               					 value		="#{row.monday}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
 		               					 size		="8"/>
 		               		<h:outputText value		="#{row.monday}" 
 		               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 		               		<f:facet name="footer">
 		                  		<h:outputText value="#{controller.currentTimesheet.getDailyHours()[2]}"/>
-		               		</f:facet>
+		                  		 <h:message for="monday"/>
+		                  	</f:facet>
 			      		</h:column>
 			      		<h:column>
 			               <f:facet name="header">
