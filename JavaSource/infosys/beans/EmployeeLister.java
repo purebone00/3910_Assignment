@@ -1,5 +1,9 @@
 package infosys.beans;
 
+import ca.bcit.infosys.employee.Credentials;
+import ca.bcit.infosys.employee.Employee;
+import ca.bcit.infosys.employee.EmployeeList;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,7 +11,7 @@ import java.util.Map;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
-import ca.bcit.infosys.employee.*;
+
 
 @Named("el")
 @ApplicationScoped
@@ -66,9 +70,9 @@ public class EmployeeLister implements EmployeeList {
     }
     
     /**
-     * 
-     * @param e
-     * @return
+     * Gets the credentials of an employee.
+     * @param employee to have credentials extracted. 
+     * @return The employee's credentials.
      */
     public Credentials getCreds(Employee employee) {
         for (Credentials c: cred) {
@@ -78,22 +82,9 @@ public class EmployeeLister implements EmployeeList {
         }
         return null;
     }
-    
-    public ArrayList<Credentials> getCred() {
-        return cred;
-    }
-    
-    
-    public Map<String, String> getLogInfo() {
-        return logInfo;
-    }
-    
-    public ArrayList<Employee> getEmployees() {
-        return employees;
-    }
 
     /**
-     * 
+     * Get the current employee. 
      */
     public Employee getEmployee(String name) {
         for (Employee x : employees) {
@@ -102,11 +93,6 @@ public class EmployeeLister implements EmployeeList {
             }
         }
         return null;
-    }
-    
-
-    public Map<String, String> getLoginCombos() {
-        return logInfo;
     }
 
     /**
@@ -119,6 +105,23 @@ public class EmployeeLister implements EmployeeList {
             }
         }
         return null;
+    }
+    
+    public ArrayList<Credentials> getCred() {
+        return cred;
+    }
+    
+    public Map<String, String> getLogInfo() {
+        return logInfo;
+    }
+    
+    public ArrayList<Employee> getEmployees() {
+        return employees;
+    }
+    
+    public Map<String, String> getLoginCombos() {
+     
+        return logInfo;
     }
 
     @Override

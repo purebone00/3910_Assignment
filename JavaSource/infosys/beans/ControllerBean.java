@@ -1,5 +1,8 @@
 package infosys.beans;
 
+import ca.bcit.infosys.employee.Credentials;
+import ca.bcit.infosys.employee.Employee;
+
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
@@ -9,8 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
-import ca.bcit.infosys.employee.Credentials;
-import ca.bcit.infosys.employee.Employee;
+
 
 @Named("controller")
 @SessionScoped
@@ -104,19 +106,7 @@ public class ControllerBean implements Serializable {
       
         return "log out";
     }
-    
-    public String goToPassword() {
-        return "changePassword";
-    }
-    
-    public String goToTimeSheet() {
-        return "toTimeSheet";
-    }
-    
-    public String goBack() {
-        return "goBack";
-    }
-    
+  
     /**
      * Adds a user to our user list.
      */
@@ -221,6 +211,18 @@ public class ControllerBean implements Serializable {
                     + "Password: " + password : "User does not exist.";
         }
     }
+
+    public String goToPassword() {
+        return "changePassword";
+    }
+    
+    public String goToTimeSheet() {
+        return "toTimeSheet";
+    }
+    
+    public String goBack() {
+        return "goBack";
+    }    
     
     public String getSearchConfirmUser() {
         return searchConfirmUser;
@@ -269,7 +271,6 @@ public class ControllerBean implements Serializable {
     public void setDeleteUserPasswordConfirm(String deleteUserPasswordConfirm) {
         this.deleteUserPasswordConfirm = deleteUserPasswordConfirm;
     }
-    
     
     public String getAddName() {
         return addName;
@@ -350,6 +351,4 @@ public class ControllerBean implements Serializable {
     public TimeSheetCollector getTimesheetCollection() {
         return timesheetCollection;
     }
-
-
 }
