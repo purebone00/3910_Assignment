@@ -11,8 +11,9 @@ import javax.enterprise.context.ApplicationScoped;
 
 
 /**
- * The pseudo-database that holds information on all currently stores timesheets.
- * Will iteract with an actual database in the future, and will act as in 
+ * The pseudo-database that holds information on all currently stores
+ * timesheets. Will iteract with an actual database in the future,
+ * and will act as in.
  * intermediary between the database and the front-end JSF page.
  * @author Albert
  *

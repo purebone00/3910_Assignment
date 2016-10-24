@@ -16,39 +16,42 @@
 		
 	    <title>#{msgs['login.title']}</title>
 	</h:head>
-	<h:body style = "background: gray !important; padding-top: 15%;">
-	
-		<div class="container">
-	    	<div class="row">
-				<div class="col-md-4 col-md-offset-4">
-	    			<div class="panel panel-default">
-				  		
-				  		<div class="panel-heading">
-				    		<h3 class="panel-title">#{msgs['login.message']}</h3>
-				 		</div>
-				  		
-				  		<div class="panel-body">
-				    		<h:form>
-								<div class = "form-group">
-									<div class = "form-inline">
-										<label for="userName">#{msgs['login.username']}</label> 
-										<span> </span>
-										<h:inputText class = "form-control" id="userName" value="#{controller.userName}"/>
-									</div>
-								</div>
-								<div class = "form-group">
-									<div class = "form-inline">
-										<label for="password">#{msgs['login.password']}</label>
-										<span> </span> 
-										<h:inputSecret class = "form-control" id="password" value="#{controller.password}"/>
-									</div>
-								</div>
-					    		<h:commandButton class="btn btn-default" value="#{msgs['login.submit']}" action="#{controller.verifyLogin}"/>						
-							</h:form>
-				    	</div>
+	<h:body>
+		<ui:composition template="/templates/template.xhtml">
+			<ui:define name="body">
+				<div class="container"  style = "padding-top: 15%;">
+			    	<div class="row">
+						<div class="col-md-4 col-md-offset-4">
+			    			<div class="panel panel-default">
+						  		
+						  		<div class="panel-heading">
+						    		<h3 class="panel-title">#{msgs['login.message']}</h3>
+						 		</div>
+						  		
+						  		<div class="panel-body">
+						    		<h:form>
+										<div class = "form-group">
+											<div class = "form-inline">
+												<label for="userName">#{msgs['login.username']}</label> 
+												<span> </span>
+												<h:inputText class = "form-control" id="userName" value="#{controller.userName}"/>
+											</div>
+										</div>
+										<div class = "form-group">
+											<div class = "form-inline">
+												<label for="password">#{msgs['login.password']}</label>
+												<span> </span> 
+												<h:inputSecret class = "form-control" id="password" value="#{controller.password}"/>
+											</div>
+										</div>
+							    		<h:commandButton class="btn btn-default" value="#{msgs['login.submit']}" action="#{controller.verifyLogin}"/>						
+									</h:form>
+						    	</div>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+			</ui:define>
+		</ui:composition>
 	</h:body>
 </html>

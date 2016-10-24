@@ -255,10 +255,14 @@ public class ControllerBean implements Serializable {
         return "toTimeSheet";
     }
     
+    /**
+     * Navigating method.
+     * @return Navigational string.
+     */
     public String goBack() {
-    	if (getEmpId() == 0000) {
-    		return "goBackAdmin";
-    	}
+        if (getEmpId() == 0000) {
+            return "goBackAdmin";
+        }
         return "goBack";
     }    
     
