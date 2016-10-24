@@ -3,6 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html">
 	<h:head>
 	    <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -13,6 +14,7 @@
 	    <title>User Panel</title>
 	</h:head>
 	<h:body>
+<<<<<<< Updated upstream
 		<div class="jumbotron" style="margin-top: 50px">
   			<h1 style = "text-align:center;">Welcome, #{controller.userName}</h1>
 		</div>
@@ -33,6 +35,31 @@
 		</div>
 		<hr></hr>
 		
+=======
+		<ui:composition template="/templates/template.xhtml">
+			<ui:define name="body">
+				<div class="jumbotron" style="margin-top: 50px">
+		  			<h1 style = "text-align:center">#{msgs['userPanel.welcomeMsg']}#{controller.userName}</h1>
+				</div>
+				
+				<hr></hr>
+				<div class="container" style="height:300px;">
+					<div class="col-md-4" style="text-align:center;">
+						<h:button class="btn btn-default btn-lg" value="#{msgs['userPanel.changePswd']}" outcome="#{controller.goToPassword()}"/>
+					</div>
+					<div class="col-md-4" style="text-align:center;">
+						<h:button class="btn btn-default btn-lg" value="#{msgs['userPanel.timesheet']}" outcome="#{controller.goToTimeSheet()}"/>
+					</div>
+					<div class="col-md-4" style="text-align:center;">
+						<h:form>
+							<h:commandButton class="btn btn-default btn-lg" value="#{msgs['userPanel.logout']}" action="#{controller.logOut}"/>
+						</h:form>
+					</div>
+				</div>
+				<hr></hr>
+			</ui:define>
+		</ui:composition>	
+>>>>>>> Stashed changes
 	</h:body>
 	
 </html>

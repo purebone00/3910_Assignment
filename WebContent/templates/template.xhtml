@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+	<h:head>
+		<title></title>
+    	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	   	<h:outputStylesheet library="css" name="bootstrap.min.css"/>
+		<h:outputStylesheet name="css/styles.css"/>
+		<h:outputScript library="js" name="jquery-3.1.1.min.js" />
+		<h:outputScript library="js" name="bootstrap.js" />
+	</h:head>
+	<h:body>
+	
+		<div id="header">
+        	 <ui:insert name="header">
+         	   <ui:include src="/common/header.xhtml"/>
+         	</ui:insert>
+      	</div>
+      	
+		<div id="main">
+			<ui:insert name="body">
+				 <ui:include src="/common/content.xhtml"/>
+			</ui:insert>
+		</div>
+		
+		<div id="footer">
+        	 <ui:insert name="footer">
+         	   <ui:include src="/common/footer.xhtml"/>
+         	</ui:insert>
+      	</div>  
+      
+      	<ui:debug/>
+		
+	</h:body>
+</html>
