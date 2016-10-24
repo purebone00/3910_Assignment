@@ -4,8 +4,14 @@ import ca.bcit.infosys.employee.Employee;
 import ca.bcit.infosys.timesheet.Timesheet;
 import ca.bcit.infosys.timesheet.TimesheetRow;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 
 /**
@@ -112,7 +118,31 @@ public class EditableTimesheet extends Timesheet {
         super.getDetails().add(new EditableRow());
     }
     
-    
+    /**
+     * My attempt to check for row uniqueness.
+     * @param context
+     * @param component
+     * @param value
+     */
+    public void checkRow(FacesContext context, UIComponent component, Object value) {
+    	
+        UIInput dayInput = (UIInput) component.findComponent("day");
+        UIInput monthInput = (UIInput) component.findComponent("month");
+    	    	
+    	List<String> checkForUnique = new ArrayList<String>();
+    	for (TimesheetRow x : getDetails()) {
+    		checkForUnique.add(new String(x.getProjectID() + x.getWorkPackage()));
+    	}
+    	
+    	for (int i = 0 ; i < checkForUnique.size() ; i++) {
+    		for (int j = 1 ; j < checkForUnique.size() ; j++) {
+    			if (checkForUnique.get(i).equals(checkForUnique.get(j))) {
+    				throw new ValidatorException(new FacesMessage("ProjectID and WorkPackage have to be unique"));
+    			}
+    		}
+    	}
+    	
+    }
     
 
 }

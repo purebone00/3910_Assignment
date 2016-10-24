@@ -35,14 +35,16 @@
 	      		<div class="col-md-12">
 	      		<div class="col-md-12">
 			      	<h:dataTable value="#{controller.currentTimesheet.details}" var="row" styleClass="names" 
-		                      headerClass="namesHeader" rowClasses="odd,even">
+		                      headerClass="namesHeader" rowClasses="odd,even" columnClasses="projectID,workPackage">
 			      		<h:column>     			
 			      			<f:facet name="header">
 		                  		<h:outputText value="#{msgs['timesheet.projectID']}"/>
 		               		</f:facet>
 		               		<h:inputText value		="#{row.projectID}" 
 		               					 rendered	="#{controller.currentTimesheet.editing}" 
-		               					 size		="8"/>
+		               					 size		="8">
+		               			<f:convertNumber pattern="#####"/>
+		               		</h:inputText>
 		               		<h:outputText value		="#{row.projectID}" 
 		               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 		               		<f:facet name="footer">
