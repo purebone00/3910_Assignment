@@ -26,14 +26,10 @@ import javax.inject.Named;
 @Named("el")
 @SessionScoped
 public class EmployeeLister implements Serializable{    
-    /** An employee number starting from 1000. */
-    private static int employeeNumber = 1000;
-    /** A list of credentials. */
-    private static ArrayList<Credentials> cred = new ArrayList<Credentials>();
+
     /** A list of current employees. */
     private ArrayList<Employee> employees = new ArrayList<Employee>();
-    /** A a map of current employees. */
-    private static Map<String, String> logInfo = new HashMap<String, String>();
+
     /** The current employee on the system. */
     private Employee currentEmployee;
 
@@ -42,9 +38,7 @@ public class EmployeeLister implements Serializable{
     /**
      * Constructor to create an Employee list that contains all our employees. 
      */
-    public EmployeeLister() {
-       
-    }
+    public EmployeeLister() {}
     
 
     /**

@@ -34,15 +34,19 @@
 											<div class = "form-inline">
 												<label for="userName">#{msgs['login.username']}</label> 
 												<span> </span>
-												<h:inputText class = "form-control" id="userName" value="#{controller.userName}"/>
+												<h:inputText class = "form-control" id="userName" value="#{controller.userName}" required="true" requiredMessage="#{msgs['login.validUser']}">
+												</h:inputText>
 											</div>
+											<span style="color:red;"><h:message for="userName"></h:message></span>
 										</div>
 										<div class = "form-group">
 											<div class = "form-inline">
 												<label for="password">#{msgs['login.password']}</label>
 												<span> </span> 
-												<h:inputSecret class = "form-control" id="password" value="#{controller.password}"/>
+												<h:inputSecret class = "form-control" id="password" value="#{controller.password}" required="true" requiredMessage="#{msgs['login.validPassword']}">
+												</h:inputSecret>
 											</div>
+											<span style="color:red;"><h:message for="password"></h:message></span>
 										</div>
 							    		<h:commandButton class="btn btn-default" value="#{msgs['login.submit']}" action="#{controller.verifyLogin}"/>						
 									</h:form>

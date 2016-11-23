@@ -134,13 +134,13 @@ public class ControllerBean implements Serializable {
     public void addingUser() {
         list.setEmployees();
         this.render = false;
-        /*Can add multiple of same employee name*/
+        
         for(Employee e :list.getEmployees()) {
             if(e.getUserName().equals(getAddUser()))
                 this.render = true;
         }
         
-        if(render == false) {
+        if(!render) {
             Employee employee = new Employee(0, getAddUser(), getAddName(), "default");
             list.addEmployee(employee);
         }
@@ -190,13 +190,14 @@ public class ControllerBean implements Serializable {
                 : "User, " + getDeleteUser() + ", does not exist in the system.";
         }
     }
+
     
     /**
      * Resets a users password.
      * @return A message notifying that the password has been reseted.
      */
     public String getChangingUser() {
-        this.render = true;
+        
         for (Employee e: list.getEmployees()) {
             if (e.getUserName().equals(getSearchUser())
                     && (getSearchUser().equals(getSearchConfirmUser()))) {
@@ -211,7 +212,7 @@ public class ControllerBean implements Serializable {
         if (("".equals(getSearchUser()) || getSearchUser() == null)) {
             return "";
         } else {
-            return (list.getEmployee(getSearchUser()))
+            return (list.findEmployee(getSearchUser()) != null && getSearchUser().equals(getSearchConfirmUser()))
                     ? "User, " + getSearchUser() + "'s password has been reseted to 'default'."
                             : "User Does Not Exist.";
         }
@@ -222,15 +223,17 @@ public class ControllerBean implements Serializable {
      * @return A message about the user information.
      */
     public String getSearchingUser() {
-
-        String name = "";
-        //FIX NULL PTR
-        Employee e = list.findEmployee(getSearchUser());
-        
+        Employee e = null;
+        try{
+            e = list.findEmployee(getSearchUser());
+            this.render = true;
+        } catch (NullPointerException n) {
+            this.render = false;
+        }
         if (("".equals(getSearchUser()) || getSearchUser() == null)) {
             return "";
         } else {
-            return (e.getUserName().equals(getSearchUser()))
+            return (e != null)
                     ? "User: " + getSearchUser() + "\n" + "Name: " + e.getName() + "\n" 
                     + "EmployeeID: " + e.getEmpNumber() + "\n"
                     + "Password: " + e.getPassword() : "User does not exist.";
@@ -250,7 +253,6 @@ public class ControllerBean implements Serializable {
      * @return Navigational string.
      */
     public String goBack() {
-    	timesheetCollection.update();
         if (getEmpId() == 3) {
             return "goBackAdmin";
         }
