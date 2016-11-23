@@ -1,8 +1,13 @@
 package ca.bcit.infosys.access;
 
+import ca.bcit.infosys.employee.Employee;
+import ca.bcit.infosys.timesheet.Timesheet;
+import ca.bcit.infosys.timesheet.TimesheetRow;
+import infosys.beans.EditableRow;
+import infosys.beans.EditableTimesheet;
+
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,21 +18,22 @@ import javax.annotation.Resource;
 import javax.enterprise.context.RequestScoped;
 import javax.sql.DataSource;
 
-import ca.bcit.infosys.employee.Employee;
-import ca.bcit.infosys.timesheet.Timesheet;
-import ca.bcit.infosys.timesheet.TimesheetRow;
-import infosys.beans.EditableRow;
-import infosys.beans.EditableTimesheet;
-
-
+/**
+ * This is the Timesheet JDBC manager that manages all the CRUB operations
+ * needed to populate our local timesheet beans and conversely store any
+ * updated data back into the database.
+ * 
+ * @author Albert Chen
+ *
+ */
 @RequestScoped
 public class TimesheetManager {
-    @Resource(mappedName="java:/employeeTimeSheet")
+    @Resource(mappedName = "java:/employeeTimeSheet")
     private DataSource dataSource;
-    
+
     /**
-     * Return all Timesheets.
-     * @return 
+     * Return all Timesheets that were avaliable from the database.
+     * @return ArrayList of all the timesheets
      */
     public ArrayList<EditableTimesheet> getAll() {
         ArrayList<EditableTimesheet> timesheetList = new ArrayList<EditableTimesheet>();
@@ -41,12 +47,13 @@ public class TimesheetManager {
                     ResultSet result = stmt.executeQuery(
                             "SELECT * FROM TimesheetLog");
                     while (result.next()) {
-                    	EditableTimesheet timesheet = 
-                    			new EditableTimesheet(getEmployee(result.getInt("employeeNumber")),
-                    			result.getDate("endDate"),
-                    			getAllRows(result.getInt("timesheetID")));
-                    	timesheet.setTimesheetID(result.getInt("timesheetID"));
-                    	timesheetList.add(timesheet);
+                        EditableTimesheet timesheet = 
+                                new EditableTimesheet(
+                                        getEmployee(result.getInt("employeeNumber")),
+                                        result.getDate("endDate"),
+                                        getAllRows(result.getInt("timesheetID")));
+                        timesheet.setTimesheetId(result.getInt("timesheetID"));
+                        timesheetList.add(timesheet);
                     }
                 } finally {
                     if (stmt != null) {
@@ -63,52 +70,58 @@ public class TimesheetManager {
             ex.printStackTrace();
             return null;
         }
-        
-        
+
+
         return timesheetList;
     }
-    
+
+    /**
+     * Grabs all the rows corresponding with a specific timesheet.
+     * @param timesheetId the id of the timesheet the rows are associated with
+     * @return An ArrayList of timesheetRows
+     */
     public ArrayList<TimesheetRow> getAllRows(int timesheetId) {
-    	ArrayList<TimesheetRow> timesheetRows = new ArrayList<TimesheetRow>();
-    	Connection connection = null;
+        ArrayList<TimesheetRow> timesheetRows = new ArrayList<TimesheetRow>();
+        Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
             try {
-            	connection = dataSource.getConnection();
+                connection = dataSource.getConnection();
                 try {
-                	preparedStatement = connection.prepareStatement("SELECT * FROM Timesheet WHERE timesheetID = ?");
-                	
+                    preparedStatement = connection.prepareStatement(
+                            "SELECT * FROM Timesheet WHERE timesheetID = ?");
+
                     preparedStatement.setInt(1, timesheetId);
                     ResultSet result = preparedStatement.executeQuery();
                     while (result.next()) {
-                    	int id = result.getInt("projectID");
-                    	String workpackage = result.getString("wp");
-                    	
-                    	BigDecimal[] hours = new BigDecimal[Timesheet.DAYS_IN_WEEK];
-                    	
-                    	hours[0] = result.getBigDecimal("saturday");
-                    	
-                    	hours[1] = result.getBigDecimal("sunday");
-                    	
-                    	hours[2] = result.getBigDecimal("monday");
-                    	
-                    	hours[3] = result.getBigDecimal("tuesday");
-                    	
-                    	hours[4] = result.getBigDecimal("wednesday");
-                    	
-                    	hours[5] = result.getBigDecimal("thursday");
-                    	
-                    	hours[6] = result.getBigDecimal("friday");
+                        final int id = result.getInt("projectID");
+                        final String workpackage = result.getString("wp");
 
-                    	String notes = result.getString("notes");
-                    	
-                    	EditableRow newRow = new EditableRow(id, workpackage, hours, notes);
-                    	newRow.setRowID(result.getInt("timesheetRow"));
-                    	timesheetRows.add(newRow);
+                        BigDecimal[] hours = new BigDecimal[Timesheet.DAYS_IN_WEEK];
+
+                        hours[0] = result.getBigDecimal("saturday");
+
+                        hours[1] = result.getBigDecimal("sunday");
+
+                        hours[2] = result.getBigDecimal("monday");
+
+                        hours[3] = result.getBigDecimal("tuesday");
+
+                        hours[4] = result.getBigDecimal("wednesday");
+
+                        hours[5] = result.getBigDecimal("thursday");
+
+                        hours[6] = result.getBigDecimal("friday");
+
+                        String notes = result.getString("notes");
+
+                        EditableRow newRow = new EditableRow(id, workpackage, hours, notes);
+                        newRow.setRowId(result.getInt("timesheetRow"));
+                        timesheetRows.add(newRow);
                     }
                 } finally {
                     if (preparedStatement != null) {
-                    	preparedStatement.close();
+                        preparedStatement.close();
                     }
                 }
             } finally {
@@ -121,12 +134,17 @@ public class TimesheetManager {
             ex.printStackTrace();
             return null;
         }
-        
+
         return timesheetRows;
     }
-    
+
+    /**
+     * Grabs the employee that is associated with an id.
+     * @param id of the employee
+     * @return A employee created with properties pulled from the database.
+     */
     public Employee getEmployee(int id) {
-    	Connection connection = null;
+        Connection connection = null;
         Statement stmt = null;
         try {
             try {
@@ -140,7 +158,7 @@ public class TimesheetManager {
                                 result.getString("employeeID"),
                                 result.getString("employeeName"),
                                 result.getString("password")
-                               );
+                                );
                     } else {
                         return null;
                     }
@@ -160,7 +178,11 @@ public class TimesheetManager {
             return null;
         }
     }
-    
+
+    /**
+     * Updates the row in the database that is associated with the row passed in.
+     * @param timesheetRow needed to be updated database side
+     */
     public void update(EditableRow timesheetRow) {
         Connection connection = null;
         PreparedStatement updateQuery = null;
@@ -168,42 +190,42 @@ public class TimesheetManager {
             try {
                 connection = dataSource.getConnection();
                 try {
-                	updateQuery = connection.prepareStatement("UPDATE timesheet SET " +
-                								"projectID=?, " +
-                								"wp=?, " +
-                								"saturday=?, " +
-                								"sunday=?, " + 
-                								"monday=?, " + 
-                								"tuesday=?, " + 
-                								"wednesday=?, " + 
-                								"thursday=?, " + 
-                								"friday=?, " + 
-                								"notes=? " +
-                								"WHERE timesheetRow=?;");
-                	updateQuery.setInt(1, timesheetRow.getProjectID());
-                	updateQuery.setString(2, timesheetRow.getWorkPackage());
-                	updateQuery.setBigDecimal(3, timesheetRow.getSaturday() );
+                    updateQuery = connection.prepareStatement("UPDATE timesheet SET " 
+                            + "projectID=?, " 
+                            + "wp=?, " 
+                            + "saturday=?, " 
+                            + "sunday=?, " 
+                            + "monday=?, " 
+                            + "tuesday=?, " 
+                            + "wednesday=?, " 
+                            + "thursday=?, " 
+                            + "friday=?, " 
+                            + "notes=? " 
+                            + "WHERE timesheetRow=?;");
+                    updateQuery.setInt(1, timesheetRow.getProjectID());
+                    updateQuery.setString(2, timesheetRow.getWorkPackage());
+                    updateQuery.setBigDecimal(3, timesheetRow.getSaturday() );
 
-                	updateQuery.setBigDecimal(4, timesheetRow.getSunday() );
+                    updateQuery.setBigDecimal(4, timesheetRow.getSunday() );
 
-                	updateQuery.setBigDecimal(5, timesheetRow.getMonday() );
+                    updateQuery.setBigDecimal(5, timesheetRow.getMonday() );
 
-                	updateQuery.setBigDecimal(6, timesheetRow.getTuesday() );
+                    updateQuery.setBigDecimal(6, timesheetRow.getTuesday() );
 
-                	updateQuery.setBigDecimal(7, timesheetRow.getWednesday() );
+                    updateQuery.setBigDecimal(7, timesheetRow.getWednesday() );
 
-                	updateQuery.setBigDecimal(8, timesheetRow.getThursday() );
+                    updateQuery.setBigDecimal(8, timesheetRow.getThursday() );
 
-                	updateQuery.setBigDecimal(9, timesheetRow.getFriday() );
+                    updateQuery.setBigDecimal(9, timesheetRow.getFriday() );
 
                     updateQuery.setString(10, timesheetRow.getNotes());
-                    
-                    updateQuery.setInt(11, timesheetRow.getRowID());
-                    
+
+                    updateQuery.setInt(11, timesheetRow.getRowId());
+
                     updateQuery.executeUpdate();
                 } finally {
                     if (updateQuery != null) {
-                    	updateQuery.close();
+                        updateQuery.close();
                     }
                 }
             } finally {
@@ -216,32 +238,38 @@ public class TimesheetManager {
             ex.printStackTrace();
         }
     }
-    
+
+    /**
+     * Creates a new timesheet Entry in the timesheetlog database.
+     * @param timesheet represents the new timesheet
+     */
     public void create(EditableTimesheet timesheet) {
-    	Connection connection = null;
+        Connection connection = null;
         PreparedStatement query = null;
         try {
             try {
                 connection = dataSource.getConnection();
                 try {
-                	query = connection.prepareStatement("INSERT INTO timesheetlog " 
-                			+ "VALUES(NULL, ?, ?, ?);");
-                	query.setInt(1, timesheet.getEmployee().getEmpNumber());
-                	query.setDate(2, new java.sql.Date (timesheet.getEndWeek().getTime()));
-                	query.setInt(3, timesheet.getWeekNumber());
-                	
-                	query.executeUpdate();
-                	query.close();
-                	
-                	query = connection.prepareStatement("SELECT timesheetID FROM timesheetlog WHERE timesheetID=last_insert_id()");
-                
-                	ResultSet result = query.executeQuery();
-                	while (result.next()) {
-                		timesheet.setTimesheetID(result.getInt("timesheetID"));
-                	}               	
+                    query = connection.prepareStatement("INSERT INTO timesheetlog " 
+                            + "VALUES(NULL, ?, ?, ?);");
+                    query.setInt(1, timesheet.getEmployee().getEmpNumber());
+                    query.setDate(2, new java.sql.Date(timesheet.getEndWeek().getTime()));
+                    query.setInt(3, timesheet.getWeekNumber());
+
+                    query.executeUpdate();
+                    query.close();
+
+                    query = connection.prepareStatement(
+                            "SELECT timesheetID FROM timesheetlog "
+                            + "WHERE timesheetID=last_insert_id()");
+
+                    ResultSet result = query.executeQuery();
+                    while (result.next()) {
+                        timesheet.setTimesheetId(result.getInt("timesheetID"));
+                    }               
                 } finally {
                     if (query != null) {
-                    	query.close();
+                        query.close();
                     }
                 }
             } finally {
@@ -254,33 +282,41 @@ public class TimesheetManager {
             ex.printStackTrace();
         }
     }
-    
-    public void createRow(EditableRow timesheetRow, int timesheetID) {
-    	Connection connection = null;
+
+    /**
+     * Creates a new entry in the Timesheet database that holds the information
+     * for a row.
+     * @param timesheetRow object to be stored
+     * @param timesheetId timesheet it is associated with
+     */
+    public void createRow(EditableRow timesheetRow, int timesheetId) {
+        Connection connection = null;
         PreparedStatement query = null;
         try {
             try {
                 connection = dataSource.getConnection();
                 try {
-                	query = connection.prepareStatement("INSERT INTO timesheet "
-                			+ "(timesheetRow, projectID, wp, saturday, sunday, monday, tuesday, wednesday, thursday, friday, notes, timesheetID) "
-                			+ "VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
-                	query.setInt(1, timesheetRow.getProjectID());
-                	query.setString(2, timesheetRow.getWorkPackage());
-                	query.setBigDecimal(3, timesheetRow.getSaturday());
-                	query.setBigDecimal(4, timesheetRow.getSunday());
-                	query.setBigDecimal(5, timesheetRow.getMonday());
-                	query.setBigDecimal(6, timesheetRow.getTuesday());
-                	query.setBigDecimal(7, timesheetRow.getWednesday());
-                	query.setBigDecimal(8, timesheetRow.getThursday());
-                	query.setBigDecimal(9, timesheetRow.getFriday());
-                	query.setString(10, timesheetRow.getNotes());
-                	query.setInt(11, timesheetID);
-                	
-                	query.executeUpdate();
+                    query = connection.prepareStatement("INSERT INTO timesheet "
+                            + "(timesheetRow, projectID, wp, "
+                            + "saturday, sunday, monday, tuesday, wednesday, " 
+                            + "thursday, friday, notes, timesheetID) "
+                            + "VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+                    query.setInt(1, timesheetRow.getProjectID());
+                    query.setString(2, timesheetRow.getWorkPackage());
+                    query.setBigDecimal(3, timesheetRow.getSaturday());
+                    query.setBigDecimal(4, timesheetRow.getSunday());
+                    query.setBigDecimal(5, timesheetRow.getMonday());
+                    query.setBigDecimal(6, timesheetRow.getTuesday());
+                    query.setBigDecimal(7, timesheetRow.getWednesday());
+                    query.setBigDecimal(8, timesheetRow.getThursday());
+                    query.setBigDecimal(9, timesheetRow.getFriday());
+                    query.setString(10, timesheetRow.getNotes());
+                    query.setInt(11, timesheetId);
+
+                    query.executeUpdate();
                 } finally {
                     if (query != null) {
-                    	query.close();
+                        query.close();
                     }
                 }
             } finally {
@@ -293,5 +329,5 @@ public class TimesheetManager {
             ex.printStackTrace();
         }
     }
-    
+
 }

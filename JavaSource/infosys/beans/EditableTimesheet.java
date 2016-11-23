@@ -25,12 +25,13 @@ public class EditableTimesheet extends Timesheet {
 
     /** Sees if a time sheet is editable. For now it is always true. */
     private boolean isEditable;
-    
+
     /** Saves the state on if someone is currently editing this timesheet. */
     private boolean editing;
-    
-    private int timesheetID;
-    
+
+    /** timesheetId for this timesheet. */
+    private int timesheetId;
+
     /**
      * Constructor for a blank timesheet.
      * Adds 5 new rows.
@@ -45,7 +46,7 @@ public class EditableTimesheet extends Timesheet {
         this.addRow();
         this.addRow();
     }
-    
+
     /**
      * Constructor for a Timesheet linked with an employee.
      * @param newEmployee the employee
@@ -55,11 +56,11 @@ public class EditableTimesheet extends Timesheet {
     public EditableTimesheet(final Employee newEmployee, final Date end,
             final List<TimesheetRow> list) {
         super(newEmployee, end, list);
-        
+
         isEditable = true;
         editing = false;
     }
-    
+
     /**
      * Returns current state of editing.
      * @return state of editing.
@@ -67,7 +68,7 @@ public class EditableTimesheet extends Timesheet {
     public boolean isEditing() {
         return editing;
     }
-    
+
     /**
      * Sets current state of editing.
      * @param editing.
@@ -75,7 +76,7 @@ public class EditableTimesheet extends Timesheet {
     public void setEditing(boolean editing) {
         this.editing = editing;
     }
-    
+
     /**
      * Returns Whether or not this page is editable.
      * @return editable
@@ -83,7 +84,7 @@ public class EditableTimesheet extends Timesheet {
     public boolean isEditable() {
         return isEditable;
     }
-    
+
     /**
      * Sets whether or not this page will be editable in the future.
      * @param isEditable state
@@ -91,7 +92,7 @@ public class EditableTimesheet extends Timesheet {
     public void setEditable(boolean isEditable) {
         this.isEditable = isEditable;
     }
-    
+
     /**
      * Flips the state of editing.
      */
@@ -100,7 +101,7 @@ public class EditableTimesheet extends Timesheet {
             setEditing(!isEditing());
         }
     }
-    
+
     /**
      * returns the appropriate string for the button.
      * @return Save or Edit
@@ -111,9 +112,9 @@ public class EditableTimesheet extends Timesheet {
         }
         return "Edit";
     }
-    
-    
-    
+
+
+
     /**
      * My attempt to check for row uniqueness.
      * @param context.
@@ -121,15 +122,15 @@ public class EditableTimesheet extends Timesheet {
      * @param value.
      */
     public void checkRow(FacesContext context, UIComponent component, Object value) {
-    
+
         //UIInput dayInput = (UIInput) component.findComponent("day");
         //UIInput monthInput = (UIInput) component.findComponent("month");
-    
+
         List<String> checkForUnique = new ArrayList<String>();
         for (TimesheetRow x : getDetails()) {
             checkForUnique.add(new String(x.getProjectID() + x.getWorkPackage()));
         }
-        
+
         for (int i = 0 ; i < checkForUnique.size() ; i++) {
             for (int j = 1 ; j < checkForUnique.size() ; j++) {
                 if (checkForUnique.get(i).equals(checkForUnique.get(j))) {
@@ -141,13 +142,13 @@ public class EditableTimesheet extends Timesheet {
 
     }
 
-	public int getTimesheetID() {
-		return timesheetID;
-	}
+    public int getTimesheetId() {
+        return timesheetId;
+    }
 
-	public void setTimesheetID(int timesheetID) {
-		this.timesheetID = timesheetID;
-	}
-        
-    
+    public void setTimesheetId(int timesheetId) {
+        this.timesheetId = timesheetId;
+    }
+
+
 }

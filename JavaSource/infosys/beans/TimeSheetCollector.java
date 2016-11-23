@@ -23,15 +23,15 @@ import javax.inject.Inject;
 
 @ApplicationScoped
 public class TimeSheetCollector {
-	
-	@Inject TimesheetManager timesheetManager;
-    
+
+    @Inject TimesheetManager timesheetManager;
+
     /** A list that holds all timesheets that have been made. */
     List<EditableTimesheet> timesheets = new ArrayList<EditableTimesheet>();
-    
+
     /** the timesheet that is being displayed. */
     EditableTimesheet currentTimesheet;
-              
+
     /**
      * Gets all currently stores timesheets.
      * @return timesheets
@@ -53,7 +53,7 @@ public class TimeSheetCollector {
         timesheets.add(temp);
         return null;
     }
-    
+
     /**
      * Adds a blank timesheet.
      * @return null to refresh the page.
@@ -66,7 +66,7 @@ public class TimeSheetCollector {
         temp.setDetails(createNewRows());
         return null;
     }
-    
+
     /**
      * Creates a list of 5 new rows.
      * @return ArrayList of timesheetRows
@@ -75,42 +75,46 @@ public class TimeSheetCollector {
         ArrayList<TimesheetRow> newRows = new ArrayList<TimesheetRow>();
         EditableRow newRow = new EditableRow();
         newRows.add(newRow);
-        timesheetManager.createRow(newRow, currentTimesheet.getTimesheetID());
+        timesheetManager.createRow(newRow, currentTimesheet.getTimesheetId());
         newRow = new EditableRow();
         newRows.add(newRow);
-        timesheetManager.createRow(newRow, currentTimesheet.getTimesheetID());
+        timesheetManager.createRow(newRow, currentTimesheet.getTimesheetId());
         newRow = new EditableRow();
         newRows.add(newRow);
-        timesheetManager.createRow(newRow, currentTimesheet.getTimesheetID());
+        timesheetManager.createRow(newRow, currentTimesheet.getTimesheetId());
         newRow = new EditableRow();
         newRows.add(newRow);
-        timesheetManager.createRow(newRow, currentTimesheet.getTimesheetID());
+        timesheetManager.createRow(newRow, currentTimesheet.getTimesheetId());
         newRow = new EditableRow();
         newRows.add(newRow);
-        timesheetManager.createRow(newRow, currentTimesheet.getTimesheetID());
+        timesheetManager.createRow(newRow, currentTimesheet.getTimesheetId());
         return newRows;
     }
     
-    public ArrayList<TimesheetRow> createNewRows(int n) {
+    /**
+     * Creates a list of 5 blank rows.
+     * @return ArrayList of timesheetRows
+     */
+    public ArrayList<TimesheetRow> createNewRows(int num) {
         ArrayList<TimesheetRow> newRows = new ArrayList<TimesheetRow>();
         EditableRow newRow = new EditableRow();
         newRows.add(newRow);
-        timesheetManager.createRow(newRow, n);
+        timesheetManager.createRow(newRow, num);
         newRow = new EditableRow();
         newRows.add(newRow);
-        timesheetManager.createRow(newRow, n);
+        timesheetManager.createRow(newRow, num);
         newRow = new EditableRow();
         newRows.add(newRow);
-        timesheetManager.createRow(newRow, n);
+        timesheetManager.createRow(newRow, num);
         newRow = new EditableRow();
         newRows.add(newRow);
-        timesheetManager.createRow(newRow, n);
+        timesheetManager.createRow(newRow, num);
         newRow = new EditableRow();
         newRows.add(newRow);
-        timesheetManager.createRow(newRow, n);
+        timesheetManager.createRow(newRow, num);
         return newRows;
     }
-    
+
     /**
      * Gets the currentTimesheet.
      * @return currentTimesheet
@@ -121,7 +125,7 @@ public class TimeSheetCollector {
         }
         return currentTimesheet;
     }
-    
+
     /**
      * Gets currentTimesheet that belongs to employee.
      * @param employee that is currently on the page
@@ -140,7 +144,7 @@ public class TimeSheetCollector {
         }
         return currentTimesheet;
     }
-    
+
     /**
      * Updates the currentTimesheet to the appropriate one.
      * @param currentTimesheet selected.
@@ -148,7 +152,7 @@ public class TimeSheetCollector {
     public void setCurrentTimesheet(EditableTimesheet currentTimesheet) {
         this.currentTimesheet = currentTimesheet;
     }
-    
+
     /**
      * Calculates the date for the NextFriday.
      * @return Date of next Friday
@@ -161,24 +165,27 @@ public class TimeSheetCollector {
         int week = cal.get(Calendar.DAY_OF_WEEK);
         return new Date(now.getTime() - 24 * 60 * 60 * 1000 * (week - 6));
     }
-    
+
     public void setTimesheets() {
-    	timesheets = timesheetManager.getAll();
+        timesheets = timesheetManager.getAll();
     }
-    
+
+    /**
+     * updates the database with the new details.
+     */
     public void update() {
-    	for (TimesheetRow row : currentTimesheet.getDetails()) {
-    		timesheetManager.update((EditableRow) row);
-    	}
+        for (TimesheetRow row : currentTimesheet.getDetails()) {
+            timesheetManager.update((EditableRow) row);
+        }
     }
-    
+
     /**
      * Adds a new row to the timesheet.
      */
     public void addRow() {
-    	EditableRow newRow = new EditableRow();
-    	timesheetManager.createRow(newRow, currentTimesheet.getTimesheetID());
+        EditableRow newRow = new EditableRow();
+        timesheetManager.createRow(newRow, currentTimesheet.getTimesheetId());
         currentTimesheet.getDetails().add(newRow);
     }
-    
+
 }
