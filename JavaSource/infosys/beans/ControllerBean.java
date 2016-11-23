@@ -135,12 +135,13 @@ public class ControllerBean implements Serializable {
         list.setEmployees();
         this.render = false;
         
-        for(Employee e :list.getEmployees()) {
-            if(e.getUserName().equals(getAddUser()))
+        for (Employee e :list.getEmployees()) {
+            if (e.getUserName().equals(getAddUser())) {
                 this.render = true;
+            }
         }
         
-        if(!render) {
+        if (!render) {
             Employee employee = new Employee(0, getAddUser(), getAddName(), "default");
             list.addEmployee(employee);
         }
@@ -155,7 +156,8 @@ public class ControllerBean implements Serializable {
         if (("".equals(getAddUser()) || getAddUser() == null)) {
             return "";
         } else {
-            return (!render)? "User, " + getAddUser() + ", has been added into the system." : "User Exists In System.";
+            return (!render) ? "User, " + getAddUser() + ", has been added into the system." 
+                    : "User Exists In System.";
         }
     }
     
@@ -212,7 +214,8 @@ public class ControllerBean implements Serializable {
         if (("".equals(getSearchUser()) || getSearchUser() == null)) {
             return "";
         } else {
-            return (list.findEmployee(getSearchUser()) != null && getSearchUser().equals(getSearchConfirmUser()))
+            return (list.findEmployee(getSearchUser()) != null
+                    && getSearchUser().equals(getSearchConfirmUser()))
                     ? "User, " + getSearchUser() + "'s password has been reseted to 'default'."
                             : "User Does Not Exist.";
         }
@@ -223,20 +226,20 @@ public class ControllerBean implements Serializable {
      * @return A message about the user information.
      */
     public String getSearchingUser() {
-        Employee e = null;
-        try{
-            e = list.findEmployee(getSearchUser());
+        Employee employee = null;
+        try {
+            employee = list.findEmployee(getSearchUser());
             this.render = true;
-        } catch (NullPointerException n) {
+        } catch (NullPointerException exception) {
             this.render = false;
         }
         if (("".equals(getSearchUser()) || getSearchUser() == null)) {
             return "";
         } else {
-            return (e != null)
-                    ? "User: " + getSearchUser() + "\n" + "Name: " + e.getName() + "\n" 
-                    + "EmployeeID: " + e.getEmpNumber() + "\n"
-                    + "Password: " + e.getPassword() : "User does not exist.";
+            return (employee != null)
+                    ? "User: " + getSearchUser() + "\n" + "Name: " + employee.getName() + "\n" 
+                    + "EmployeeID: " + employee.getEmpNumber() + "\n"
+                    + "Password: " + employee.getPassword() : "User does not exist.";
         }
     }
 

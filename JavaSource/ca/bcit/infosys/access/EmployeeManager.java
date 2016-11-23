@@ -1,6 +1,7 @@
 package ca.bcit.infosys.access;
 
-import java.io.Serializable;
+import ca.bcit.infosys.employee.Employee;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,18 +13,22 @@ import javax.annotation.Resource;
 import javax.enterprise.context.RequestScoped;
 import javax.sql.DataSource;
 
-import ca.bcit.infosys.employee.Employee;
-
+/**
+ * This is the EmployeeManager. It gets connections via data source and performs SQL queries 
+ * to create, reset, update, delete Employees in the employee table.
+ * @author JF
+ * @version 1.0
+ */
 @RequestScoped
 public class EmployeeManager {
-    @Resource(mappedName="java:/employeeTimeSheet")
+    @Resource(mappedName = "java:/employeeTimeSheet")
     private DataSource dataSource;
     
     
     /**
      * Find Employee record from database.
      * 
-     * @param user ID of the Employee record.
+     * @param name ID of the Employee record.
      * @return the Employee record with key = id, null if not found.
      */
     public Employee find(String name) {
@@ -107,7 +112,7 @@ public class EmployeeManager {
     
     /**
      * Persist Employee record into database.
-     * @param supplier the record to be persisted.
+     * @param employee the record to be persisted.
      */
     public void persist(Employee employee) {
         Connection connection = null;
@@ -117,9 +122,9 @@ public class EmployeeManager {
                 connection = dataSource.getConnection();
                 try {
                     stmt = connection.prepareStatement(
-                            "INSERT INTO Employee (employeeNumber, employeeID, employeeName, password)"
-                         + "VALUES (null, ?, ?, ?)");
-                    
+                            "INSERT INTO Employee "
+                            + "(employeeNumber, employeeID, employeeName, password)"
+                            + "VALUES (null, ?, ?, ?)");
                     stmt.setString(1, employee.getUserName());
                     stmt.setString(2, employee.getName());
                     stmt.setString(3, employee.getPassword());
@@ -141,8 +146,8 @@ public class EmployeeManager {
     }
     
     /**
-     * Remove supplier from database.
-     * @param supplier record to be removed from database
+     * Remove Employee from database.
+     * @param employee record to be removed from database
      */
     public void remove(Employee employee) {
         Connection connection = null;
@@ -173,42 +178,43 @@ public class EmployeeManager {
 
     /**
     * merge Employee record fields into existing database record.
-    * @param Employee the record to be merged.
+    * @param newPass the where clause.
+    * @param user user to have password changed
     */
-   public void changePassword(String newPass, String user) {
-      
-       Connection connection = null;
-       PreparedStatement stmt = null;
-       try {
-           try {
-               connection = dataSource.getConnection();
-               try {
-                   stmt = connection.prepareStatement("UPDATE Employee "
-                           + "SET password = ? " + "WHERE employeeID = ?");
-                   stmt.setString(1, newPass);
-                   stmt.setString(2, user);
+    public void changePassword(String newPass, String user) {
+          
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        try {
+            try {
+                connection = dataSource.getConnection();
+                try {
+                    stmt = connection.prepareStatement("UPDATE Employee "
+                            + "SET password = ? " + "WHERE employeeID = ?");
+                    stmt.setString(1, newPass);
+                    stmt.setString(2, user);
                    
                    
-                   stmt.executeUpdate();
-               } finally {
-                   if (stmt != null) {
-                       stmt.close();
-                   }
-               }
-           } finally {
-               if (connection != null) {
-                   connection.close();
-               }
-           }
-       } catch (SQLException ex) {
-           System.out.println("Error in resetUser " + user);
-           ex.printStackTrace();
-       }
-   }
-    
+                    stmt.executeUpdate();
+                } finally {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error in resetUser " + user);
+            ex.printStackTrace();
+        }
+    }
+
     /**
-     * merge Employee record fields into existing database record.
-     * @param Employee the record to be merged.
+     * Resets Employee record fields to have 'default' as password.
+     * @param resetUser the where clause.
      */
     public void resetPassword(String resetUser) {
        

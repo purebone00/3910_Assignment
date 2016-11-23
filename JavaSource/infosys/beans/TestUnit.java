@@ -1,12 +1,5 @@
 package infosys.beans;
 
-import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
-import ca.bcit.infosys.access.Database;
-import ca.bcit.infosys.employee.Employee;
-import ca.bcit.infosys.timesheet.TimesheetRow;
 
 
 /**
@@ -16,14 +9,11 @@ import ca.bcit.infosys.timesheet.TimesheetRow;
  */
 public class TestUnit {
     /**
-     * Main.
+     * Main for testin.
      * @param args.
-     * @throws SQLException 
+     * @throws SQLException thrown if thrown.
      */
-    public static void main(String[] args) throws SQLException {
-        
-        
-        
+    public static void main(String[] args) {
         
         /*
         Database db = new Database();

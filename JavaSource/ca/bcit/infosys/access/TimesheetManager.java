@@ -29,6 +29,7 @@ public class TimesheetManager {
      * Return all Timesheets.
      * @return 
      */
+    
     public ArrayList<EditableTimesheet> getAll() {
         ArrayList<EditableTimesheet> timesheetList = new ArrayList<EditableTimesheet>();
         Connection connection = null;
