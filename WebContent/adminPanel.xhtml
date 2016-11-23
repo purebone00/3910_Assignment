@@ -126,7 +126,7 @@
 										    		<h:form>
 														<div class = "form-group">
 															<div class = "form-inline">
-																<label for="userName">#{msgs['adminPage.username']} </label> 
+																<label for="userName">#{msgs['adminPage.username']}</label> 
 																<span> </span>
 																<h:inputText class ="form-control" id="inputUserName" value="#{controller.addUser}"></h:inputText>
 															</div>
@@ -140,9 +140,8 @@
 														</div>
 														<div class = "form-group">
 															<div class = "form-inline">
-																<label for="password">#{msgs['adminPage.password']}</label>
+																<h4><i>Password set to 'default'</i></h4>
 																<span> </span> 
-																<h:inputText class ="form-control" id="inputAddPassword" value="#{controller.addUserPassword}"></h:inputText>
 															</div>
 														</div>
 														<h:commandButton class="btn btn-default btn-md" value="#{msgs['adminPage.addUser']}" action="#{controller.addingUser()}">
@@ -174,13 +173,6 @@
 																<label for="userName">#{msgs['adminPage.username']} </label> 
 																<span> </span>
 																<h:inputText class ="form-control" id="inputDeleteUser" value="#{controller.deleteUser}"></h:inputText>
-															</div>
-														</div>
-														<div class = "form-group">
-															<div class = "form-inline">
-																<label for="password">#{msgs['adminPage.password']}</label>
-																<span> </span> 
-																<h:inputText class ="form-control" id="inputDeletePassword" value="#{controller.deleteUserPassword}"></h:inputText>
 															</div>
 														</div>
 														<h:commandButton class="btn btn-default btn-md" value="#{msgs['adminPage.deleteUser']}" action="#{controller.deleteAUser()}">

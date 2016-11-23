@@ -29,6 +29,8 @@ public class EditableTimesheet extends Timesheet {
     /** Saves the state on if someone is currently editing this timesheet. */
     private boolean editing;
     
+    private int timesheetID;
+    
     /**
      * Constructor for a blank timesheet.
      * Adds 5 new rows.
@@ -46,14 +48,13 @@ public class EditableTimesheet extends Timesheet {
     
     /**
      * Constructor for a Timesheet linked with an employee.
-     * @param user the employee
+     * @param newEmployee the employee
      * @param end  the ending of the current week
      * @param list the details in each of the rows.
      */
-    public EditableTimesheet(final Employee user, final Date end,
+    public EditableTimesheet(final Employee newEmployee, final Date end,
             final List<TimesheetRow> list) {
-        
-        super(user, end, list);
+        super(newEmployee, end, list);
         
         isEditable = true;
         editing = false;
@@ -111,12 +112,7 @@ public class EditableTimesheet extends Timesheet {
         return "Edit";
     }
     
-    /**
-     * Adds a new row to the timesheet.
-     */
-    public void addRow() {
-        super.getDetails().add(new EditableRow());
-    }
+    
     
     /**
      * My attempt to check for row uniqueness.
@@ -144,6 +140,14 @@ public class EditableTimesheet extends Timesheet {
         }
 
     }
+
+	public int getTimesheetID() {
+		return timesheetID;
+	}
+
+	public void setTimesheetID(int timesheetID) {
+		this.timesheetID = timesheetID;
+	}
         
     
 }

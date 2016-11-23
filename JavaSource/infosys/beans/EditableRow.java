@@ -16,6 +16,15 @@ import java.math.BigDecimal;
  */
 public class EditableRow extends TimesheetRow implements Serializable {
     
+	private int rowID;
+	
+    public EditableRow() {
+        super();
+    }
+    
+    public EditableRow(final int id, final String wp, final BigDecimal[] hours, final String comments) {
+        super( id, wp, hours, comments);
+    }
     /**
      * returns the number of hours for Saturday.
      * @return number of hours for Saturday.
@@ -138,5 +147,15 @@ public class EditableRow extends TimesheetRow implements Serializable {
     public void setFriday(BigDecimal hours) {
         super.setHour(6, hours);
     }
+
+	public int getRowID() {
+		return rowID;
+	}
+
+	public void setRowID(int rowID) {
+		this.rowID = rowID;
+	}
+    
+    
 }
 

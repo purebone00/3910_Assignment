@@ -1,14 +1,18 @@
 package infosys.beans;
 
+import ca.bcit.infosys.access.EmployeeManager;
 import ca.bcit.infosys.employee.Credentials;
 import ca.bcit.infosys.employee.Employee;
 import ca.bcit.infosys.employee.EmployeeList;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 
@@ -20,105 +24,41 @@ import javax.inject.Named;
  *     Version 1.0
  */
 @Named("el")
-@ApplicationScoped
-public class EmployeeLister implements EmployeeList {
+@SessionScoped
+public class EmployeeLister implements Serializable{    
     /** An employee number starting from 1000. */
     private static int employeeNumber = 1000;
     /** A list of credentials. */
     private static ArrayList<Credentials> cred = new ArrayList<Credentials>();
     /** A list of current employees. */
-    private static ArrayList<Employee> employees = new ArrayList<Employee>();
+    private ArrayList<Employee> employees = new ArrayList<Employee>();
     /** A a map of current employees. */
     private static Map<String, String> logInfo = new HashMap<String, String>();
     /** The current employee on the system. */
     private Employee currentEmployee;
 
+    @Inject EmployeeManager em;
+    
     /**
      * Constructor to create an Employee list that contains all our employees. 
      */
-    public EmployeeLister() { 
-        Employee admin = new Employee("Admin", 0000, "Admin"); 
-        addEmployee(admin);
-        Credentials adminCred = new Credentials();
-        adminCred.setUserName(admin.getUserName());
-        adminCred.setPassword("default");
-        
-        logInfo.put(adminCred.getUserName(), adminCred.getPassword());
-        cred.add(adminCred);   
+    public EmployeeLister() {
+       
     }
     
-    /**
-     * Gets an employee number and increment the number by 1. 
-     * @return the employee number.
-     */
-    public int getEmployeeNumber() {
-        employeeNumber++;
-        return employeeNumber;
-    }
-    
-    /**
-     * Adds a credential to the list of credentials.
-     * @param credentials to be added to the credential's list.
-     */
-    public void addCred(Credentials credentials) {
-        cred.add(credentials);
-    }
-    
-    /**
-     * Gets the credentials of an employee.
-     * @param employee to have credentials extracted. 
-     * @return The employee's credentials.
-     */
-    public Credentials getCreds(Employee employee) {
-        for (Credentials c: cred) {
-            if (employee.getUserName() == c.getUserName()) {
-                return c;
-            }
-        }
-        return null;
-    }
 
     /**
      * Gets an employee matching the parameter.
-     * @param name matching the employee.
-     * @return An employee matching name. 
+     * @param boolean if employee exist in list.
+     * @return boolean. 
      */
-    public Employee getEmployee(String name) {
+    public boolean getEmployee(String name) {
         for (Employee x : employees) {
             if (x.getName().equals(name)) {
-                return x;
+                return true;
             }
         }
-        return null;
-    }
-
-    /**
-     * Gets the administrator.
-     * @return the administrator.
-     */
-    public Employee getAdministrator() {
-        for (Employee e: employees) {
-            if (e.getEmpNumber() == 0000) {
-                return e;
-            }
-        }
-        return null;
-    }
-    
-    /**
-     * The list of credentials.
-     * @return List of credentials.
-     */
-    public ArrayList<Credentials> getCred() {
-        return cred;
-    }
-    
-    /**
-     * The map of users.
-     * @return Map of users.
-     */
-    public Map<String, String> getLoginCombos() {
-        return logInfo;
+        return false;
     }
     
     /**
@@ -129,36 +69,34 @@ public class EmployeeLister implements EmployeeList {
         return employees;
     }
 
-    /**
-     * Verifies the current user.
-     * @return false.
-     */
-    @Override
-    public boolean verifyUser(Credentials credential) {
-        return false;
-    }
-
-    /**
-     * Logs the user out. 
-     * @return String for navigating.
-     */
-    public String logout(Employee employee) {
-        return "log out";
-    }
-
     /** 
      * Deletes a user. 
      */
     public void deleteEmpoyee(Employee userToDelete) {
-        employees.remove(userToDelete);
-        
+        em.remove(userToDelete);
     }
 
     /**
      * Adds a user.
      */
     public void addEmployee(Employee newEmployee) {
-        employees.add(newEmployee);
+        em.persist(newEmployee);
+    }
+    
+    public Employee findEmployee(String name) {
+        return em.find(name);
+    }
+    
+    public void setEmployees() {
+        employees = em.getAll();
+    }
+    
+    public void resetUser(String resetUser) {
+        em.resetPassword(resetUser);
+    }
+    
+    public void changePassword(String password, String user) {
+        em.changePassword(password, user);
     }
 
     /**
@@ -176,6 +114,5 @@ public class EmployeeLister implements EmployeeList {
     public void setCurrentEmployee(Employee currentEmployee) {
         this.currentEmployee = currentEmployee;
     }
-    
 
 }
