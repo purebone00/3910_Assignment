@@ -18,6 +18,7 @@ import javax.inject.Named;
  * users and admins in their current session. 
  * @author Joe Fong
  */
+@SuppressWarnings("serial")
 @Named("controller")
 @SessionScoped
 public class ControllerBean implements Serializable {

@@ -70,7 +70,6 @@ public class TimeSheetCollector {
 
     /**
      * Creates a list of 5 new rows.
-     * @return ArrayList of timesheetRows
      */
     public void createNewRows() {
         addRow();

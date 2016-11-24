@@ -21,6 +21,7 @@ import javax.faces.validator.ValidatorException;
  * @author Albert
  *
  */
+@SuppressWarnings("serial")
 public class EditableTimesheet extends Timesheet {
 
     /** Sees if a time sheet is editable. For now it is always true. */

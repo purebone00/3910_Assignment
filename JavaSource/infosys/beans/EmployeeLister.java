@@ -17,6 +17,7 @@ import javax.inject.Named;
  * @author Joe Fong
  *     Version 1.0
  */
+@SuppressWarnings("serial")
 @Named("el")
 @SessionScoped
 public class EmployeeLister implements Serializable {    
@@ -89,7 +90,7 @@ public class EmployeeLister implements Serializable {
     
     /**
      * Finds the employee by name from the database.
-     * @param name of employee.
+     * @param employeeNumber id
      * @return the employee found.
      */
     public Employee findEmployee(int employeeNumber) {

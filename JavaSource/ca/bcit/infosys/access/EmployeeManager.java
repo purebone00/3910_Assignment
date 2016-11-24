@@ -28,7 +28,7 @@ public class EmployeeManager {
     /**
      * Find Employee record from database.
      * 
-     * @param name ID of the Employee record.
+     * @param number employee id
      * @return the Employee record with key = id, null if not found.
      */
     public Employee find(int number) {
@@ -146,7 +146,7 @@ public class EmployeeManager {
     
     /**
      * Remove Employee from database.
-     * @param employee record to be removed from database
+     * @param employeeNumber id
      */
     public void remove(int employeeNumber) {
         Connection connection = null;
