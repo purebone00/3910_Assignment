@@ -18,6 +18,7 @@ import javax.inject.Named;
  * users and admins in their current session. 
  * @author Joe Fong
  */
+@SuppressWarnings("serial")
 @Named("controller")
 @SessionScoped
 public class ControllerBean implements Serializable {
@@ -156,8 +157,13 @@ public class ControllerBean implements Serializable {
         if (("".equals(getAddUser()) || getAddUser() == null)) {
             return "";
         } else {
+<<<<<<< HEAD
+            return (!render) ? "User, " + getAddUser() + ", has been added " 
+                    + "into the system." : "User Exists In System.";
+=======
             return (!render) ? "User, " + getAddUser() + ", has been added into the system." 
                     : "User Exists In System.";
+>>>>>>> database
         }
     }
     
@@ -215,7 +221,11 @@ public class ControllerBean implements Serializable {
         if (("".equals(getSearchUser()) || getSearchUser() == null)) {
             return "";
         } else {
+<<<<<<< HEAD
+            return (list.findEmployee(getSearchUser()) != null 
+=======
             return (list.findEmployee(employeeNumber) != null
+>>>>>>> database
                     && getSearchUser().equals(getSearchConfirmUser()))
                     ? "User, " + getSearchUser() + "'s password has been reseted to 'default'."
                             : "User Does Not Exist.";
@@ -229,9 +239,15 @@ public class ControllerBean implements Serializable {
     public String getSearchingUser() {
         Employee employee = null;
         try {
+<<<<<<< HEAD
+            employee = list.findEmployee(getSearchUser());
+            this.render = true;
+        } catch (NullPointerException nullException) {
+=======
             employee = list.findEmployee(list.searchEmployeeNumber(getSearchUser()));
             this.render = true;
         } catch (NullPointerException exception) {
+>>>>>>> database
             this.render = false;
         }
         if (("".equals(getSearchUser()) || getSearchUser() == null)) {
@@ -335,22 +351,6 @@ public class ControllerBean implements Serializable {
      */
     public void setDeleteUser(String deleteUser) {
         this.deleteUser = deleteUser;
-    }
-
-    public String getDeleteUserPassword() {
-        return deleteUserPassword;
-    }
-
-    public void setDeleteUserPassword(String deleteUserPassword) {
-        this.deleteUserPassword = deleteUserPassword;
-    }
-
-    public String getDeleteUserPasswordConfirm() {
-        return deleteUserPasswordConfirm;
-    }
-
-    public void setDeleteUserPasswordConfirm(String deleteUserPasswordConfirm) {
-        this.deleteUserPasswordConfirm = deleteUserPasswordConfirm;
     }
     
     /**

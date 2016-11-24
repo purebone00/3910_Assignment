@@ -61,14 +61,18 @@
 															<div class = "form-inline">
 																<label for="userName">#{msgs['adminPage.username']} </label> 
 																<span> </span>
-																<h:inputText class ="form-control" id="inputChangeUser" value="#{controller.searchUser}"></h:inputText>
+																<h:inputText class ="form-control" id="inputChangeUser" value="#{controller.searchUser}" required="true" requiredMessage="#{msgs['adminPage.requiredField']}">
+																</h:inputText>
+																<span style="color:red;"><h:message for="inputChangeUser"></h:message></span>
 															</div>
 														</div>
 														<div class = "form-group">
 															<div class = "form-inline">
 																<label for="userName">#{msgs['adminPage.confirmUsername']} </label> 
 																<span> </span>
-																<h:inputText class ="form-control" id="inputConfirmChangeUser" value="#{controller.searchConfirmUser}"></h:inputText>
+																<h:inputText class ="form-control" id="inputConfirmChangeUser" value="#{controller.searchConfirmUser}" required="true" requiredMessage="#{msgs['adminPage.requiredField']}">
+																</h:inputText>
+																<span style="color:red;"><h:message for="inputConfirmChangeUser"></h:message></span>
 															</div>
 														</div>
 														<h:commandButton class="btn btn-default btn-md" value="#{msgs['adminPage.resetUser']}">
@@ -98,7 +102,9 @@
 															<div class = "form-inline">
 																<label for="userName">#{msgs['adminPage.username']} </label> 
 																<span> </span>
-																<h:inputText class ="form-control" id="inputSearchUser" value="#{controller.searchUser}"></h:inputText>
+																<h:inputText class ="form-control" id="inputSearchUser" value="#{controller.searchUser}" required="true" requiredMessage="#{msgs['adminPage.requiredField']}">
+																</h:inputText>
+																<span style="color:red;"><h:message for="inputSearchUser"></h:message></span>
 															</div>
 														</div>
 														<h:commandButton class="btn btn-default btn-md" value="#{msgs['adminPage.viewUser']}">
@@ -128,14 +134,18 @@
 															<div class = "form-inline">
 																<label for="userName">#{msgs['adminPage.username']}</label> 
 																<span> </span>
-																<h:inputText class ="form-control" id="inputUserName" value="#{controller.addUser}"></h:inputText>
+																<h:inputText class ="form-control" id="inputUserName" value="#{controller.addUser}" required="true" requiredMessage="#{msgs['adminPage.requiredField']}">
+																</h:inputText>
+																<span style="color:red;"><h:message for="inputUserName"></h:message></span>
 															</div>
 														</div>
 														<div class = "form-group">
 															<div class = "form-inline">
 																<label for="userName">#{msgs['adminPage.name']}</label> 
 																<span> </span>
-																<h:inputText class ="form-control" id="inputAddName" value="#{controller.addName}"></h:inputText>
+																<h:inputText class ="form-control" id="inputAddName" value="#{controller.addName}" required="true" requiredMessage="#{msgs['adminPage.requiredField']}">
+																</h:inputText>
+																<span style="color:red;"><h:message for="inputAddName"></h:message></span>
 															</div>
 														</div>
 														<div class = "form-group">
@@ -172,7 +182,9 @@
 															<div class = "form-inline">
 																<label for="userName">#{msgs['adminPage.username']} </label> 
 																<span> </span>
-																<h:inputText class ="form-control" id="inputDeleteUser" value="#{controller.deleteUser}"></h:inputText>
+																<h:inputText class ="form-control" id="inputDeleteUser" value="#{controller.deleteUser}" required="true" requiredMessage="#{msgs['adminPage.requiredField']}">
+																</h:inputText>
+																<span style="color:red;"><h:message for="inputDeleteUser"></h:message></span>
 															</div>
 														</div>
 														<h:commandButton class="btn btn-default btn-md" value="#{msgs['adminPage.deleteUser']}" action="#{controller.deleteAUser()}">

@@ -35,6 +35,7 @@ public class TimesheetManager {
      * Return all Timesheets that were avaliable from the database.
      * @return ArrayList of all the timesheets
      */
+    
     public ArrayList<EditableTimesheet> getAll() {
         ArrayList<EditableTimesheet> timesheetList = new ArrayList<EditableTimesheet>();
         Connection connection = null;

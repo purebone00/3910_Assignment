@@ -1,38 +1,33 @@
 package infosys.beans;
 
 import ca.bcit.infosys.access.EmployeeManager;
-import ca.bcit.infosys.employee.Credentials;
 import ca.bcit.infosys.employee.Employee;
-import ca.bcit.infosys.employee.EmployeeList;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 
 /**
- * This is the employer list bean. This is held as an application scope and hold persists 
- * for as long as the system is running. This bean holds information regarding current 
+ * This is the employer list bean. This bean holds information regarding current 
  * employees and their credentials. 
  * @author Joe Fong
  *     Version 1.0
  */
 @Named("el")
 @SessionScoped
-public class EmployeeLister implements Serializable{    
+public class EmployeeLister implements Serializable {    
 
     /** A list of current employees. */
     private ArrayList<Employee> employees = new ArrayList<Employee>();
 
     /** The current employee on the system. */
     private Employee currentEmployee;
-
+    
+    /** EmployeeManager for database calls. */
     @Inject EmployeeManager em;
     
     /**
@@ -43,7 +38,7 @@ public class EmployeeLister implements Serializable{
 
     /**
      * Gets an employee matching the parameter.
-     * @param boolean if employee exist in list.
+     * @param name if employee exist in list.
      * @return boolean. 
      */
     public boolean getEmployee(String name) {
@@ -53,6 +48,21 @@ public class EmployeeLister implements Serializable{
             }
         }
         return false;
+    }
+    
+    /**
+     * Gets an employee matching the parameter.
+     * @param name if employee exist in list.
+     * @return boolean. 
+     */
+    public int searchEmployeeNumber(String name) {
+        setEmployees();
+        for (Employee x : employees) {
+            if (x.getUserName().equals(name)) {
+                return x.getEmpNumber();
+            }
+        }
+        return -1;
     }
     
     /**
@@ -66,8 +76,8 @@ public class EmployeeLister implements Serializable{
     /** 
      * Deletes a user. 
      */
-    public void deleteEmpoyee(Employee userToDelete) {
-        em.remove(userToDelete);
+    public void deleteEmpoyee(int employeeNumber) {
+        em.remove(employeeNumber);
     }
 
     /**
@@ -77,18 +87,35 @@ public class EmployeeLister implements Serializable{
         em.persist(newEmployee);
     }
     
-    public Employee findEmployee(String name) {
-        return em.find(name);
+    /**
+     * Finds the employee by name from the database.
+     * @param name of employee.
+     * @return the employee found.
+     */
+    public Employee findEmployee(int employeeNumber) {
+        return em.find(employeeNumber);
     }
     
+    /**
+     * Sets the ArrayList of Employee to correspond with the database.
+     */
     public void setEmployees() {
         employees = em.getAll();
     }
     
+    /**
+     * Resets user to have a password of 'default'.
+     * @param resetUser name of user to be reset. 
+     */
     public void resetUser(String resetUser) {
         em.resetPassword(resetUser);
     }
     
+    /**
+     * Changes the password for the user.
+     * @param password to be changed.
+     * @param user to have password changed.
+     */
     public void changePassword(String password, String user) {
         em.changePassword(password, user);
     }
