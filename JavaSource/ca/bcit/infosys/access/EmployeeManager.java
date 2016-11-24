@@ -31,7 +31,7 @@ public class EmployeeManager {
      * @param name ID of the Employee record.
      * @return the Employee record with key = id, null if not found.
      */
-    public Employee find(String name) {
+    public Employee find(int number) {
         Connection connection = null;
         Statement stmt = null;
         try {
@@ -40,8 +40,7 @@ public class EmployeeManager {
                 try {
                     stmt = connection.createStatement();
                     ResultSet result = stmt.executeQuery(
-                            "SELECT * FROM Employee where employeeID = '"
-                                    + name + "'");
+                            "SELECT * FROM Employee where employeeNumber = " + number);
                     if (result.next()) {
                         return new Employee(result.getInt("employeeNumber"),
                                 result.getString("employeeID"),
@@ -62,7 +61,7 @@ public class EmployeeManager {
                 }
             }
         } catch (SQLException ex) {
-            System.out.println("Error in find " + name);
+            System.out.println("Error in find " + number);
             ex.printStackTrace();
             return null;
         }
@@ -149,7 +148,7 @@ public class EmployeeManager {
      * Remove Employee from database.
      * @param employee record to be removed from database
      */
-    public void remove(Employee employee) {
+    public void remove(int employeeNumber) {
         Connection connection = null;
         PreparedStatement stmt = null;
         try {
@@ -157,8 +156,7 @@ public class EmployeeManager {
                 connection = dataSource.getConnection();
                 try {
                     stmt = connection.prepareStatement(
-                            "DELETE FROM Employee WHERE employeeID =  ?");
-                    stmt.setString(1, employee.getUserName());
+                            "DELETE FROM Employee WHERE employeeNumber = " + employeeNumber);
                     stmt.executeUpdate();
                 } finally {
                     if (stmt != null) {
@@ -171,7 +169,7 @@ public class EmployeeManager {
                 }
             }
         } catch (SQLException ex) {
-            System.out.println("Error in remove " + employee.getUserName());
+            System.out.println("Error in remove " + employeeNumber);
             ex.printStackTrace();
         }
     }

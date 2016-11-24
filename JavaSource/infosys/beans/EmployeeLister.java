@@ -51,6 +51,20 @@ public class EmployeeLister implements Serializable {
     }
     
     /**
+     * Gets an employee matching the parameter.
+     * @param name if employee exist in list.
+     * @return boolean. 
+     */
+    public int searchEmployeeNumber(String name) {
+        for (Employee x : employees) {
+            if (x.getUserName().equals(name)) {
+                return x.getEmpNumber();
+            }
+        }
+        return -1;
+    }
+    
+    /**
      * The List of employees.
      * @return List of employees.
      */
@@ -61,8 +75,8 @@ public class EmployeeLister implements Serializable {
     /** 
      * Deletes a user. 
      */
-    public void deleteEmpoyee(Employee userToDelete) {
-        em.remove(userToDelete);
+    public void deleteEmpoyee(int employeeNumber) {
+        em.remove(employeeNumber);
     }
 
     /**
@@ -77,8 +91,8 @@ public class EmployeeLister implements Serializable {
      * @param name of employee.
      * @return the employee found.
      */
-    public Employee findEmployee(String name) {
-        return em.find(name);
+    public Employee findEmployee(int employeeNumber) {
+        return em.find(employeeNumber);
     }
     
     /**

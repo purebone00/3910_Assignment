@@ -172,7 +172,7 @@ public class ControllerBean implements Serializable {
             Employee employee = it.next();
             if (employee.getUserName().equals(getDeleteUser())) {
                 it.remove();
-                list.deleteEmpoyee(employee);
+                list.deleteEmpoyee(employee.getEmpNumber());
                 this.render = true;
             }
         }
@@ -199,12 +199,13 @@ public class ControllerBean implements Serializable {
      * @return A message notifying that the password has been reseted.
      */
     public String getChangingUser() {
-        
+        int employeeNumber = -1;
         for (Employee e: list.getEmployees()) {
             if (e.getUserName().equals(getSearchUser())
                     && (getSearchUser().equals(getSearchConfirmUser()))) {
                 try {
                     list.resetUser(getSearchConfirmUser());
+                    employeeNumber = e.getEmpNumber();
                 } catch (NullPointerException nullP) {
                     this.render = false;
                 }
@@ -214,7 +215,7 @@ public class ControllerBean implements Serializable {
         if (("".equals(getSearchUser()) || getSearchUser() == null)) {
             return "";
         } else {
-            return (list.findEmployee(getSearchUser()) != null
+            return (list.findEmployee(employeeNumber) != null
                     && getSearchUser().equals(getSearchConfirmUser()))
                     ? "User, " + getSearchUser() + "'s password has been reseted to 'default'."
                             : "User Does Not Exist.";
@@ -228,7 +229,7 @@ public class ControllerBean implements Serializable {
     public String getSearchingUser() {
         Employee employee = null;
         try {
-            employee = list.findEmployee(getSearchUser());
+            employee = list.findEmployee(list.searchEmployeeNumber(getSearchUser()));
             this.render = true;
         } catch (NullPointerException exception) {
             this.render = false;
