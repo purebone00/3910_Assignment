@@ -49,7 +49,8 @@ public class TimeSheetCollector {
         EditableTimesheet temp = new EditableTimesheet(employee, getNextFriday(), createNewRows(0));
         timesheetManager.create(temp);
         setCurrentTimesheet(temp);
-        temp.setDetails(createNewRows());
+        createNewRows();
+        update();
         timesheets.add(temp);
         return null;
     }
@@ -63,7 +64,7 @@ public class TimeSheetCollector {
         timesheetManager.create(temp);
         timesheets.add(temp);
         setCurrentTimesheet(temp);
-        temp.setDetails(createNewRows());
+        createNewRows();
         return null;
     }
 
@@ -71,24 +72,12 @@ public class TimeSheetCollector {
      * Creates a list of 5 new rows.
      * @return ArrayList of timesheetRows
      */
-    public ArrayList<TimesheetRow> createNewRows() {
-        ArrayList<TimesheetRow> newRows = new ArrayList<TimesheetRow>();
-        EditableRow newRow = new EditableRow();
-        newRows.add(newRow);
-        timesheetManager.createRow(newRow, currentTimesheet.getTimesheetId());
-        newRow = new EditableRow();
-        newRows.add(newRow);
-        timesheetManager.createRow(newRow, currentTimesheet.getTimesheetId());
-        newRow = new EditableRow();
-        newRows.add(newRow);
-        timesheetManager.createRow(newRow, currentTimesheet.getTimesheetId());
-        newRow = new EditableRow();
-        newRows.add(newRow);
-        timesheetManager.createRow(newRow, currentTimesheet.getTimesheetId());
-        newRow = new EditableRow();
-        newRows.add(newRow);
-        timesheetManager.createRow(newRow, currentTimesheet.getTimesheetId());
-        return newRows;
+    public void createNewRows() {
+        addRow();
+        addRow();
+        addRow();
+        addRow();
+        addRow();
     }
     
     /**
@@ -99,19 +88,14 @@ public class TimeSheetCollector {
         ArrayList<TimesheetRow> newRows = new ArrayList<TimesheetRow>();
         EditableRow newRow = new EditableRow();
         newRows.add(newRow);
-        timesheetManager.createRow(newRow, num);
         newRow = new EditableRow();
         newRows.add(newRow);
-        timesheetManager.createRow(newRow, num);
         newRow = new EditableRow();
         newRows.add(newRow);
-        timesheetManager.createRow(newRow, num);
         newRow = new EditableRow();
         newRows.add(newRow);
-        timesheetManager.createRow(newRow, num);
         newRow = new EditableRow();
         newRows.add(newRow);
-        timesheetManager.createRow(newRow, num);
         return newRows;
     }
 
@@ -185,7 +169,7 @@ public class TimeSheetCollector {
     public void addRow() {
         EditableRow newRow = new EditableRow();
         timesheetManager.createRow(newRow, currentTimesheet.getTimesheetId());
-        currentTimesheet.getDetails().add(newRow);
+        currentTimesheet.setDetails(timesheetManager.getAllRows(currentTimesheet.getTimesheetId()));
     }
 
 }

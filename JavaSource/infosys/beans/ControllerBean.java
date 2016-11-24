@@ -268,6 +268,7 @@ public class ControllerBean implements Serializable {
      * @return navigation rule to timesheets outcome.
      */
     public String goToTimeSheet() {
+        timesheetCollection.setTimesheets();
         return "toTimeSheet";
     }
     

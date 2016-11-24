@@ -45,7 +45,8 @@
 				               		</f:facet>
 				               		<h:inputText value		="#{row.projectID}" 
 				               					 rendered	="#{controller.currentTimesheet.editing}" 
-				               					 size		="8">
+				               					 size		="8"
+				               					 required   ="true">
 				               			<f:convertNumber pattern="#####"/>
 				               		</h:inputText>
 				               		<h:outputText value		="#{row.projectID}" 
@@ -60,7 +61,8 @@
 					               </f:facet>
 				               		<h:inputText value		="#{row.workPackage}" 
 				               					 rendered	="#{controller.currentTimesheet.editing}" 
-				               					 size		="8"/>
+				               					 size		="8"
+				               					 required   ="true"w/>
 				               		<h:outputText value		="#{row.workPackage}" 
 				               					  rendered	="#{not controller.currentTimesheet.editing}"/>
 					      		</h:column>

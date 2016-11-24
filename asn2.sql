@@ -40,11 +40,8 @@ CREATE TABLE Timesheet
 ,thursday     NUMERIC         
 ,friday       NUMERIC         
 ,notes        VARCHAR(100)    
-,timesheetID  int             
+,timesheetID  int            
 ,CONSTRAINT   PKtimesheet    PRIMARY KEY(timesheetRow)
-,CONSTRAINT   FKtimesheet    FOREIGN KEY(timesheetID) REFERENCES TimesheetLog(timesheetID)
-ON DELETE SET NULL 
-ON UPDATE cascade
 )DEFauLT CHARACTER SET utf8 COLLATE utf8_unicode_ci
 ; 
  
