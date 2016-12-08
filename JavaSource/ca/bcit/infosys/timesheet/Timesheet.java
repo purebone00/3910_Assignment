@@ -7,6 +7,9 @@ import java.util.GregorianCalendar;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import ca.bcit.infosys.employee.Employee;
 
 /**
@@ -14,6 +17,7 @@ import ca.bcit.infosys.employee.Employee;
  *
  * @author Bruce Link
  */
+@XmlRootElement(name = "Timesheet")
 public class Timesheet implements java.io.Serializable {
     /** Serial version number. */
     private static final long serialVersionUID = 2L;
@@ -72,6 +76,7 @@ public class Timesheet implements java.io.Serializable {
     /**
      * @return the employee.
      */
+    @XmlElement
     public Employee getEmployee() {
         return employee;
     }
@@ -79,6 +84,7 @@ public class Timesheet implements java.io.Serializable {
     /**
      * @return the endWeek
      */
+    @XmlElement
     public Date getEndWeek() {
         return endWeek;
     }
@@ -103,6 +109,7 @@ public class Timesheet implements java.io.Serializable {
     /**
      * @return the weeknumber of the timesheet
      */
+    @XmlElement
     public int getWeekNumber() {
         Calendar c = new GregorianCalendar();
         c.setTime(endWeek);
@@ -127,6 +134,7 @@ public class Timesheet implements java.io.Serializable {
     /**
      * @return the endWeek as string
      */
+    @XmlElement
     public String getWeekEnding() {
         Calendar c = new GregorianCalendar();
         c.setTime(endWeek);
@@ -140,6 +148,7 @@ public class Timesheet implements java.io.Serializable {
     /**
      * @return the details
      */
+    @XmlElement
     public List<TimesheetRow> getDetails() {
         return details;
     }
@@ -156,6 +165,7 @@ public class Timesheet implements java.io.Serializable {
     /**
      * @return the overtime
      */
+    @XmlElement
     public BigDecimal getOvertime() {
         return overtime;
     }
@@ -186,6 +196,7 @@ public class Timesheet implements java.io.Serializable {
      *
      * @return total hours for timesheet.
      */
+    @XmlElement
     public BigDecimal getTotalHours() {
         BigDecimal sum = BigDecimal.ZERO;
         for (TimesheetRow row : details) {
@@ -199,6 +210,7 @@ public class Timesheet implements java.io.Serializable {
      *
      * @return array of total hours for each day of week for timesheet.
      */
+    @XmlElement
     public BigDecimal[] getDailyHours() {
         BigDecimal[] sums = new BigDecimal[DAYS_IN_WEEK];
         for (TimesheetRow day : details) {

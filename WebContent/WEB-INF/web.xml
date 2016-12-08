@@ -29,7 +29,11 @@
   <welcome-file>/faces/login.xhtml</welcome-file>
  </welcome-file-list>
  
- 
+  <servlet-mapping>
+	<servlet-name>com.joealb.resteasy.MyRESTApplication</servlet-name>
+    <url-pattern>/*</url-pattern>
+  </servlet-mapping>
+    
 
 </web-app>
 

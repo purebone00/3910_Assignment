@@ -2,12 +2,16 @@ package ca.bcit.infosys.employee;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * A class representing a single Employee.
  *
  * @author Bruce Link
  *
  */
+@XmlRootElement(name = "Employee")
 public class Employee implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,6 +50,7 @@ public class Employee implements Serializable {
     /**
      * @return the name
      */
+    @XmlElement
     public String getName() {
         return name;
     }
@@ -60,6 +65,7 @@ public class Employee implements Serializable {
     /**
      * @return the empNumber
      */
+    @XmlElement
     public int getEmpNumber() {
         return empNumber;
     }
@@ -74,6 +80,7 @@ public class Employee implements Serializable {
     /**
      * @return the userName
      */
+    @XmlElement
     public String getUserName() {
         return userName;
     }
@@ -85,6 +92,7 @@ public class Employee implements Serializable {
         userName = id;
     }
 
+    @XmlElement
     public String getPassword() {
         return password;
     }

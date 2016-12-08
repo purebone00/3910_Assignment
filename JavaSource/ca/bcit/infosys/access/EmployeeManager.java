@@ -122,7 +122,7 @@ public class EmployeeManager {
                 try {
                     stmt = connection.prepareStatement(
                             "INSERT INTO Employee "
-                            + "(employeeNumber, employeeID, employeeName, password)"
+                            + "(employeeNumber, employeeID, employeeName, password, token)"
                             + "VALUES (null, ?, ?, ?)");
                     stmt.setString(1, employee.getUserName());
                     stmt.setString(2, employee.getName());

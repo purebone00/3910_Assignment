@@ -29,6 +29,9 @@ public class ControllerBean implements Serializable {
     /** An editable timesheet. */
     EditableTimesheet currentTimesheet;
     
+    String userName;
+    String password;
+    
     /** The old password. */
     String oldPassword;
     /** The new password to change to. */
@@ -407,7 +410,7 @@ public class ControllerBean implements Serializable {
      * @return the user name.
      */
     public String getUserName() {
-        return currentCredential.getUserName();
+        return userName;
     }
     
     /**
@@ -415,7 +418,7 @@ public class ControllerBean implements Serializable {
      * @param userName to be set.
      */
     public void setUserName(String userName) {
-        currentCredential.setUserName(userName);;
+        this.userName = userName;
     }
     
     /**
@@ -423,7 +426,7 @@ public class ControllerBean implements Serializable {
      * @return password of current user.
      */
     public String getPassword() {
-        return currentCredential.getPassword();
+        return password;
     }
     
     /**
@@ -495,7 +498,7 @@ public class ControllerBean implements Serializable {
      * @param password to be set.
      */
     public void setPassword(String password) {
-        currentCredential.setPassword(password);
+        this.password = password;
     }
 
     /**

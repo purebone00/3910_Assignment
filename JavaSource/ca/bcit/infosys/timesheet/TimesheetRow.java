@@ -2,12 +2,20 @@ package ca.bcit.infosys.timesheet;
 
 import java.math.BigDecimal;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
 /**
  * A class representing a single row of a Timesheet.
  *
  * @author Bruce Link
  */
+@XmlRootElement(name = "TimesheetRow")
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder={"rowID","id", "projectID", "workPackage","editable","hoursForWeek","notes"})
 public class TimesheetRow implements java.io.Serializable {
 
     /** Version number. */
