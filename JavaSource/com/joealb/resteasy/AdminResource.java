@@ -35,7 +35,7 @@ public class AdminResource {
     @PUT
     @Path("/reset")
     @Produces(MediaType.APPLICATION_XML)
-    public Response resetPassword(@QueryParam("token")int token, @QueryParam("user")String resetUser) {
+    public Response resetPassword(@QueryParam("token")String token, @QueryParam("user")String resetUser) {
         String response = "";
         Connection connection = null;
         PreparedStatement stmt = null;
@@ -84,7 +84,7 @@ public class AdminResource {
      */
     @DELETE
     @Path("/delete")
-    public Response remove(@QueryParam("token")int token, @QueryParam("empno")int employeeNumber) {
+    public Response remove(@QueryParam("token")String token, @QueryParam("empno")int employeeNumber) {
         Connection connection = null;
         PreparedStatement stmt = null;
         String response = null;
@@ -131,7 +131,7 @@ public class AdminResource {
     @Path("/add")
     @Produces(MediaType.APPLICATION_XML)
     public Response persist(
-            @QueryParam("token")int token,
+            @QueryParam("token")String token,
             @QueryParam("name")String employeeId,
             @QueryParam("user")String employeeName) {
         Connection connection = null;
@@ -176,18 +176,18 @@ public class AdminResource {
     }
     
    
-    public Employee find(int number) {
+    private Employee find(String token) {
         Connection connection = null;
         try {
             try {
                 InitialContext ctx = new InitialContext();
                 DataSource dataSource = (DataSource)ctx.lookup("java:/employeeTimeSheet");
                 connection = dataSource.getConnection();
-                Statement stmt = null;
+                PreparedStatement stmt = null;
                 try {
-                    stmt = connection.createStatement();
-                    ResultSet result = stmt.executeQuery(
-                            "SELECT * FROM Employee where employeeNumber = " + number);
+                    stmt = connection.prepareStatement("SELECT * FROM Employee where token = ?");
+                    stmt.setString(1, token);
+                    ResultSet result = stmt.executeQuery();
                     if (result.next()) {
                         return new Employee(result.getInt("employeeNumber"),
                                 result.getString("employeeID"),
@@ -211,7 +211,7 @@ public class AdminResource {
                 }
             }
         } catch (SQLException ex) {
-            System.out.println("Error in find " + number);
+            System.out.println("Error in find " + token);
             ex.printStackTrace();
             return null;
         }
@@ -221,7 +221,7 @@ public class AdminResource {
     @GET
     @Path("find")
     @Produces(MediaType.APPLICATION_XML)
-    public Employee find(@QueryParam("token")int token,@QueryParam("number") int number) {
+    public Employee find(@QueryParam("token")String token,@QueryParam("number") int number) {
         Connection connection = null;
         try {
             try {
@@ -270,7 +270,7 @@ public class AdminResource {
     @GET
     @Path("view")
     @Produces(MediaType.APPLICATION_XML)
-    public ArrayList<Employee> viewAllEmployee(@QueryParam("token")int token) {
+    public ArrayList<Employee> viewAllEmployee(@QueryParam("token")String token) {
         ArrayList<Employee> employeeList = new ArrayList<Employee>();
         Connection con = null;
         

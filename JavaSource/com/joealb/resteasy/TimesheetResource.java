@@ -37,12 +37,57 @@ import infosys.beans.EditableTimesheet;
 @Path("/timesheet")
 public class TimesheetResource {
 
+    private Employee find(String token) {
+        Connection connection = null;
+        if(token.equals("loggedout"))
+            return null;
+        try {
+            try {
+                InitialContext ctx = new InitialContext();
+                DataSource dataSource = (DataSource)ctx.lookup("java:/employeeTimeSheet");
+                connection = dataSource.getConnection();
+                PreparedStatement stmt = null;
+                try {
+                    stmt = connection.prepareStatement("SELECT * FROM Employee where token = ?");
+                    stmt.setString(1, token);
+                    ResultSet result = stmt.executeQuery();
+                    if (result.next()) {
+                        return new Employee(result.getInt("employeeNumber"),
+                                result.getString("employeeID"),
+                                result.getString("employeeName"),
+                                result.getString("password")
+                               );
+                    } else {
+                        return null;
+                    }
+                } finally {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                }
+            } catch (NamingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error in find " + token);
+            ex.printStackTrace();
+            return null;
+        }
+        return null;
+    }
+    
+    
     /**
      * Return all Timesheets that were avaliable from the database.
      * @return ArrayList of all the timesheets
      */
     @GET
-    public ArrayList<EditableTimesheet> getAll() {
+    public ArrayList<EditableTimesheet> getAll(@QueryParam("token")String token) {
         ArrayList<EditableTimesheet> timesheetList = new ArrayList<EditableTimesheet>();
         Connection connection = null;
         Statement stmt = null;
@@ -52,17 +97,19 @@ public class TimesheetResource {
                 DataSource dataSource = (DataSource)ctx.lookup("java:/employeeTimeSheet");
                 connection = dataSource.getConnection();
                 try {
-                    stmt = connection.createStatement();
-                    ResultSet result = stmt.executeQuery(
-                            "SELECT * FROM TimesheetLog");
-                    while (result.next()) {
-                        EditableTimesheet timesheet = 
-                                new EditableTimesheet(
-                                        getEmployee(result.getInt("employeeNumber")),
-                                        result.getDate("endDate"),
-                                        getAllRows(result.getInt("timesheetID")));
-                        timesheet.setTimesheetId(result.getInt("timesheetID"));
-                        timesheetList.add(timesheet);
+                    if(find(token) != null) {
+                        stmt = connection.createStatement();
+                        ResultSet result = stmt.executeQuery(
+                                "SELECT * FROM TimesheetLog");
+                        while (result.next()) {
+                            EditableTimesheet timesheet = 
+                                    new EditableTimesheet(
+                                            getEmployee(result.getInt("employeeNumber")),
+                                            result.getDate("endDate"),
+                                            getAllRows(token, result.getInt("timesheetID")));
+                            timesheet.setTimesheetId(result.getInt("timesheetID"));
+                            timesheetList.add(timesheet);
+                        }
                     }
                 } finally {
                     if (stmt != null) {
@@ -94,7 +141,7 @@ public class TimesheetResource {
      */
     @GET
     @Produces(MediaType.APPLICATION_XML)
-    public ArrayList<TimesheetRow> getAllRows(@QueryParam("timesheetId")int timesheetId) {
+    public ArrayList<TimesheetRow> getAllRows(@QueryParam("token")String token, @QueryParam("timesheetId")int timesheetId) {
         ArrayList<TimesheetRow> timesheetRows = new ArrayList<TimesheetRow>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -104,36 +151,38 @@ public class TimesheetResource {
                 DataSource dataSource = (DataSource)ctx.lookup("java:/employeeTimeSheet");
                 connection = dataSource.getConnection();
                 try {
-                    preparedStatement = connection.prepareStatement(
-                            "SELECT * FROM Timesheet WHERE timesheetID = ?");
-
-                    preparedStatement.setInt(1, timesheetId);
-                    ResultSet result = preparedStatement.executeQuery();
-                    while (result.next()) {
-                        final int id = result.getInt("projectID");
-                        final String workpackage = result.getString("wp");
-
-                        BigDecimal[] hours = new BigDecimal[Timesheet.DAYS_IN_WEEK];
-
-                        hours[0] = result.getBigDecimal("saturday");
-
-                        hours[1] = result.getBigDecimal("sunday");
-
-                        hours[2] = result.getBigDecimal("monday");
-
-                        hours[3] = result.getBigDecimal("tuesday");
-
-                        hours[4] = result.getBigDecimal("wednesday");
-
-                        hours[5] = result.getBigDecimal("thursday");
-
-                        hours[6] = result.getBigDecimal("friday");
-
-                        String notes = result.getString("notes");
-
-                        EditableRow newRow = new EditableRow(id, workpackage, hours, notes);
-                        newRow.setRowId(result.getInt("timesheetRow"));
-                        timesheetRows.add(newRow);
+                    if(find(token) != null) {
+                        preparedStatement = connection.prepareStatement(
+                                "SELECT * FROM Timesheet WHERE timesheetID = ?");
+    
+                        preparedStatement.setInt(1, timesheetId);
+                        ResultSet result = preparedStatement.executeQuery();
+                        while (result.next()) {
+                            final int id = result.getInt("projectID");
+                            final String workpackage = result.getString("wp");
+    
+                            BigDecimal[] hours = new BigDecimal[Timesheet.DAYS_IN_WEEK];
+    
+                            hours[0] = result.getBigDecimal("saturday");
+    
+                            hours[1] = result.getBigDecimal("sunday");
+    
+                            hours[2] = result.getBigDecimal("monday");
+    
+                            hours[3] = result.getBigDecimal("tuesday");
+    
+                            hours[4] = result.getBigDecimal("wednesday");
+    
+                            hours[5] = result.getBigDecimal("thursday");
+    
+                            hours[6] = result.getBigDecimal("friday");
+    
+                            String notes = result.getString("notes");
+    
+                            EditableRow newRow = new EditableRow(id, workpackage, hours, notes);
+                            newRow.setRowId(result.getInt("timesheetRow"));
+                            timesheetRows.add(newRow);
+                        }
                     }
                 } finally {
                     if (preparedStatement != null) {
@@ -293,7 +342,7 @@ public class TimesheetResource {
      */
     @POST
     @Path("/create")
-    public Response create(@QueryParam("empNum") int empNum, 
+    public Response create(@QueryParam("token")String token,@QueryParam("empNum") int empNum, 
                        @QueryParam("endDate") String endDate, 
                        @QueryParam("endWeek") int endWeek) {
         Connection connection = null;
@@ -305,17 +354,19 @@ public class TimesheetResource {
                 DataSource dataSource = (DataSource)ctx.lookup("java:/employeeTimeSheet");
                 connection = dataSource.getConnection();
                 try {
-                    query = connection.prepareStatement("INSERT INTO timesheetlog " 
-                            + "VALUES(NULL, ?, ?, ?);");
-                    query.setInt(1, empNum);
-                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                    java.util.Date date = formatter.parse(endDate);
-                    query.setDate(2, new java.sql.Date(date.getTime()));
-                    query.setInt(3, endWeek);
-
-                    query.executeUpdate();
-                    query.close();        
-                    response = "success";
+                    if(find(token) != null) {
+                        query = connection.prepareStatement("INSERT INTO timesheetlog " 
+                                + "VALUES(NULL, ?, ?, ?);");
+                        query.setInt(1, empNum);
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                        java.util.Date date = formatter.parse(endDate);
+                        query.setDate(2, new java.sql.Date(date.getTime()));
+                        query.setInt(3, endWeek);
+    
+                        query.executeUpdate();
+                        query.close();        
+                        response = "success";
+                    }
                 } catch (ParseException e) {
                     e.printStackTrace();
                 } finally {
@@ -349,7 +400,7 @@ public class TimesheetResource {
      */
     @POST
     @Path("/createRow")
-    public void createRow(@QueryParam("projectID")int projectID,
+    public void createRow(@QueryParam("token") String token, @QueryParam("projectID")int projectID,
             @QueryParam("wp") String wp, 
             @QueryParam("saturday") int saturday,
             @QueryParam("sunday") int sunday,
@@ -368,31 +419,33 @@ public class TimesheetResource {
                 DataSource dataSource = (DataSource)ctx.lookup("java:/employeeTimeSheet");
                 connection = dataSource.getConnection();
                 try {
-                    query = connection.prepareStatement("INSERT INTO timesheet "
-                            + "(timesheetRow, projectID, wp, "
-                            + "saturday, sunday, monday, tuesday, wednesday, " 
-                            + "thursday, friday, notes, timesheetID) "
-                            + "VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
-                    query.setInt(1, projectID);
-                    query.setString(2, wp);
-                    query.setBigDecimal(3, new BigDecimal(saturday));
-
-                    query.setBigDecimal(4, new BigDecimal(sunday));
-
-                    query.setBigDecimal(5, new BigDecimal(monday));
-
-                    query.setBigDecimal(6, new BigDecimal(tuesday));
-
-                    query.setBigDecimal(7, new BigDecimal(wednesday));
-
-                    query.setBigDecimal(8, new BigDecimal(thursday));
-
-                    query.setBigDecimal(9, new BigDecimal(friday));
-
-                    query.setString(10, notes);
-
-                    query.setInt(11, id);
-                    query.executeUpdate();
+                    if(find(token) != null) {
+                        query = connection.prepareStatement("INSERT INTO timesheet "
+                                + "(timesheetRow, projectID, wp, "
+                                + "saturday, sunday, monday, tuesday, wednesday, " 
+                                + "thursday, friday, notes, timesheetID) "
+                                + "VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+                        query.setInt(1, projectID);
+                        query.setString(2, wp);
+                        query.setBigDecimal(3, new BigDecimal(saturday));
+    
+                        query.setBigDecimal(4, new BigDecimal(sunday));
+    
+                        query.setBigDecimal(5, new BigDecimal(monday));
+    
+                        query.setBigDecimal(6, new BigDecimal(tuesday));
+    
+                        query.setBigDecimal(7, new BigDecimal(wednesday));
+    
+                        query.setBigDecimal(8, new BigDecimal(thursday));
+    
+                        query.setBigDecimal(9, new BigDecimal(friday));
+    
+                        query.setString(10, notes);
+    
+                        query.setInt(11, id);
+                        query.executeUpdate();
+                    }
                 } finally {
                     if (query != null) {
                         query.close();

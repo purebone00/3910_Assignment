@@ -28,18 +28,28 @@ import ca.bcit.infosys.employee.Employee;
 @Path("/employee")
 public class EmployeeResource {
     
-    public Employee find(int number) {
+    private int generateToken() {
+        int token = (int) (Math.random() * 999);
+
+        // String response = "Your token is: " + token + "\nFor login
+        // combination: " + user + " : " + password;
+        return token;
+    }
+    
+    private Employee find(String token) {
         Connection connection = null;
+        if(token.equals("loggedout"))
+            return null;
         try {
             try {
                 InitialContext ctx = new InitialContext();
                 DataSource dataSource = (DataSource)ctx.lookup("java:/employeeTimeSheet");
                 connection = dataSource.getConnection();
-                Statement stmt = null;
+                PreparedStatement stmt = null;
                 try {
-                    stmt = connection.createStatement();
-                    ResultSet result = stmt.executeQuery(
-                            "SELECT * FROM Employee where employeeNumber = " + number);
+                    stmt = connection.prepareStatement("SELECT * FROM Employee where token = ?");
+                    stmt.setString(1, token);
+                    ResultSet result = stmt.executeQuery();
                     if (result.next()) {
                         return new Employee(result.getInt("employeeNumber"),
                                 result.getString("employeeID"),
@@ -63,7 +73,7 @@ public class EmployeeResource {
                 }
             }
         } catch (SQLException ex) {
-            System.out.println("Error in find " + number);
+            System.out.println("Error in find " + token);
             ex.printStackTrace();
             return null;
         }
@@ -75,6 +85,8 @@ public class EmployeeResource {
     @Path("login")
     public Response login(@QueryParam("username")String username, @QueryParam("password")String password) {
         String response = "";
+        String token = "loggedout";
+        boolean loggedIn = false;
         Connection connection = null;
         try {
             try {
@@ -86,14 +98,23 @@ public class EmployeeResource {
                     stmt = connection.prepareStatement("SELECT * FROM Employee WHERE employeeID = ? AND password = ?");
                     stmt.setString(1, username);
                     stmt.setString(2, password);
-                    
+                    loggedIn = true;
                     ResultSet result = stmt.executeQuery();                   
                     
                     if (result.next()) {
-                        int empID = result.getInt("employeeNumber");
-                        response = "Your token is " + empID;
+                        String username1 = result.getString("employeeName");
+                        token = Integer.toString(generateToken()) + username1;
+                        response = "The token is " + token;
                     } else {
                         return null;
+                    }
+                    stmt.close();
+                    if(loggedIn) {
+                        stmt = connection.prepareStatement("UPDATE Employee SET token = ? WHERE employeeID = ?");
+                        stmt.setString(1, token);
+                        stmt.setString(2, username);
+                        stmt.executeUpdate();
+                        stmt.close();
                     }
                 } finally {
                     if (stmt != null) {
@@ -118,31 +139,25 @@ public class EmployeeResource {
         return Response.status(200).entity(response).build();
     }
     
-    @GET
-    @Path("login")
-    public Response logOut(@QueryParam("username")String username, @QueryParam("password")String password) {
+    @PUT
+    @Path("logout")
+    public Response logOut(@QueryParam("token")String token) {
         String response = "";
         Connection connection = null;
+        PreparedStatement stmt = null;
         try {
             try {
                 InitialContext ctx = new InitialContext();
                 DataSource dataSource = (DataSource)ctx.lookup("java:/employeeTimeSheet");
                 connection = dataSource.getConnection();
-                PreparedStatement stmt = null;
                 try {
-                    stmt = connection.prepareStatement("SELECT * FROM Employee WHERE employeeID = ? AND password = ?");
-                    stmt.setString(1, username);
-                    stmt.setString(2, password);
+                   
+                    stmt = connection.prepareStatement("UPDATE Employee "
+                            + "SET token = 'loggedout' " + "WHERE token = ?");
+                    stmt.setString(1, token);
+                    stmt.executeUpdate();
+                    response = "logged out success";
                     
-                    ResultSet result = stmt.executeQuery();                   
-                    
-                    if (result.next()) {
-                        String username1 = result.getString("employeeID");
-                        int empID = result.getInt("employeeNumber");
-                        response = username1 + " " + empID;
-                    } else {
-                        return null;
-                    }
                 } finally {
                     if (stmt != null) {
                         stmt.close();
@@ -157,15 +172,13 @@ public class EmployeeResource {
                 }
             }
         } catch (SQLException ex) {
-            response = "login failed";
-            System.out.println("Error in find " + username);
+            response = "Error in loggedout rest";
             ex.printStackTrace();
-            return null;
         }
         
         return Response.status(200).entity(response).build();
     }
-    
+
     
     /**
      * merge Employee record fields into existing database record.
@@ -173,8 +186,8 @@ public class EmployeeResource {
      * @param user user to have password changed
      */
     @PUT
-    @Path("/reset")
-    public Response changePassword(@QueryParam("token")int token, @QueryParam("newPass")String newPass, @QueryParam("userName")String user) {
+    @Path("/changePassword")
+    public Response changePassword(@QueryParam("token")String token, @QueryParam("newPass")String newPass, @QueryParam("userName")String user) {
          String response = "";
          Connection connection = null;
          PreparedStatement stmt = null;
