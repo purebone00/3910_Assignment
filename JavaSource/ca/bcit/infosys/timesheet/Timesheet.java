@@ -35,6 +35,7 @@ public class Timesheet implements java.io.Serializable {
     /** Full work week */
     public static final BigDecimal FULL_WORK_WEEK =
             new BigDecimal(40.0).setScale(1, BigDecimal.ROUND_HALF_UP);
+    private int timesheetId;
     /**
      * Constructor for Timesheet.
      * Initialize a Timesheet with no rows and
@@ -231,5 +232,14 @@ public class Timesheet implements java.io.Serializable {
      */
     public void addRow() {
         details.add(new TimesheetRow());
+    }
+    
+    @XmlElement
+    public int getTimesheetId() {
+        return timesheetId;
+    }
+
+    public void setTimesheetId(int timesheetId) {
+        this.timesheetId = timesheetId;
     }
 }

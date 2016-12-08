@@ -87,8 +87,10 @@ public class TimesheetResource {
      * @return ArrayList of all the timesheets
      */
     @GET
-    public ArrayList<EditableTimesheet> getAll(@QueryParam("token")String token) {
-        ArrayList<EditableTimesheet> timesheetList = new ArrayList<EditableTimesheet>();
+    @Path("/all")
+    @Produces(MediaType.APPLICATION_XML)
+    public ArrayList<Timesheet> getAll(@QueryParam("token")String token) {
+        ArrayList<Timesheet> timesheetList = new ArrayList<Timesheet>();
         Connection connection = null;
         Statement stmt = null;
         try {
@@ -102,8 +104,8 @@ public class TimesheetResource {
                         ResultSet result = stmt.executeQuery(
                                 "SELECT * FROM TimesheetLog");
                         while (result.next()) {
-                            EditableTimesheet timesheet = 
-                                    new EditableTimesheet(
+                            Timesheet timesheet = 
+                                    new Timesheet(
                                             getEmployee(result.getInt("employeeNumber")),
                                             result.getDate("endDate"),
                                             getAllRows(token, result.getInt("timesheetID")));
@@ -420,31 +422,31 @@ public class TimesheetResource {
                 connection = dataSource.getConnection();
                 try {
                     if(find(token) != null) {
-                        query = connection.prepareStatement("INSERT INTO timesheet "
-                                + "(timesheetRow, projectID, wp, "
-                                + "saturday, sunday, monday, tuesday, wednesday, " 
-                                + "thursday, friday, notes, timesheetID) "
-                                + "VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
-                        query.setInt(1, projectID);
-                        query.setString(2, wp);
-                        query.setBigDecimal(3, new BigDecimal(saturday));
-    
-                        query.setBigDecimal(4, new BigDecimal(sunday));
-    
-                        query.setBigDecimal(5, new BigDecimal(monday));
-    
-                        query.setBigDecimal(6, new BigDecimal(tuesday));
-    
-                        query.setBigDecimal(7, new BigDecimal(wednesday));
-    
-                        query.setBigDecimal(8, new BigDecimal(thursday));
-    
-                        query.setBigDecimal(9, new BigDecimal(friday));
-    
-                        query.setString(10, notes);
-    
-                        query.setInt(11, id);
-                        query.executeUpdate();
+                    query = connection.prepareStatement("INSERT INTO timesheet "
+                            + "(timesheetRow, projectID, wp, "
+                            + "saturday, sunday, monday, tuesday, wednesday, " 
+                            + "thursday, friday, notes, timesheetID) "
+                            + "VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+                    query.setInt(1, projectID);
+                    query.setString(2, wp);
+                    query.setBigDecimal(3, new BigDecimal(saturday));
+
+                    query.setBigDecimal(4, new BigDecimal(sunday));
+
+                    query.setBigDecimal(5, new BigDecimal(monday));
+
+                    query.setBigDecimal(6, new BigDecimal(tuesday));
+
+                    query.setBigDecimal(7, new BigDecimal(wednesday));
+
+                    query.setBigDecimal(8, new BigDecimal(thursday));
+
+                    query.setBigDecimal(9, new BigDecimal(friday));
+
+                    query.setString(10, notes);
+
+                    query.setInt(11, id);
+                    query.executeUpdate();
                     }
                 } finally {
                     if (query != null) {

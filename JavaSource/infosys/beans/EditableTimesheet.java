@@ -12,6 +12,8 @@ import javax.faces.component.UIComponent;
 //import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
@@ -143,13 +145,7 @@ public class EditableTimesheet extends Timesheet {
 
     }
 
-    public int getTimesheetId() {
-        return timesheetId;
-    }
-
-    public void setTimesheetId(int timesheetId) {
-        this.timesheetId = timesheetId;
-    }
+    
 
 
 }
