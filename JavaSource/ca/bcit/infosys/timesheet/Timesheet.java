@@ -1,23 +1,19 @@
 package ca.bcit.infosys.timesheet;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Calendar;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import ca.bcit.infosys.employee.Employee;
-
 /**
  * A class representing a single Timesheet.
  *
  * @author Bruce Link
  */
-@XmlRootElement(name = "Timesheet")
+@XmlRootElement (name = "Timesheet")
 public class Timesheet implements java.io.Serializable {
     /** Serial version number. */
     private static final long serialVersionUID = 2L;
@@ -31,18 +27,14 @@ public class Timesheet implements java.io.Serializable {
     private BigDecimal overtime;
     /** The total number of flextime hours on the timesheet. */
     private BigDecimal flextime;
-
     /** Number of days in a week. */
     public static final int DAYS_IN_WEEK = 7;
-
     /** Number of hours in a day. */
     public static final BigDecimal HOURS_IN_DAY =
             new BigDecimal(24.0).setScale(1, BigDecimal.ROUND_HALF_UP);
-
     /** Full work week */
     public static final BigDecimal FULL_WORK_WEEK =
             new BigDecimal(40.0).setScale(1, BigDecimal.ROUND_HALF_UP);
-
     /**
      * Constructor for Timesheet.
      * Initialize a Timesheet with no rows and
@@ -57,7 +49,6 @@ public class Timesheet implements java.io.Serializable {
         c.add(Calendar.DATE, leftDays);
         endWeek = c.getTime();
     }
-
     /**
      * Creates a Timesheet object with all fields set. Used to create sample
      * data.
@@ -72,7 +63,6 @@ public class Timesheet implements java.io.Serializable {
         endWeek = end;
         details = charges;
     }
-
     /**
      * @return the employee.
      */
@@ -80,7 +70,6 @@ public class Timesheet implements java.io.Serializable {
     public Employee getEmployee() {
         return employee;
     }
-
     /**
      * @return the endWeek
      */
@@ -88,7 +77,6 @@ public class Timesheet implements java.io.Serializable {
     public Date getEndWeek() {
         return endWeek;
     }
-
     private void checkFriday(final Date end) {
         Calendar c = new GregorianCalendar();
         c.setTime(end);
@@ -96,7 +84,6 @@ public class Timesheet implements java.io.Serializable {
         if (currentDay != Calendar.FRIDAY) {
             throw new IllegalArgumentException("EndWeek must be a Friday");
         }
-
     }
     /**
      * @param end the endWeek to set. Must be a Friday
@@ -105,7 +92,6 @@ public class Timesheet implements java.io.Serializable {
         checkFriday(end);
         endWeek = end;
     }
-
     /**
      * @return the weeknumber of the timesheet
      */
@@ -116,7 +102,6 @@ public class Timesheet implements java.io.Serializable {
         c.setFirstDayOfWeek(Calendar.SATURDAY);
         return c.get(Calendar.WEEK_OF_YEAR);
     }
-
     /**
      * Sets the end of week based on the week number.
      *
@@ -130,7 +115,6 @@ public class Timesheet implements java.io.Serializable {
         c.setWeekDate(weekYear, weekNo, Calendar.FRIDAY);
         endWeek = c.getTime();
     }
-
     /**
      * @return the endWeek as string
      */
@@ -144,7 +128,6 @@ public class Timesheet implements java.io.Serializable {
         int day = c.get(Calendar.DAY_OF_MONTH);
         return month + "/" + day + "/" + year;
     }
-
     /**
      * @return the details
      */
@@ -152,7 +135,6 @@ public class Timesheet implements java.io.Serializable {
     public List<TimesheetRow> getDetails() {
         return details;
     }
-
     /**
      * Sets the details of the timesheet.
      *
@@ -161,36 +143,31 @@ public class Timesheet implements java.io.Serializable {
     public void setDetails(final ArrayList<TimesheetRow> newDetails) {
         details = newDetails;
     }
-
     /**
      * @return the overtime
      */
-    @XmlElement
     public BigDecimal getOvertime() {
         return overtime;
     }
-
     /**
      * @param ot the overtime to set
      */
     public void setOvertime(final BigDecimal ot) {
         overtime = ot.setScale(1, BigDecimal.ROUND_HALF_UP);
     }
-
     /**
      * @return the flextime
      */
+    @XmlElement
     public BigDecimal getFlextime() {
         return flextime;
     }
-
     /**
      * @param flex the flextime to set
      */
     public void setFlextime(final BigDecimal flex) {
         flextime = flex.setScale(1, BigDecimal.ROUND_HALF_UP);
     }
-
     /**
      * Calculates the total hours.
      *
@@ -204,7 +181,6 @@ public class Timesheet implements java.io.Serializable {
         }
         return sum;
     }
-
     /**
      * Calculates the daily hours.
      *
@@ -227,7 +203,6 @@ public class Timesheet implements java.io.Serializable {
         }
         return sums;
     }
-
     /**
      * Checks to see if timesheet total nets 40 hours.
      * @return true if FULL_WORK_WEEK == hours -flextime - overtime
@@ -242,7 +217,6 @@ public class Timesheet implements java.io.Serializable {
         }
         return net.equals(FULL_WORK_WEEK);
     }
-
     /**
      * Deletes the specified row from the timesheet.
      *
@@ -252,12 +226,10 @@ public class Timesheet implements java.io.Serializable {
     public void deleteRow(final TimesheetRow rowToRemove) {
         details.remove(rowToRemove);
     }
-
     /**
      * Add an empty to to the timesheet.
      */
     public void addRow() {
         details.add(new TimesheetRow());
     }
-
 }

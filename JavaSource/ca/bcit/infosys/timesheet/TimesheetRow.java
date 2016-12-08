@@ -1,26 +1,20 @@
 package ca.bcit.infosys.timesheet;
-
 import java.math.BigDecimal;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 /**
  * A class representing a single row of a Timesheet.
  *
  * @author Bruce Link
  */
 @XmlRootElement(name = "TimesheetRow")
-
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder={"rowID","id", "projectID", "workPackage","editable","hoursForWeek","notes"})
+@XmlType(propOrder={"projectID", "workPackage", "hoursForWeek","notes"})
 public class TimesheetRow implements java.io.Serializable {
-
     /** Version number. */
     private static final long serialVersionUID = 2L;
-
     /** Timesheet row index for Saturday. */
     public static final int SAT = 0;
     /** Timesheet row index for Sunday. */
@@ -35,12 +29,10 @@ public class TimesheetRow implements java.io.Serializable {
     public static final int THU = 5;
     /** Timesheet row index for Friday. */
     public static final int FRI = 6;
-
     /** The projectID. */
     private int projectID;
     /** The WorkPackage. Must be a unique for a given projectID. */
     private String workPackage;
-
     /**
      * An array holding all the hours charged for each day of the week. Day 0 is
      * Saturday, ... day 6 is Friday
@@ -48,13 +40,11 @@ public class TimesheetRow implements java.io.Serializable {
     private BigDecimal[] hoursForWeek = new BigDecimal[Timesheet.DAYS_IN_WEEK];
     /** Any notes added to the end of a row. */
     private String notes;
-
     /**
      * Creates a TimesheetDetails object and sets the editable state to true.
      */
     public TimesheetRow() {
     }
-
     /**
      * Creates a TimesheetDetails object with all fields set. Used to create
      * sample data.
@@ -71,42 +61,36 @@ public class TimesheetRow implements java.io.Serializable {
         setHoursForWeek(hours);
         setNotes(comments);
     }
-
     /**
      * @return the projectID
      */
     public int getProjectID() {
         return projectID;
     }
-
     /**
      * @param id the projectID to set
      */
     public void setProjectID(final int id) {
         this.projectID = id;
     }
-
     /**
      * @return the workPackage
      */
     public String getWorkPackage() {
         return workPackage;
     }
-
     /**
      * @param wp the workPackage to set
      */
     public void setWorkPackage(final String wp) {
         this.workPackage = wp;
     }
-
     /**
      * @return the hours charged for each day
      */
     public BigDecimal[] getHoursForWeek() {
         return hoursForWeek;
     }
-
     /**
      * @param hours the hours charged for each day
      */
@@ -114,7 +98,6 @@ public class TimesheetRow implements java.io.Serializable {
         checkHoursForWeek(hours);
         this.hoursForWeek = hours;
     }
-
     /**
      * @param day The day of week to return charges for
      * @return charges in hours of specific day in week
@@ -122,7 +105,6 @@ public class TimesheetRow implements java.io.Serializable {
     public BigDecimal getHour(final int day) {
         return hoursForWeek[day];
     }
-
     /**
     * @param day The day of week to set the hour
     * @param hour The number of hours worked for that day
@@ -143,7 +125,6 @@ public class TimesheetRow implements java.io.Serializable {
       checkHour(bdHour);
       hoursForWeek[day] = bdHour;
   }
-
     /**
      * Checks if hour value is out of the valid
      * bounds of 0.0 to 24.0, or has more than one decimal digit.
@@ -164,7 +145,6 @@ public class TimesheetRow implements java.io.Serializable {
             }
         }
     }
-
     /**
      * Checks if any hour value in any day of the week is out of the valid
      * bounds of 0.0 to 24.0, or has more than one decimal digit.
@@ -180,21 +160,19 @@ public class TimesheetRow implements java.io.Serializable {
             checkHour(next);
         }
     }
-
     /**
      * @return the notes
      */
+    
     public String getNotes() {
         return notes;
     }
-
     /**
      * @param comments the notes to set
      */
     public void setNotes(final String comments) {
         this.notes = comments;
     }
-
     /**
      * @return the weekly hours
      */
@@ -207,5 +185,4 @@ public class TimesheetRow implements java.io.Serializable {
         }
         return sum;
     }
-
 }
